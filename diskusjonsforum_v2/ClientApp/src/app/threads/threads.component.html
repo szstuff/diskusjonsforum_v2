@@ -1,3 +1,21 @@
-<h2 id="tableLabel"> List of threads </h2>
+<h1 id="tabelLabel">List of Threads ({{viewTitle}} View)</h1>
+<table class="table table-striped" aria-labelledby="tabelLabel">
+  <h2>Thread Details</h2>
+  <p>Thread ID: {{ thread.ThreadId }}</p>
+  <p>Thread Title: {{ thread.ThreadTitle }}</p>
+  <p>Thread Body: {{ thread.ThreadBody }}</p>
+  <h3>Comments</h3>
+  <ul>
+    <li *ngFor="let comment of thread.ThreadComments">
+      <div class="comment">
+        <p>Posted by: {{ comment.User.UserName }} on {{ comment.CommentCreatedAt }}</p>
+        <p>{{ comment.CommentBody }}</p>
 
-<p> table of threads </p>
+        <div *ngIf="userId === comment.UserId || userIsAdmin">
+          <button (click)="editComment(comment.CommentId)">Edit Comment</button>
+          <button (click)="deleteComment(comment.CommentId)">Delete Comment</button>
+        </div>
+      </div>
+    </li>
+  </ul>
+</table>
