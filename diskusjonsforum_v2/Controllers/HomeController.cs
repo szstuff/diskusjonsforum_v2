@@ -20,12 +20,13 @@ namespace diskusjonsforum_v2.Controllers
         public IActionResult Index()
         {
             var threads = GetThreads(); // Call your GetThreads method to fetch the list of threads.
-            var threadListViewModel = new ThreadListViewModel(threads, "Table")
-            {
-                Threads = threads
-            };
-
-            return View(threadListViewModel);
+            // var threadListViewModel = new ThreadListViewModel(threads, "Table")
+            // {
+            //     Threads = threads
+            // };
+            //
+            // return View(threadListViewModel);
+            return null;
         }
         
         // Fetch threads from repository

@@ -47,16 +47,16 @@ public class CommentController : Controller
                 thread.User = await _userManager.FindByIdAsync(thread.UserId); //User needs to be set to load Thread and Comment in Comment/Create view 
                 // Retrieve query parameters
                 // Create a CommentViewModel and populate it with data
-                var viewModel = new CommentCreateViewModel()
-                {
-                    ThreadId = threadId,
-                    ParentCommentId = parentCommentId,
-                    ParentComment = parentComment,
-                    Thread = thread
-                };
+                // var viewModel = new CommentCreateViewModel()
+                // {
+                //     ThreadId = threadId,
+                //     ParentCommentId = parentCommentId,
+                //     ParentComment = parentComment,
+                //     Thread = thread
+                // };
 
                 // Pass the CommentViewModel to the view
-                return View(viewModel);
+                return null;
             }
             else
             {
@@ -95,14 +95,15 @@ public class CommentController : Controller
                     //Input validation: adds modelerror if submitted CommentBody is empty 
                     ModelState.AddModelError("CommentBody", "Comment can't be empty.");
                     //Recreates the Create-viewmodel and returns a new Comment/Create view
-                    var viewModel = new CommentCreateViewModel()
-                    {
-                        ThreadId = comment.ThreadId,
-                        ParentCommentId = comment.ParentCommentId,
-                        ParentComment = _commentRepository.GetById(comment.ParentCommentId),
-                        Thread = _threadRepository.GetThreadById(comment.ThreadId)
-                    };
-                    return View("Create", viewModel);
+                    // var viewModel = new CommentCreateViewModel()
+                    // {
+                    //     ThreadId = comment.ThreadId,
+                    //     ParentCommentId = comment.ParentCommentId,
+                    //     ParentComment = _commentRepository.GetById(comment.ParentCommentId),
+                    //     Thread = _threadRepository.GetThreadById(comment.ThreadId)
+                    // };
+                    // return View("Create", viewModel);
+                    return null;
                 }
             }
 
@@ -146,7 +147,7 @@ public class CommentController : Controller
                 Thread thread = _threadRepository.GetThreadById(threadId);
                 // Retrieve query parameters
                 // Create a CommentViewModel and populate it with data
-                var viewModel = new CommentCreateViewModel()
+                /*var viewModel = new CommentCreateViewModel()
                 {
                     ThreadId = threadId,
                     ParentCommentId = commentId,
@@ -156,7 +157,9 @@ public class CommentController : Controller
                 };
 
                 // Pass the CommentViewModel to the view
-                 return View(viewModel);
+                 return View(viewModel);*/
+
+                return null; 
             }
             else
             {
@@ -187,7 +190,7 @@ public class CommentController : Controller
             {
                 // Content is empty, add a model error
                 ModelState.AddModelError("CommentBody", "Comment content is required.");
-                var viewModel = new CommentCreateViewModel()
+                /*var viewModel = new CommentCreateViewModel()
                 {
                     ThreadId = uneditedComment.ThreadId,
                     ParentCommentId = uneditedComment.ParentCommentId,
@@ -196,7 +199,8 @@ public class CommentController : Controller
                     Thread = uneditedComment.Thread
                 };
                 // Gets thread categories and passes them to View. Used to generate dropdown list of available thread categories 
-                return View("Edit", viewModel);
+                return View("Edit", viewModel);*/
+                return null;
             }
             
             //Reconstruct the comment before saving 

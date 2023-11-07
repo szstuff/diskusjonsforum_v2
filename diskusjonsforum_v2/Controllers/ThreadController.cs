@@ -42,8 +42,9 @@ public class ThreadController : Controller
                 thread.ThreadComments?.AddRange(GetComments(thread));
             }
             // Create view model for thread and displays them
-            var threadListViewModel = new ThreadListViewModel(threads, "Table");
-            return View(threadListViewModel); 
+            // var threadListViewModel = new ThreadListViewModel(threads, "Table");
+            // return View(threadListViewModel); 
+            return null;
         }
         catch (Exception ex)
         {

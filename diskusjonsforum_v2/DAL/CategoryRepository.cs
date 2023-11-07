@@ -21,7 +21,7 @@ public class CategoryRepository : ICategoryRepository
     }
     
     //All the methods below are implemented, but not used in the application. 
-    public List<Diskusjonsforum.Models.Thread> GetThreads(Category category)
+    public List<diskusjonsforum_v2.Models.Thread> GetThreads(Category category)
     {
         return _threadDbContext.Threads
             .Where(thread => thread.Category == category)
@@ -35,7 +35,7 @@ public class CategoryRepository : ICategoryRepository
             .FirstOrDefault(c => c.CategoryName == name);
     }
 
-    public IQueryable<Diskusjonsforum.Models.Thread> GetThreadsByCategory(Category category)
+    public IQueryable<diskusjonsforum_v2.Models.Thread> GetThreadsByCategory(Category category)
     {
         return _threadDbContext.Threads.Where(thread => thread.Category == category);
     }

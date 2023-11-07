@@ -1,7 +1,7 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using SQLite;namespace diskusjonsforum_v2.Models
+
+namespace diskusjonsforum_v2.Models
 {
     public class Comment
 	{

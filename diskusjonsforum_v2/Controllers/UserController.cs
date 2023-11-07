@@ -37,8 +37,9 @@ public class UserController : Controller
         {
             // Fetch all users and create view model for user table view
             var users = _userManager.Users.ToList();
-            var userListViewModel = new UserListViewModel(users, "Table");
-            return View(userListViewModel);
+            //var userListViewModel = new UserListViewModel(users, "Table");
+            //return View(userListViewModel);
+            return null;
         }
         catch (Exception ex)
         {
