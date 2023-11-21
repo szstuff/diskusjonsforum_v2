@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {Thread } from "./threads";
 import { HttpClient } from '@angular/common/http';
 
 @Component({
@@ -7,10 +8,11 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./threads.component.css']
 })
 export class ThreadsComponent implements OnInit {
-  thread: any;
+  viewTitle: string = 'Table';
+
+  thread: Thread;
   userId: string = ''; //Initialize user Id
   userIsAdmin: boolean = false;  // and userIsAdmin
-  viewTitle: string = 'Thread';
 
   constructor(private http: HttpClient) { }
 
