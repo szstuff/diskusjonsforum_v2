@@ -1,4 +1,5 @@
 <h1 id="tabelLabel">List of Threads ({{viewTitle}} View)</h1>
+
 <table class="table table-striped" aria-labelledby="tabelLabel">
   <h2>Thread Details</h2>
   <p>Thread ID: {{ thread.ThreadId }}</p>
@@ -19,3 +20,18 @@
     </li>
   </ul>
 </table>
+
+<ul class="navbar-nav flex-grow">
+  <li
+    class="nav-item"
+    [routerLinkActive]="['link-active']"
+    [routerLinkActiveOptions]="{ exact: true}"
+    >
+      <a class="nav-link text-dark" [routerLink]="['/']">Home</a>
+  </li>
+  <li class="nav-item" [routerLinkActive]="['link-active']">
+    <a class="nav-link text-dark" [routerLink]="['/items']">
+      Threads
+    </a>
+  </li>
+</ul>

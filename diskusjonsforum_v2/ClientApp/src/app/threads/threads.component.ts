@@ -6,10 +6,10 @@ import { HttpClient } from '@angular/common/http';
   templateUrl: './threads.component.html',
   styleUrls: ['./threads.component.css']
 })
-export class ThreadComponent implements OnInit {
+export class ThreadsComponent implements OnInit {
   thread: any;
-  userId: string;
-  userIsAdmin: boolean;
+  userId: string = ''; //Initialize user Id
+  userIsAdmin: boolean = false;  // and userIsAdmin
   viewTitle: string = 'Thread';
 
   constructor(private http: HttpClient) { }
