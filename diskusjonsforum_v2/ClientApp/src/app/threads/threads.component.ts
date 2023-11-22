@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import {Thread } from "./threads";
 import { HttpClient } from '@angular/common/http';
+import {Thread} from '../../../../Models/Thread.cs';
 
 @Component({
   selector: 'app-thread',
   templateUrl: './threads.component.html',
-  styleUrls: ['./threads.component.css']
+  //styleUrls: ['./threads.component.css']
 })
 export class ThreadsComponent implements OnInit {
   viewTitle: string = 'Table';
 
-  thread: Thread;
+  thread: Thread = new Thread();
   userId: string = ''; //Initialize user Id
   userIsAdmin: boolean = false;  // and userIsAdmin
 
