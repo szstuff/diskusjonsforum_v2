@@ -1,33 +1,28 @@
-<!-- comments.component.html -->
+<h2 id="tabelLabel">List of Comments)</h2>
 
-<h1 id="tableLabel">List of comments</h1>
+  <table>
+    <tr *ngFor="let comment of comments" >
+      <p><strong>{{ comment.User.UserName }}</strong> on {{ comment.CommentCreatedAt }}</p>
+      <p>{{ comment.CommentBody }}</p>
 
-<div class="comment-list">
-  <div *ngFor="let comment of comments" class="comment-item">
-    <p><strong>{{ comment.User.UserName }}</strong> on {{ comment.CommentCreatedAt }}</p>
-    <p>{{ comment.CommentBody }}</p>
+      <div *ngIf="UserId === comment.User.UserId || UserIsAdmin">
+        <button (click)="editComment(comment.CommentId)">Edit Comment</button>
+        <button (click)="deleteComment(comment.CommentId)">Delete Comment</button>
+      </div>
 
-    <button class='btn btn-primary' (click)="getComments()">Get Threads</button>
+      <!-- Display child comments -->
+      <div *ngIf="comment.ChildComments && comment.ChildComments.length > 0">
+        <div class="child-comments">
+          <div *ngFor="let childComment of comment.ChildComments" class="comment-item">
+            <p><strong>{{ childComment.User.UserName }}</strong> on {{ childComment.CommentCreatedAt }}</p>
+            <p>{{ childComment.CommentBody }}</p>
 
-    <div *ngIf="userId === comment.UserId || userIsAdmin">
-      <button (click)="editComment(comment.CommentId)">Edit Comment</button>
-      <button (click)="deleteComment(comment.CommentId)">Delete Comment</button>
-    </div>
-
-    <!-- Display child comments -->
-    <div *ngIf="comment.ChildComments && comment.ChildComments.length > 0">
-      <div class="child-comments">
-        <div *ngFor="let childComment of comment.ChildComments" class="comment-item">
-          <p><strong>{{ childComment.User.UserName }}</strong> on {{ childComment.CommentCreatedAt }}</p>
-          <p>{{ childComment.CommentBody }}</p>
-
-          <div *ngIf="userId === childComment.UserId || userIsAdmin">
-            <button (click)="editComment(childComment.CommentId)">Edit Comment</button>
-            <button (click)="deleteComment(childComment.CommentId)">Delete Comment</button>
-
+            <div *ngIf="UserId === childComment.UserId || UserIsAdmin">
+              <button (click)="editComment(childComment.CommentId)">Edit Comment</button>
+              <button (click)="deleteComment(childComment.CommentId)">Delete Comment</button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </div>
-</div>
+    </tr>
+  </table>

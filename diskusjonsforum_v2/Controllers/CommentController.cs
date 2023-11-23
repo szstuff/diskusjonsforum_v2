@@ -5,12 +5,19 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Thread = diskusjonsforum_v2.Models.Thread;
 
-
 namespace diskusjonsforum_v2.Controllers;
 
-
+[ApiController]
+[Route("api/[controller]")]
 public class CommentController : Controller
 {
+    private static List<Comment> Comments = new List<Comment>();
+        
+    [HttpGet]
+    public List<Comment> GetAll()
+    {
+        return Comments;}
+    
     //Initialise controllers and interfaces for constructor
     private readonly ICommentRepository _commentRepository;
     private readonly IThreadRepository _threadRepository;

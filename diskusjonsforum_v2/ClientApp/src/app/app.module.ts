@@ -8,8 +8,8 @@ import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
 import { ThreadsComponent } from './threads/threads.component';
-import { CommentComponent } from './comments/comment.component';
-//import { UserComponent } from './users/users.component';
+import { CommentsComponent } from './comments/comments.component';
+import { UsersComponent } from './users/users.component';
 
 //Også comments
 @NgModule({
@@ -18,8 +18,8 @@ import { CommentComponent } from './comments/comment.component';
     NavMenuComponent,
     HomeComponent,
     ThreadsComponent,
-    CommentComponent,
-    //UserComponent
+    CommentsComponent,
+    UsersComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
