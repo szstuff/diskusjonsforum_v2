@@ -4,6 +4,7 @@ export interface Comment {
     UserIsAdmin: boolean;
     UserId: string;
   };
+
   CommentCreatedAt: string;
   CommentBody: string;
   CommentId: number;

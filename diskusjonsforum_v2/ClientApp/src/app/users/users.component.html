@@ -1,0 +1,24 @@
+﻿<h1>List of users</h1>
+
+<div class="container">
+  <table class="table table-striped">
+    <tr>
+      <th>UserName</th>
+      <th>ID</th>
+      <th>AdminRole</th>
+    </tr>
+    <tr *ngFor="let user of users">
+      <td>{{ user.UserName }}</td>
+      <td>{{ user.UserId }}</td>
+      <td>
+        <p *ngIf="user.UserIsAdmin; else notAdmin">
+          Admin
+        </p>
+        <ng-template #notAdmin>
+          <p>No</p>
+        </ng-template>
+      </td>
+    </tr>
+  </table>
+</div>
+
