@@ -7,9 +7,9 @@ import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
-import { ThreadComponent } from './threads/threads.component';
+import { ThreadsComponent } from './threads/threads.component';
 import { CommentComponent } from './comments/comment.component';
-import { UserComponent } from './users/users.component';
+//import { UserComponent } from './users/users.component';
 
 //Også comments
 @NgModule({
@@ -17,9 +17,9 @@ import { UserComponent } from './users/users.component';
     AppComponent,
     NavMenuComponent,
     HomeComponent,
-    ThreadComponent,
+    ThreadsComponent,
     CommentComponent,
-    UserComponent
+    //UserComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -27,7 +27,7 @@ import { UserComponent } from './users/users.component';
     FormsModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'threads', component: ThreadComponent},
+      { path: 'threads', component: ThreadsComponent},
     ])
   ],
   providers: [],

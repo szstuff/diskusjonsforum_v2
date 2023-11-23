@@ -1,5 +1,10 @@
-export interface Thread {
-  userId: string;
-  userIsAdmin: boolean;
-  viewTitle: string;
+export interface TThread {
+  User: {
+    UserName: string;
+    UserIsAdmin: boolean;
+  };
+  ThreadComments: string[];
+  ThreadBody: string;
+  ThreadTitle: string;
+  ThreadId: number;
 }

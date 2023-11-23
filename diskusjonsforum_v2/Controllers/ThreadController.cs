@@ -9,9 +9,18 @@ using Thread = diskusjonsforum_v2.Models.Thread;
 
 namespace diskusjonsforum_v2.Controllers;
 
+[ApiController]
+[Route("api/[controller]")]
 
 public class ThreadController : Controller
 {
+    private static List<Thread> Threads = new List<Thread>();
+
+    [HttpGet]
+    public List<Thread> GetAll()
+    {
+        return Threads;}
+    
     //Initialise controllers and interfaces for constructor
     private readonly IThreadRepository _threadRepository;
     private readonly ICategoryRepository _categoryRepository;
@@ -19,8 +28,11 @@ public class ThreadController : Controller
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly ILogger<ThreadController> _logger;
 
-    public ThreadController(IThreadRepository threadDbContext, ICategoryRepository categoryRepository,
-        ICommentRepository commentRepository, UserManager<ApplicationUser> userManager,
+    public ThreadController(
+        IThreadRepository threadDbContext, 
+        ICategoryRepository categoryRepository,
+        ICommentRepository commentRepository, 
+        UserManager<ApplicationUser> userManager,
         ILogger<ThreadController> logger)
     {
         _threadRepository = threadDbContext;

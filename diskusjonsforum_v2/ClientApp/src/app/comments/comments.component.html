@@ -1,2 +1,33 @@
-<h1 id="tableLabel"> List of comments </h1>
+<!-- comments.component.html -->
 
+<h1 id="tableLabel">List of comments</h1>
+
+<div class="comment-list">
+  <div *ngFor="let comment of comments" class="comment-item">
+    <p><strong>{{ comment.User.UserName }}</strong> on {{ comment.CommentCreatedAt }}</p>
+    <p>{{ comment.CommentBody }}</p>
+
+    <button class='btn btn-primary' (click)="getComments()">Get Threads</button>
+
+    <div *ngIf="userId === comment.UserId || userIsAdmin">
+      <button (click)="editComment(comment.CommentId)">Edit Comment</button>
+      <button (click)="deleteComment(comment.CommentId)">Delete Comment</button>
+    </div>
+
+    <!-- Display child comments -->
+    <div *ngIf="comment.ChildComments && comment.ChildComments.length > 0">
+      <div class="child-comments">
+        <div *ngFor="let childComment of comment.ChildComments" class="comment-item">
+          <p><strong>{{ childComment.User.UserName }}</strong> on {{ childComment.CommentCreatedAt }}</p>
+          <p>{{ childComment.CommentBody }}</p>
+
+          <div *ngIf="userId === childComment.UserId || userIsAdmin">
+            <button (click)="editComment(childComment.CommentId)">Edit Comment</button>
+            <button (click)="deleteComment(childComment.CommentId)">Delete Comment</button>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
