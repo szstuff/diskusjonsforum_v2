@@ -1,0 +1,220 @@
+/*Styles for comments heading*/
+.comments-heading {
+    /*Font size and weight*/
+    font-size: 25px;
+    font-weight: 400;
+}
+
+/*Syles for thread information, category and date*/
+.thread-information {
+    /*Font weight and size*/
+    font-weight: 300;
+    font-size: 13px;
+}
+
+/*Make new comment button styling*/
+.comment-button {
+    font-size: 14px;
+    font-weight: 700;
+    color: #feeeef;
+    height: 33px;
+    width: 70%;
+    border: 2px outset #288155;
+    border-radius: 30px;
+    outline: none;
+    background: #288155;
+    cursor: pointer;
+    transition: .3s ease-in-out;
+}
+
+/*Hover function for new comment button*/
+.comment-button:hover {
+    /*Change color when hovering over*/
+    background: rgba(40, 129, 85, 0.8);
+    box-shadow: 1px 5px 7px 1px rgba(0, 0, 0, 0.5);
+}
+
+/* changes the color */
+.btncost{
+
+    background-color: mediumpurple;
+    color: white;
+}
+/* Add a background color on hover */
+.btncost:hover{
+    color: white;
+    background-color: #ffc942 ;
+}
+
+
+/* THREAD TABLE VIEW STYLING BELOW*/
+
+.row {
+    margin-top: 4%;
+}
+
+.todays-discussion {
+    justify-content: start;
+    color: #feeeef;
+    font-size: 1.75rem;
+    font-weight: 700;
+    padding-left: 25px;
+    padding-bottom: 20px;
+}
+
+.title-categories {
+    padding-left: 5px;
+    color: #feeeef;
+    font-size: 1.75rem;
+    font-weight: 700;
+}
+
+.list-group {
+    border-radius: 30px;
+    margin-top: 28px;
+}
+
+
+.list-group-item {
+    text-align: center;
+    background: #feeeef;
+    border: none;
+    height: 46px;
+    width: 200px;
+    color: #feeeef;
+    font-weight: 500;
+}
+
+/* Customize thread title */
+.title-thread {
+    color: #002c45;
+    text-decoration: none;
+    font-weight: 400;
+    font-size: 1.25em;
+    margin-bottom: 10px;
+}
+
+/* Style user ID */
+.user-id {
+    font-weight: 400;
+    color: #002c45;
+}
+
+/* Style thread text */
+.thread-text {
+    color: #002c45;
+    margin-bottom: 10px;
+}
+
+/* Style comment count */
+.comment-count {
+    color: #363636;
+    font-size: 0.9em;
+}
+
+/* Designs border for the threads*/
+.thread-container {
+    overflow: hidden;
+    border: 3px #feeeef;
+    border-radius: 30px;
+    padding-left: 20px;
+    margin-bottom: 20px;
+}
+.custom-container {
+    color: white;
+}
+
+
+.btn-secondary {
+    color: white;
+    background-color: #ffc942;
+    border: transparent;
+}
+
+.btn-secondary:hover {
+    color: white;
+    background-color: #ff9fc5;
+}
+
+.top_btn {
+    position: fixed; /* Fixed/sticky position */
+    bottom: 20px; /* Place the button at the bottom of the page */
+    right: 30px; /* Place the button 30px from the right */
+    z-index: 99; /* Make sure it does not overlap */
+    border: none; /* Remove borders */
+    outline: none; /* Remove outline */
+    background: none; /* Set a background color */
+    color: #002c45; /* Text color */
+    cursor: pointer; /* Add a mouse pointer on hover */
+    transition: .3s ease-in-out;
+    padding: 15px; /* Some padding */
+    border-radius: 30px; /* Rounded corners */
+    font-size: 18px; /* Increase font size */
+    font-weight: 700;
+    align-items: center;
+    width: auto;
+    height: auto;
+}
+
+.top_btn:hover {
+    /*background-color: #555;*/ /* Add a dark-grey background on hover */
+    /*background: rgba(254, 238, 239, 0.5);*/
+    /*box-shadow: 1px 5px 7px 1px rgba(0, 0, 0, 0.2);*/
+}
+
+/*places the category container*/
+.category-container {
+    left: 8%;
+    margin-top: 9.3%;
+}
+
+/* CSS for the "Start a new thread" button */
+.button-new-thread {
+    left: 76%;
+    margin-top: 12%; /* Adjust the margin as needed to position the button */
+}
+
+/*customes button*/
+.start-new-thread {
+    color: #feeeef;
+    font-weight:400;
+}
+
+
+.button-container {
+    display: none; /* Initially hide the button container */
+}
+
+@media (max-width: 991px) {
+    .category-container {
+        display: none;
+    }
+
+    .button-new-thread {
+        display: none;
+    }
+
+    .button-container {
+        display: block; /* Show the button container */
+        text-align: center; /* Center align the button */
+        margin-top: 20px; /* Add spacing as needed */
+    }
+
+    .col-md-6 {
+        width: 100%; /* Set to 100% on smaller screens to make it full-width */
+    }
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+    .col-md-6 {
+        width: 600px; /* Set to 75% on medium-sized screens */
+    }
+
+    .container-fluid {
+        margin-top: 50px;
+    }
+}
+
+.post:hover{
+    color: blue;
+}

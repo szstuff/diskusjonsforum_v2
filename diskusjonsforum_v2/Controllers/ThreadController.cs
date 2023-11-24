@@ -10,7 +10,7 @@ using Thread = diskusjonsforum_v2.Models.Thread;
 
 namespace diskusjonsforum_v2.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/threads")]
     [ApiController]
     public class ThreadController : Controller
     {
@@ -395,6 +395,4 @@ namespace diskusjonsforum_v2.Controllers
             return Json(searchResults);
         }
     }
-
-
 }

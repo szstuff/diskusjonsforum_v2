@@ -11,7 +11,7 @@ namespace diskusjonsforum_v2.Models
         public Category Category { get; set; } 
         public string ThreadBody { get; set; }
         public DateTime ThreadCreatedAt { get; set; }  = DateTime.Now;
-        public DateTime ThreadLastEditedAt { get; set; } = DateTime.Now; //Initialises as DateTime.Now since the last edit was at the time of creation
+        public DateTime ThreadLastEditedAt { get; set; } = DateTime.Now;
 
         [ForeignKey("ApplicationUser")] 
         public string? UserId { get; set; } 
