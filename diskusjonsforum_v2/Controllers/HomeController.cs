@@ -4,6 +4,9 @@ using Thread = diskusjonsforum_v2.Models.Thread;
 
 namespace diskusjonsforum_v2.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
+
     public class HomeController : Controller
     {
         //Initialise controllers and interfaces for constructor
@@ -17,16 +20,15 @@ namespace diskusjonsforum_v2.Controllers
         }
 
         //Loads homepage/Index view with a list of threads
+        [HttpGet]
         public IActionResult Index()
         {
             var threads = GetThreads(); // Call your GetThreads method to fetch the list of threads.
-            // var threadListViewModel = new ThreadListViewModel(threads, "Table")
-            // {
-            //     Threads = threads
-            // };
-            //
-            // return View(threadListViewModel);
-            return null;
+            /*var threadListViewModel = new ThreadListViewModel(threads, "Table")
+            {
+                Threads = threads
+            };*/
+            return Ok(threads);
         }
         
         // Fetch threads from repository
@@ -51,9 +53,9 @@ namespace diskusjonsforum_v2.Controllers
             _logger.LogError("[HomeController] Error: {0}", errorMsg);
             //View error message in view
             ViewBag.ErrorMsg = errorMsg;
-            return View();
+            //return View();
+            return BadRequest();
         }
         
     }
 }
-

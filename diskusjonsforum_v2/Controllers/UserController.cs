@@ -2,9 +2,12 @@
 using diskusjonsforum_v2.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using User = diskusjonsforum_v2.Models.ApplicationUser;
+using Thread = diskusjonsforum_v2.Models.Thread;
 
 namespace diskusjonsforum_v2.Controllers;
-
+[Route("api/[controller]")]
+[ApiController]
 public class UserController : Controller
 {
     //Initialise controllers and interfaces for constructor
@@ -20,7 +23,9 @@ public class UserController : Controller
         _commentRepository = commentRepository;
     }
     
-	public async Task<IActionResult> Table()
+    //Get all users
+    [HttpGet]
+	public async Task<ActionResult<IEnumerable<User>>> Table()
     {
         var errorMsg = "";
         var user = await _userManager.GetUserAsync(HttpContext.User);
@@ -38,8 +43,7 @@ public class UserController : Controller
             // Fetch all users and create view model for user table view
             var users = _userManager.Users.ToList();
             //var userListViewModel = new UserListViewModel(users, "Table");
-            //return View(userListViewModel);
-            return null;
+            return users;
         }
         catch (Exception ex)
         {

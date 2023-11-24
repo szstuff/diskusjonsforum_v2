@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { TThread } from './threads';
+import { Thread } from './threads';
 import { User } from '../users/users';
 
 @Component({
@@ -11,7 +11,7 @@ import { User } from '../users/users';
 
 export class ThreadsComponent implements OnInit {
   viewTitle: string = 'Table';
-  threads: TThread[] = [];
+  threads: Thread[] = [];
   users: User[] = [];
 
   private _listFilter: string = '';
@@ -25,12 +25,12 @@ export class ThreadsComponent implements OnInit {
     this.filteredThreads = this.performFilter(value);
   }
 
-  filteredThreads: TThread[] = this.threads;
+  filteredThreads: Thread[] = this.threads;
 
   constructor(private _http: HttpClient) {}
 
   getThreads(): void {
-    this._http.get<TThread[]>('api/thread').subscribe(data => {
+    this._http.get<Thread[]>('api/thread').subscribe(data => {
       console.log('All', JSON.stringify(data));
       this.threads = data;
       this.filteredThreads = this.threads;
@@ -44,9 +44,9 @@ export class ThreadsComponent implements OnInit {
     });
   }
 
-  performFilter(filterBy: string): TThread[] {
+  performFilter(filterBy: string): Thread[] {
     filterBy = filterBy.toLocaleLowerCase();
-    return this.threads.filter((thread: TThread) =>
+    return this.threads.filter((thread: Thread) =>
       thread.ThreadTitle.toLocaleLowerCase().includes(filterBy)
     );
   }

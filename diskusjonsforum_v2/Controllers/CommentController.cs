@@ -1,23 +1,19 @@
-using Microsoft.AspNetCore.Mvc;
+
 using diskusjonsforum_v2.DAL;
+using Microsoft.AspNetCore.Mvc;
 using diskusjonsforum_v2.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Thread = diskusjonsforum_v2.Models.Thread;
 
-namespace diskusjonsforum_v2.Controllers;
 
-[ApiController]
+namespace diskusjonsforum_v2.Controllers;
 [Route("api/[controller]")]
+[ApiController]
+
+
 public class CommentController : Controller
 {
-    private static List<Comment> Comments = new List<Comment>();
-        
-    [HttpGet]
-    public List<Comment> GetAll()
-    {
-        return Comments;}
-    
     //Initialise controllers and interfaces for constructor
     private readonly ICommentRepository _commentRepository;
     private readonly IThreadRepository _threadRepository;
@@ -38,6 +34,7 @@ public class CommentController : Controller
         return Task.FromResult(comments);
     }
     
+    /*
     //Returns Comment/Create view
     [HttpGet("create/{parentCommentId}/{threadId}")] //URL when user replies to a comment or thread 
     [Authorize]
@@ -54,16 +51,16 @@ public class CommentController : Controller
                 thread.User = await _userManager.FindByIdAsync(thread.UserId); //User needs to be set to load Thread and Comment in Comment/Create view 
                 // Retrieve query parameters
                 // Create a CommentViewModel and populate it with data
-                // var viewModel = new CommentCreateViewModel()
-                // {
-                //     ThreadId = threadId,
-                //     ParentCommentId = parentCommentId,
-                //     ParentComment = parentComment,
-                //     Thread = thread
-                // };
+                var viewModel = new CommentCreateViewModel()
+                {
+                    ThreadId = threadId,
+                    ParentCommentId = parentCommentId,
+                    ParentComment = parentComment,
+                    Thread = thread
+                };
 
                 // Pass the CommentViewModel to the view
-                return null;
+                return View(viewModel);
             }
             else
             {
@@ -79,7 +76,7 @@ public class CommentController : Controller
             return RedirectToAction("Error", "Home", new { errormsg });
         }
     }
-
+*/
     //Saves comment submitted through the Create view 
     [HttpPost("save")]
     [Authorize]
@@ -102,15 +99,17 @@ public class CommentController : Controller
                     //Input validation: adds modelerror if submitted CommentBody is empty 
                     ModelState.AddModelError("CommentBody", "Comment can't be empty.");
                     //Recreates the Create-viewmodel and returns a new Comment/Create view
-                    // var viewModel = new CommentCreateViewModel()
-                    // {
-                    //     ThreadId = comment.ThreadId,
-                    //     ParentCommentId = comment.ParentCommentId,
-                    //     ParentComment = _commentRepository.GetById(comment.ParentCommentId),
-                    //     Thread = _threadRepository.GetThreadById(comment.ThreadId)
-                    // };
-                    // return View("Create", viewModel);
-                    return null;
+                    /*
+                    var viewModel = new CommentCreateViewModel()
+                    
+                    {
+                        ThreadId = comment.ThreadId,
+                        ParentCommentId = comment.ParentCommentId,
+                        ParentComment = _commentRepository.GetById(comment.ParentCommentId),
+                        Thread = _threadRepository.GetThreadById(comment.ThreadId)
+                    };
+                    */
+                    return BadRequest();
                 }
             }
 
@@ -139,7 +138,7 @@ public class CommentController : Controller
         errorMsg = "An error occurred while creating the comment.";
         return RedirectToAction("Error", "Home", new { errorMsg = errorMsg });
     }
-
+/*
     [HttpGet("edit/{{commentId}}/{{threadId}}")]
     [Authorize]
     public IActionResult Edit(int commentId, int threadId)
@@ -154,7 +153,7 @@ public class CommentController : Controller
                 Thread thread = _threadRepository.GetThreadById(threadId);
                 // Retrieve query parameters
                 // Create a CommentViewModel and populate it with data
-                /*var viewModel = new CommentCreateViewModel()
+                var viewModel = new CommentCreateViewModel()
                 {
                     ThreadId = threadId,
                     ParentCommentId = commentId,
@@ -164,9 +163,7 @@ public class CommentController : Controller
                 };
 
                 // Pass the CommentViewModel to the view
-                 return View(viewModel);*/
-
-                return null; 
+                 return View(viewModel);
             }
             else
             {
@@ -180,7 +177,9 @@ public class CommentController : Controller
             return RedirectToAction("Error", "Home", new { errormsg });
         }
     }
-    [HttpPost("comment/saveEdit")]
+    */
+
+    [HttpPut("{id}")]
     [Authorize]
     public async Task<IActionResult> SaveEdit(Comment comment)
     {
@@ -188,35 +187,9 @@ public class CommentController : Controller
         var user = await _userManager.GetUserAsync(HttpContext.User);
         if (user != null)
         {
-            
-            var uneditedComment = _commentRepository.GetById(comment.CommentId);
-            _commentRepository.DetachEntity(uneditedComment); // Detach the comment since there are two instances of the same comment.
-            
-            // Add custom validation for the thread content
-            if (string.IsNullOrWhiteSpace(comment.CommentBody) || string.IsNullOrWhiteSpace(comment.CommentBody))
-            {
-                // Content is empty, add a model error
-                ModelState.AddModelError("CommentBody", "Comment content is required.");
-                /*var viewModel = new CommentCreateViewModel()
-                {
-                    ThreadId = uneditedComment.ThreadId,
-                    ParentCommentId = uneditedComment.ParentCommentId,
-                    ParentComment = uneditedComment.ParentComment,
-                    CommentToEdit = _commentRepository.GetById(comment.CommentId),
-                    Thread = uneditedComment.Thread
-                };
-                // Gets thread categories and passes them to View. Used to generate dropdown list of available thread categories 
-                return View("Edit", viewModel);*/
-                return null;
-            }
-            
-            //Reconstruct the comment before saving 
-            comment.User = uneditedComment.User;
-            comment.UserId = uneditedComment.User.Id;
+            comment.User = user;
+            comment.UserId = user.Id;
             comment.CommentLastEditedAt = DateTime.Now;
-            comment.ThreadId = uneditedComment.ThreadId;
-            comment.ParentCommentId = uneditedComment.ParentCommentId;
-            comment.CommentCreatedAt = uneditedComment.CommentCreatedAt;
             ModelState.Remove("comment.User"); //Workaround for invalid modelstate. The model isnt really invalid, but it was evaluated BEFORE the controller added User and UserId. Therefore the validty of the "User" key can be removed 
             //Checks if user is owner or admin before editing
             var userRoles = await _userManager.GetRolesAsync(user);
@@ -234,7 +207,7 @@ public class CommentController : Controller
         }
         
         _logger.LogWarning("[CommentController] Comment edit failed {@comment}", comment);
-        errorMsg = "Could not save your edits";
+        errorMsg = "Comment edit failed";
         return RedirectToAction("Error", "Home", new {errorMsg});
     }
 

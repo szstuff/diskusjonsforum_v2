@@ -11,7 +11,6 @@ import { ThreadsComponent } from './threads/threads.component';
 import { CommentsComponent } from './comments/comments.component';
 import { UsersComponent } from './users/users.component';
 
-//Også comments
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,6 +27,7 @@ import { UsersComponent } from './users/users.component';
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'threads', component: ThreadsComponent},
+      { path: 'users', component: UsersComponent}
     ])
   ],
   providers: [],

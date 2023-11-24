@@ -11,7 +11,7 @@ export interface Comment {
   ChildComments?: Comment[];
 }
 
-export interface TThread {
+export interface Thread {
   User: User;
   ThreadComments: Comment[];
   ThreadBody: string;
