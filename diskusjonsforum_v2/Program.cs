@@ -15,7 +15,9 @@ builder.Services.AddDbContext<ThreadDbContext>(options => {
     options.UseSqlite(
         builder.Configuration["ConnectionStrings:ThreadDbContextConnection"]);
 });
+
 builder.Services.AddScoped<IThreadRepository, ThreadRepository>();
+
 builder.Services.AddScoped<ICommentRepository, CommentRepository>();
 
 
@@ -54,6 +56,7 @@ builder.Logging.AddSerilog(logger);
     .AddDefaultTokenProviders()
     .AddDefaultUI();
 */
+
 builder.Services.AddDistributedMemoryCache();
 
 builder.Services.AddSession(options =>
@@ -63,11 +66,10 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true;
 });
 
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment())
 {
 }
 

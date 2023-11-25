@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators, FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { ThreadService } from './threads.service';
 
 @Component({
   selector: 'app-threads-threadform',
@@ -12,7 +13,12 @@ import { HttpClient } from '@angular/common/http';
 export class ThreadformComponent {
   threadForm: FormGroup;
 
-  constructor(private _formBuilder: FormBuilder, private _router: Router, private _http: HttpClient) {
+  constructor(
+    private _formBuilder: FormBuilder,
+    private _router: Router,
+    private _threadService: ThreadService,
+    private _http: HttpClient)
+  {
     this.threadForm = _formBuilder.group({
       title: ['', Validators.required],
       body: ['', Validators.required]
@@ -23,11 +29,12 @@ export class ThreadformComponent {
   onSubmit() {
     console.log("ThreadCreate from submitted:");
     console.log(this.threadForm);
-    console.log('The item ' + this.threadForm.value.title + ' is created.');
+    console.log('The thread ' + this.threadForm.value.title + ' is created.');
     console.log(this.threadForm.touched);
     const newThread = this.threadForm.value;
     const createUrl = "api/thread/create";
-    this._http.post<any>(createUrl, newThread).subscribe(response => {
+    this._threadService.createThread(newThread)
+      .subscribe(response => {
       if (response.success) {
         console.log(response.message);
         this._router.navigate(['/threads']);

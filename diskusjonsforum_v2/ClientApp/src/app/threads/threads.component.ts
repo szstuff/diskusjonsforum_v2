@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Thread } from './threads';
-import {ThreadService} from "./threads.service";
-import {Router} from "@angular/router";
+import { ThreadService } from "./threads.service";
+import { Router } from "@angular/router";
 //import { User } from '../users/users';
 
 @Component({
   selector: 'app-thread-component',
   templateUrl: './threads.component.html',
-  // styleUrls: ['./threads.component.css']
+  styleUrls: ['./threads.component.css']
 })
 
 export class ThreadsComponent implements OnInit {
@@ -25,12 +25,16 @@ export class ThreadsComponent implements OnInit {
   }
 
   filteredThreads: Thread[] = this.threads;
-  constructor(private threadService: ThreadService, private _http: HttpClient, private _router: Router) {}
+  constructor(
+    private _threadService: ThreadService,
+    private _http: HttpClient,
+    private _router: Router) { }
 
   getThreads(): void {
-    this.threadService.getThreads().subscribe(
-      (threads) => {
-        this.threads = threads;
+    this._threadService.getThreads()
+      .subscribe(data => {
+        console.log('All', JSON.stringify(data));
+        this.threads = data;
         this.filteredThreads = this.threads;
       },
       (error) => console.error('Error getting threads', error)
