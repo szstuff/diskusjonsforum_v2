@@ -12,10 +12,7 @@ import {Router} from "@angular/router";
 })
 
 export class ThreadsComponent implements OnInit {
-  viewTitle: string = 'Table';
   threads: Thread[] = [];
-  //users: User[] = [];
-
   private _listFilter: string = '';
   get listFilter(): string {
     return this._listFilter;
@@ -28,27 +25,18 @@ export class ThreadsComponent implements OnInit {
   }
 
   filteredThreads: Thread[] = this.threads;
-
-  //constructor(private _http: HttpClient) {}
   constructor(private threadService: ThreadService, private _http: HttpClient, private _router: Router) {}
 
   getThreads(): void {
-    this.threadService.getThreads().subscribe((threads) => (this.threads = threads), (error) => console.error('Error getting threads', error))
-    /*
-    this._http.get<Thread[]>('api/thread').subscribe(data => {
-      console.log('All', JSON.stringify(data));
-      this.threads = data;
-      this.filteredThreads = this.threads;
-    });*/
+    this.threadService.getThreads().subscribe(
+      (threads) => {
+        this.threads = threads;
+        this.filteredThreads = this.threads;
+      },
+      (error) => console.error('Error getting threads', error)
+    );
   }
 
-/*  getUsers(): void {
-    this._http.get<User[]>('api/users').subscribe(data => {
-      console.log('All users', JSON.stringify(data));
-      this.users = data;
-    });
-  }
-*/
   performFilter(filterBy: string): Thread[] {
     filterBy = filterBy.toLocaleLowerCase();
     return this.threads.filter((thread: Thread) =>
@@ -63,7 +51,6 @@ export class ThreadsComponent implements OnInit {
   ngOnInit(): void {
     console.log('ThreadsComponent created');
     this.getThreads();
-    //this.getUsers();
   }
 
   // Placeholder for adding a comment

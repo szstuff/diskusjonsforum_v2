@@ -14,4 +14,8 @@ export class ThreadService {
   getThreads(): Observable<Thread[]> {
     return this.http.get<Thread[]>(`${this.apiUrl}/getall`);
   }
+  getThread(threadId: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/${threadId}`);
+  }
+
 }
