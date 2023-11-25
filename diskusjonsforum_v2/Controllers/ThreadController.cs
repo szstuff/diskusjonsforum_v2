@@ -19,6 +19,7 @@ namespace diskusjonsforum_v2.Controllers
         private readonly IThreadRepository _threadRepository;
         private readonly ICommentRepository _commentRepository;
         private readonly ILogger<ThreadController> _logger;
+        private static List<Thread> Threads = new List<Thread>();
 
         public ThreadController(IThreadRepository threadDbContext,
             ICommentRepository commentRepository,
@@ -170,26 +171,28 @@ namespace diskusjonsforum_v2.Controllers
         */
 
         [HttpPost("create")]
-        public IActionResult Create([FromBody]Thread thread)
+        public IActionResult Create([FromBody] Thread newThread)
         {
             if (newThread == null)
             {
                 return BadRequest("Inavlid Thread Data.");
             }
             newThread.ThreadId = GetNextThreadId();
-            Thread.Add(newThread);
+            Threads.Add(newThread);
 
-            var response = new { success = true, message = "Thread" + newThread.Name + " created successfully" };
-            return Ok (response);
+            var response = new { success = true, message = "Thread" + newThread.ThreadTitle + " created successfully" };
+            return Ok(response);
 
-            private static int GetNextThreadId()
+        }
+
+        private static int GetNextThreadId()
+        {
+            if (Threads.Count == 0)
             {
-                if (Thread.Count == 0)
-                {
-                    return 1;
-                }
-                return Thread.Max(thread => thread.ThreadId);
+                return 1;
             }
+            return Threads.Max(thread => thread.ThreadId) + 1;
+        }
             
             /*
             if (HttpContext.User.Identity!.IsAuthenticated) // Check if user is logged in
@@ -254,7 +257,7 @@ namespace diskusjonsforum_v2.Controllers
             //errorMsg = "[ThreadController] An error occurred in the Edit method.";
             //_logger.LogError("[ThreadController] An error occurred in the Edit method.");
             //return RedirectToAction("Error", "Home", new { errorMsg });
-        }
+        
 
         /*
         [HttpGet("edit/{threadId}")]
