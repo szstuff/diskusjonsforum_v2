@@ -9,8 +9,8 @@ using Thread = diskusjonsforum_v2.Models.Thread;
 
 namespace diskusjonsforum_v2.Controllers
 {
-    [Route("api/threads")]
     [ApiController]
+    [Route("api/[Controller]")]
     public class ThreadController : Controller
     {
         //Initialise controllers and interfaces for constructor
