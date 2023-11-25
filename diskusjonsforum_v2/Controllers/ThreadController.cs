@@ -1,9 +1,7 @@
 ﻿using diskusjonsforum_v2.DAL;
 using diskusjonsforum_v2.Models;
-using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Drawing.Text;
 // Add this namespace
 using Thread = diskusjonsforum_v2.Models.Thread;
 //The comment below disables certain irrelevant warnings in JetBrains IDE
@@ -11,8 +9,8 @@ using Thread = diskusjonsforum_v2.Models.Thread;
 
 namespace diskusjonsforum_v2.Controllers
 {
+    [Route("api/threads")]
     [ApiController]
-    [Route("api/[Controller]")]
     public class ThreadController : Controller
     {
         //Initialise controllers and interfaces for constructor
