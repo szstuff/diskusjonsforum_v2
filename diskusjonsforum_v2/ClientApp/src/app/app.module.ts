@@ -9,7 +9,6 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
 import { ThreadsComponent } from './threads/threads.component';
 import { CommentsComponent } from './comments/comments.component';
-// import { UsersComponent } from './users/users.component';
 import {ThreadformComponent} from "./threads/threadform.component";
 
 @NgModule({
@@ -19,7 +18,6 @@ import {ThreadformComponent} from "./threads/threadform.component";
     HomeComponent,
     ThreadsComponent,
     CommentsComponent,
-    // UsersComponent,
     ThreadformComponent
   ],
   imports: [
@@ -30,8 +28,8 @@ import {ThreadformComponent} from "./threads/threadform.component";
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'threads', component: ThreadsComponent},
-     // { path: 'users', component: UsersComponent},
-      {path: 'threadForm', component: ThreadformComponent}
+      {path: 'threadForm', component: ThreadformComponent},
+      {path: '**', redirectTo: '', pathMatch: 'full'}
     ])
   ],
   providers: [],

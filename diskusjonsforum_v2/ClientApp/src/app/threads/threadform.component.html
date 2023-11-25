@@ -10,5 +10,7 @@
     <input type="text" id="body" formControlName="body" class="form-control" />
   </div>
   <button type="submit" class="btn btn-primary" [disabled]="threadForm.invalid">Create Thread</button>
+  <button class="btn btn-secondary" (click)="backToThreads()">Cancel</button>
+
 </form>
 

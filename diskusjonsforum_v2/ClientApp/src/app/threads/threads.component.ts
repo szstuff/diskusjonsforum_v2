@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Thread } from './threads';
 import {ThreadService} from "./threads.service";
+import {Router} from "@angular/router";
 //import { User } from '../users/users';
 
 @Component({
@@ -29,7 +30,7 @@ export class ThreadsComponent implements OnInit {
   filteredThreads: Thread[] = this.threads;
 
   //constructor(private _http: HttpClient) {}
-  constructor(private threadService: ThreadService) {}
+  constructor(private threadService: ThreadService, private _http: HttpClient, private _router: Router) {}
 
   getThreads(): void {
     this.threadService.getThreads().subscribe((threads) => (this.threads = threads), (error) => console.error('Error getting threads', error))
@@ -53,6 +54,10 @@ export class ThreadsComponent implements OnInit {
     return this.threads.filter((thread: Thread) =>
       thread.threadTitle.toLocaleLowerCase().includes(filterBy)
     );
+  }
+
+  navigateToThreadform(){
+    this._router.navigate(['/threadForm']);
   }
 
   ngOnInit(): void {

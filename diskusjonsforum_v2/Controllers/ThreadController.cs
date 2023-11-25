@@ -12,7 +12,7 @@ using Thread = diskusjonsforum_v2.Models.Thread;
 namespace diskusjonsforum_v2.Controllers
 {
     [ApiController]
-    [Route("api/threads")]
+    [Route("api/[Controller]")]
     public class ThreadController : Controller
     {
         //Initialise controllers and interfaces for constructor

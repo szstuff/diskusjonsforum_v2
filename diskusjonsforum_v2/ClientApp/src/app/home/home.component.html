@@ -1,39 +1,28 @@
 <h3 class="recent-posts-title">Recent posts</h3>
-<div class="container">
-  <input name="PostText" class="form-control" placeholder="Create Post" type="text" (click)="redirectToCreatePage()" />
-</div>
 
 <div class="container">
   <div class="row">
     <div *ngFor="let thread of threads | slice:0:6" class="col-md-6">
-      <a [routerLink]="['/Thread/Thread', thread.ThreadId]">
+      <a [routerLink]="['/Thread/Thread', thread.threadId]">
         <div class="post">
           <div>
             <p class="thread-information">
-              <b>{{ thread.user }}</b> posted in
-              <b>{{ thread.Category.CategoryName }}</b> on
-              <b>{{ thread.ThreadCreatedAt | date: 'yyyy-MM-dd HH:mm' }}</b>
+              <b>{{ thread.createdBy }}</b> posted in
+              <b>{{ thread.threadCreatedAt | date: 'yyyy-MM-dd HH:mm' }}</b>
             </p>
           </div>
           <hr />
-          <div><p class="title-thread"><b>{{ thread.ThreadTitle }}</b></p></div>
+          <div><p class="title-thread"><b>{{ thread.threadTitle }}</b></p></div>
           <div>
             <p class="thread-text">
-              {{ thread.ThreadBody | slice: 0:75 }}
-              <span *ngIf="thread.ThreadBody.length > 75">(…)</span>
+              {{ thread.threadBody | slice: 0:75 }}
+              <span *ngIf="thread.threadBody.length > 75">(…)</span>
             </p>
           </div>
-          <div><p class="comment-count">{{ thread.ThreadComments?.length }} replies</p></div>
+          <div><p class="comment-count">{{ thread.threadComments?.length }} replies</p></div>
         </div>
       </a>
       <p></p>
     </div>
   </div>
 </div>
-
-<script>
-  // Redirect the user to the "create" page when the input is clicked
-  function redirectToCreatePage() {
-    window.location.href = "/Thread/Create";
-  }
-</script>
