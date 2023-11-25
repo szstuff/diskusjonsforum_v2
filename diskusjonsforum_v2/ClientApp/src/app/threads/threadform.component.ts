@@ -45,6 +45,25 @@ export class ThreadformComponent {
     });
   }
 
+  //onSubmit() {
+  //  console.log("ThreadCreate from submitted:");
+  //  console.log(this.threadForm);
+  //  console.log('The thread ' + this.threadForm.value.title + ' is created.');
+  //  console.log(this.threadForm.touched);
+  //  const newThread = this.threadForm.value;
+  //  const createUrl = "api/thread/create";
+  //  this._http.post<any>(createUrl, newThread)
+  //    .subscribe(response => {
+  //      if (response.success) {
+  //        console.log(response.message);
+  //        this._router.navigate(['/threads']);
+  //      }
+  //      else {
+  //        console.log('Thread creation failed');
+  //      }
+  //    });
+  //}
+
   backToThreads() {
     this._router.navigate(['/threads']);
   }
