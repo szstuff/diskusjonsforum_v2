@@ -17,13 +17,11 @@ public class CommentController : Controller
     //Initialise controllers and interfaces for constructor
     private readonly ICommentRepository _commentRepository;
     private readonly IThreadRepository _threadRepository;
-    private readonly UserManager<ApplicationUser> _userManager;
     private readonly ILogger<CommentController> _logger;
-    public CommentController(ICommentRepository commentRepository, IThreadRepository threadRepository, UserManager<ApplicationUser> userManager, ILogger<CommentController> logger)
+    public CommentController(ICommentRepository commentRepository, IThreadRepository threadRepository, ILogger<CommentController> logger)
     {
         _commentRepository = commentRepository;
         _threadRepository = threadRepository;
-        _userManager = userManager;
         _logger = logger;
     }
 
@@ -82,9 +80,11 @@ public class CommentController : Controller
     [Authorize]
     public async Task<IActionResult> Save(Comment comment)
     {
+        /*
         var errorMsg = "";
         try
         {
+            
             var user = await _userManager.GetUserAsync(HttpContext.User); //Gets current user 
             if (user != null)
             {
@@ -108,7 +108,7 @@ public class CommentController : Controller
                         ParentComment = _commentRepository.GetById(comment.ParentCommentId),
                         Thread = _threadRepository.GetThreadById(comment.ThreadId)
                     };
-                    */
+                    
                     return BadRequest();
                 }
             }
@@ -137,6 +137,8 @@ public class CommentController : Controller
         // If no other return occurred, return a generic error page or redirect
         errorMsg = "An error occurred while creating the comment.";
         return RedirectToAction("Error", "Home", new { errorMsg = errorMsg });
+        */
+        return null;
     }
 /*
     [HttpGet("edit/{{commentId}}/{{threadId}}")]
@@ -183,6 +185,7 @@ public class CommentController : Controller
     [Authorize]
     public async Task<IActionResult> SaveEdit(Comment comment)
     {
+        /*
         var errorMsg = "";
         var user = await _userManager.GetUserAsync(HttpContext.User);
         if (user != null)
@@ -209,12 +212,14 @@ public class CommentController : Controller
         _logger.LogWarning("[CommentController] Comment edit failed {@comment}", comment);
         errorMsg = "Comment edit failed";
         return RedirectToAction("Error", "Home", new {errorMsg});
+        */
+        return null;
     }
 
     public async Task<IActionResult> DeleteComment(int commentId)
     {
         Comment comment = _commentRepository.GetById(commentId);
-
+        /*
         try
         {
             // Checks if the user is either the owner of the comment or an admin before deleting
@@ -250,6 +255,8 @@ public class CommentController : Controller
             _logger.LogError(ex, "[CommentController] An error occurred in the DeleteComment action.");
             return RedirectToAction("Error", "Home", new { errorMsg });
         }
+        */
+        return null;
     }
 
     //recursively finds all replies to the comment 

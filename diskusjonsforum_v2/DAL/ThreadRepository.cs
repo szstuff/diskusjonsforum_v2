@@ -19,7 +19,6 @@ public class ThreadRepository : IThreadRepository
     {
         return _threadDbContext.Threads
             .Include(t => t.ThreadComments)
-            .Include(t => t.User).Include(t=>t.Category)
             .ToList();
     }
 
@@ -27,12 +26,8 @@ public class ThreadRepository : IThreadRepository
     {
         var thread = _threadDbContext.Threads
             .Include(t => t.ThreadComments)
-            .ThenInclude(c => c.User)
             .FirstOrDefault(t => t.ThreadId == threadId);
-            //Access the entry for the thread to load Users into memory. Prevents issue where Users sometimes aren't loaded despite being included
-            _threadDbContext.Entry(thread)
-            .Reference(t => t!.User)
-            .Load();
+        _threadDbContext.Entry(thread);
             return thread;
     }
 

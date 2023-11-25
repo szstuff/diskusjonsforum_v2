@@ -20,19 +20,18 @@ public class CommentRepository : ICommentRepository
 
     public IEnumerable<Comment> GetAll()
     {
-        return _threadDbContext.Comments.Include(c => c.User).ToList();
+        return _threadDbContext.Comments.ToList();
     }
 
     public Comment GetById(int? commentId)
     {
         return _threadDbContext.Comments
-            .Include(c => c.User)
             .FirstOrDefault(c => c.CommentId == commentId)!;
     }
 
     public IQueryable<Comment> GetThreadComments(Thread thread)
     {
-        return _threadDbContext.Comments.Where(comment => comment.ThreadId == thread.ThreadId).Include(t => t.User).Include(t=>t.ParentComment);
+        return _threadDbContext.Comments.Where(comment => comment.ThreadId == thread.ThreadId).Include(t=>t.ParentComment);
     }
 
 

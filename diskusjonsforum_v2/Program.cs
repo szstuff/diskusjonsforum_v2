@@ -1,20 +1,14 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-
+﻿using diskusjonsforum_v2.DAL;
 using diskusjonsforum_v2.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using diskusjonsforum_v2.DAL;
-using Microsoft.EntityFrameworkCore.Sqlite.Diagnostics.Internal;
+using Microsoft.Extensions.Configuration;
 using Serilog;
 using Serilog.Events;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-//builder.Services.AddDbContext<diskusjonsforum_v2.DAL.ThreadDbContext>(options =>
-//    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
-
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<ThreadDbContext>(options => {
@@ -23,7 +17,6 @@ builder.Services.AddDbContext<ThreadDbContext>(options => {
 });
 builder.Services.AddScoped<IThreadRepository, ThreadRepository>();
 builder.Services.AddScoped<ICommentRepository, CommentRepository>();
-builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 
 
 var loggerConfiguration = new LoggerConfiguration()
@@ -38,7 +31,8 @@ var logger = loggerConfiguration.CreateLogger();
 builder.Logging.AddSerilog(logger);
 
 
-builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+/*
+ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
     {
         // Password settings
         options.Password.RequireDigit = true;
@@ -59,9 +53,7 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
     .AddEntityFrameworkStores<ThreadDbContext>()
     .AddDefaultTokenProviders()
     .AddDefaultUI();
-
-builder.Services.AddRazorPages(); //order of adding services does not matter
-
+*/
 builder.Services.AddDistributedMemoryCache();
 
 builder.Services.AddSession(options =>
@@ -80,18 +72,14 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseStaticFiles();
+
 app.UseRouting();
-
-app.UseAuthentication();
-app.UseAuthorization();
-
-app.UseSession();
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller}/{action=Index}/{id?}");
 
-app.MapFallbackToFile("index.html");
+app.MapFallbackToFile("index.html"); ;
 
 app.Run();
 

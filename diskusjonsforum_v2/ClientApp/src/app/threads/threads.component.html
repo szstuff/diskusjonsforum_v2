@@ -15,29 +15,31 @@
   </div>
 </div>
 
-<h2>Thread Details</h2>
-<table class="table table-striped" aria-labelledby="tabelLabel">
-  <thead>
-  <tr>
-    <th>Thread ID</th>
-    <th>Thread Title</th>
-    <th>Thread Body</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr *ngFor="let thread of filteredThreads">
-    <td>{{ thread.ThreadId }}</td>
-    <td>{{ thread.ThreadTitle }}</td>
-    <td>{{ thread.ThreadBody }}</td>
-  </tr>
-  </tbody>
-</table>
+<div *ngFor="let thread of threads" class="col-md-6">
+  <a [routerLink]="['/Thread/Thread', thread.threadId]">
+    <div class="post">
+      <div>
+        <p class="thread-information">
+          <b>{{ thread.createdBy }}</b>
+          <b>{{ thread.threadCreatedAt | date: 'yyyy-MM-dd HH:mm' }}</b>
+        </p>
+      </div>
+    </div>
+  </a>
+</div>
+
+
 
 <h3>Comments</h3>
 <p> not implemented </p>
-<!--
+
+<!---
 <div *ngFor="let thread of threads">
   <ul>
+    <li class="thread">
+      <p> Posted by: {{thread.createdBy}}</p>
+    </li>
+
     <li *ngFor="let comment of thread.comments">
       <div class="comment">
         <p>Posted by: {{ comment?.User?.UserName }} on {{ comment?.CommentCreatedAt }}</p>
@@ -51,7 +53,8 @@
     </li>
   </ul>
 </div>
--->
+    -->
+
 <ul class="navbar-nav flex-grow">
   <li
     class="nav-thread"
