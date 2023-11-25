@@ -1,14 +1,14 @@
-// home.component.ts
-
 import { Component, OnInit } from '@angular/core';
 import { ThreadService } from '../threads/threads.service';
+import { Thread } from '../threads/threads'; // Adjust the path accordingly
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
 })
+
 export class HomeComponent implements OnInit {
-  threads: any[] = [];
+  threads: Thread[] = [];
 
   constructor(private threadService: ThreadService) {}
 
@@ -18,7 +18,7 @@ export class HomeComponent implements OnInit {
 
   loadThreads() {
     this.threadService.getThreads().subscribe(
-      (threads) => {
+      (threads: Thread[]) => {
         this.threads = threads;
       },
       (error) => {
@@ -26,6 +26,7 @@ export class HomeComponent implements OnInit {
       }
     );
   }
+
   redirectToCreatePage() {
     window.location.href = '/Thread/Create';
   }
