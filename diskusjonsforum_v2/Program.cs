@@ -10,8 +10,6 @@ using Serilog;
 using Serilog.Events;
 
 var builder = WebApplication.CreateBuilder(args);
-var connectionString = builder.Configuration.GetConnectionString("diskusjonsforumIdentityDbContextConnection") ?? throw new 
-    InvalidOperationException("Connection string 'diskusjonsforumIdentityDbContextConnection' not found.");
 
 // Add services to the container.
 //builder.Services.AddDbContext<diskusjonsforum_v2.DAL.ThreadDbContext>(options =>
