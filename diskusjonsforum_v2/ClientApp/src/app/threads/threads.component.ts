@@ -34,7 +34,12 @@ export class ThreadsComponent implements OnInit {
         this.threads = threads;
         this.filteredThreads = this.threads;
       },
-      (error) => console.error('Error getting threads', error)
+      (error) => {
+        console.error('Error getting threads', error);
+        // Handle the error, e.g., display an error message to the user
+        // For now, let's log a generic error message to the console
+        console.error('An error occurred while fetching threads. Please try again later.');
+      }
     );
   }
 
