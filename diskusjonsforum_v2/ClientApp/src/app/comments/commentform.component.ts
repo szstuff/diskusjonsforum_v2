@@ -5,7 +5,8 @@ import { CommentsService} from "./comments.service";
 import {HttpClient} from "@angular/common/http";
 
 @Component({
-  selector: "app-comments-commentform", templateUrl: "comments.component.html"
+  selector: "app-comments-commentform",
+  templateUrl: "./comments.component.html"
 })
 
 export class CommentformComponent{
