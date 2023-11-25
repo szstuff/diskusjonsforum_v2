@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Thread = diskusjonsforum_v2.Models.Thread;
 
 
+
 namespace diskusjonsforum_v2.Controllers;
 [Route("api/[controller]")]
 [ApiController]
@@ -18,6 +19,7 @@ public class CommentController : Controller
     private readonly ICommentRepository _commentRepository;
     private readonly IThreadRepository _threadRepository;
     private readonly ILogger<CommentController> _logger;
+    private static List<Comment> Comments = new List<Comment>();
     public CommentController(ICommentRepository commentRepository, IThreadRepository threadRepository, ILogger<CommentController> logger)
     {
         _commentRepository = commentRepository;
@@ -30,6 +32,32 @@ public class CommentController : Controller
     {
         var comments = new List<Comment>();
         return Task.FromResult(comments);
+    }
+    
+    //create a new comment
+    [HttpPost("create")]
+    public IActionResult Create([FromBody] Comment newComment)
+    {
+        if (newComment == null)
+        {
+            return BadRequest("Invalid item data.");
+        }
+
+        newComment.CommentId = GetNextCommentId();
+        Comments.Add(newComment);
+
+        var response = new { success = true, message = "Thread" + newComment.CommentId + " created successfully" };
+        return Ok(response);
+
+    }
+
+    private static int GetNextCommentId()
+    {
+        if (Comments.Count == 0)
+        {
+            return 1;
+        }
+        return Comments.Max(item => item.CommentId) + 1;
     }
     
     /*
