@@ -1,7 +1,9 @@
 ﻿using diskusjonsforum_v2.DAL;
 using diskusjonsforum_v2.Models;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Drawing.Text;
 // Add this namespace
 using Thread = diskusjonsforum_v2.Models.Thread;
 //The comment below disables certain irrelevant warnings in JetBrains IDE
@@ -167,10 +169,27 @@ namespace diskusjonsforum_v2.Controllers
         }
         */
 
-        [HttpPost]
-        public async Task<IActionResult> Create(Thread thread)
+        [HttpPost("create")]
+        public IActionResult Create([FromBody]Thread thread)
         {
-            var errorMsg = "";
+            if (newThread == null)
+            {
+                return BadRequest("Inavlid Thread Data.");
+            }
+            newThread.ThreadId = GetNextThreadId();
+            Thread.Add(newThread);
+
+            var response = new { success = true, message = "Thread" + newThread.Name + " created successfully" };
+            return Ok (response);
+
+            private static int GetNextThreadId()
+            {
+                if (Thread.Count == 0)
+                {
+                    return 1;
+                }
+                return Thread.Max(thread => thread.ThreadId);
+            }
             
             /*
             if (HttpContext.User.Identity!.IsAuthenticated) // Check if user is logged in
@@ -232,9 +251,9 @@ namespace diskusjonsforum_v2.Controllers
                 return BadRequest();
             }
         */
-            errorMsg = "[ThreadController] An error occurred in the Edit method.";
-            _logger.LogError("[ThreadController] An error occurred in the Edit method.");
-            return RedirectToAction("Error", "Home", new { errorMsg });
+            //errorMsg = "[ThreadController] An error occurred in the Edit method.";
+            //_logger.LogError("[ThreadController] An error occurred in the Edit method.");
+            //return RedirectToAction("Error", "Home", new { errorMsg });
         }
 
         /*
