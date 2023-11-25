@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators, FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-threads-threadform',
@@ -10,7 +11,7 @@ import { FormControl, FormGroup, Validators, FormBuilder, ReactiveFormsModule } 
 export class ThreadformComponent {
   threadForm: FormGroup;
 
-  constructor(private _formBuilder: FormBuilder) {
+  constructor(private _formBuilder: FormBuilder, private _router: Router) {
     this.threadForm = _formBuilder.group({
       title: ['', Validators.required],
       body: ['', Validators.required]
@@ -23,5 +24,8 @@ export class ThreadformComponent {
     console.log(this.threadForm);
     console.log('The item ' + this.threadForm.value.title + ' is created.');
     console.log(this.threadForm.touched);
+  }
+  backToThreads(){
+    this._router.navigate(['/threads']);
   }
 }
