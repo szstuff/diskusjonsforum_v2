@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Thread } from './threads';
 import { ThreadService } from "./threads.service";
-import { Router } from "@angular/router";
-//import { User } from '../users/users';
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-thread-component',
@@ -29,7 +28,8 @@ export class ThreadsComponent implements OnInit {
   constructor(
     private _threadService: ThreadService,
     private _http: HttpClient,
-    private _router: Router) { }
+    private _router: Router,
+    private route: ActivatedRoute) { }
 
   getThreads(): void {
     this._threadService.getThreads()
@@ -63,21 +63,39 @@ export class ThreadsComponent implements OnInit {
     this.getThreads();
   }
 
-  // Placeholder for adding a comment
-  addComment() {
-    // Placeholder for adding a comment logic
-    console.log('Add Comment logic');
+  update(thread: Thread): void {
+    this._threadService.updateThread(thread).subscribe(
+      ()=>{
+        console.log('Thread updated');
+      },
+      (error) =>{
+        console.error('Error updating thread', error);
+      }
+    );
   }
 
-  // Placeholder for editing a comment
-  editComment(commentId: number) {
-    // Placeholder for editing a comment logic
-    console.log(`Edit Comment logic for Comment ID: ${commentId}`);
+  delete(threadId: number): void{
+    this._threadService.deleteThread(threadId).subscribe(
+      ()=>{
+        console.log('Thread deleted');
+        // Refresh the thread list or perform other actions after deletion
+        this.getThreads();
+      },
+      (error) => {
+        console.error('Error deleting thread', error);
+      }
+    );
   }
 
-  // Placeholder for deleting a comment
-  deleteComment(commentId: number) {
-    // Placeholder for deleting a comment logic
-    console.log(`Delete Comment logic for Comment ID: ${commentId}`);
+  search(searchQuery: string): void {
+    this._threadService.searchThreads(searchQuery).subscribe(
+      (searchResults) => {
+        console.log('Search results', searchResults);
+        // Handle the search results as needed
+      },
+      (error) => {
+        console.error('Error searching threads', error);
+      }
+    );
   }
 }

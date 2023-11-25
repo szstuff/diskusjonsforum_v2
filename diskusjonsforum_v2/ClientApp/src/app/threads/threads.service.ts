@@ -20,4 +20,19 @@ export class ThreadService {
     return this._http.post<any>(createUrl, newThread);
   }
 
+  updateThread(thread: Thread): Observable<any>{
+    const url ='api/thread/update/${thread.id}';
+    return this._http.put(url, thread);
+  }
+
+  deleteThread(threadId: number): Observable<any>{
+    const url = `api/thread/delete/${threadId}`;
+    return this._http.delete(url);
+  }
+
+  searchThreads(searchQuery: string): Observable<any> {
+    const url = `api/thread/search?searchQuery=${searchQuery}`;
+    return this._http.get(url);
+  }
+
 }
