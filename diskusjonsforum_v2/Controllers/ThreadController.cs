@@ -53,6 +53,20 @@ namespace diskusjonsforum_v2.Controllers
             }
         }
 
+        //Dette under er fra Demo uke 13, "HTTP Post Request", skal det bytte ut det over eller skal den over bli?
+
+        //[HttpGet]
+        //public async Task<IActionResult> GetAll()
+        //{
+        //    var threads = await _threadRepository.GetAll();
+        //    if (threads == null)
+        //    {
+        //        _logger.LogError("[ThreadController] Thread list not found while executing _threadRepository.GetAll()");
+        //        return NotFound("Thread list not found");
+        //    }
+        //    return Ok(threads);
+        //}
+
         //Returns comments for a given thread 
         public IQueryable<Comment> GetComments(Thread thread)
         {
@@ -169,28 +183,36 @@ namespace diskusjonsforum_v2.Controllers
         */
 
         [HttpPost("create")]
-        public IActionResult Create([FromBody] Thread newThread)
+        public async Task<IActionResult> Create([FromBody] Thread newThread)
         {
             if (newThread == null)
             {
                 return BadRequest("Inavlid Thread Data.");
             }
-            newThread.ThreadId = GetNextThreadId();
-            Threads.Add(newThread);
 
-            var response = new { success = true, message = "Thread" + newThread.ThreadTitle + " created successfully" };
-            return Ok(response);
+            bool returnOk = await _threadRepository.Add(newThread);
 
-        }
-
-        private static int GetNextThreadId()
-        {
-            if (Threads.Count == 0)
+            if (returnOk)
             {
-                return 1;
+                var response = new { success = true, message = "Thread" + newThread.ThreadTitle + " created successfully" };
+                return Ok(response);
             }
-            return Threads.Max(thread => thread.ThreadId) + 1;
+            else
+            {
+                var reseponse = new { success = false, message = "Thread creation failed." };
+                return BadRequest(reseponse);
+            }
+
         }
+
+        //private static int GetNextThreadId()
+        //{
+        //    if (Threads.Count == 0)
+        //    {
+        //        return 1;
+        //    }
+        //    return Threads.Max(thread => thread.ThreadId) + 1;
+        //}
             
             /*
             if (HttpContext.User.Identity!.IsAuthenticated) // Check if user is logged in
