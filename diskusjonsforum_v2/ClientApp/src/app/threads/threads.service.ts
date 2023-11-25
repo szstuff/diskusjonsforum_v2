@@ -12,7 +12,7 @@ export class ThreadService {
   constructor(private _http: HttpClient) {}
 
   getThreads(): Observable<Thread[]> {
-    return this._http.get<Thread[]>(this.apiUrl);
+    return this._http.get<Thread[]>(`${this.apiUrl}/getall`);
   }
 
   createThread(newThread: Thread): Observable<any> {
