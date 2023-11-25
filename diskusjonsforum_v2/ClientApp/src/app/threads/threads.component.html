@@ -26,18 +26,22 @@
   </thead>
   <tbody>
   <tr *ngFor="let thread of filteredThreads">
-    <td>{{ thread.ThreadId }}</td>
-    <td>{{ thread.ThreadTitle }}</td>
-    <td>{{ thread.ThreadBody }}</td>
+    <td>{{ thread.threadId }}</td>
+    <td>{{ thread.threadTitle }}</td>
+    <td>{{ thread.threadBody }}</td>
   </tr>
   </tbody>
 </table>
 
 <h3>Comments</h3>
 <p> not implemented </p>
-<!--
+
 <div *ngFor="let thread of threads">
   <ul>
+    <li class="thread">
+      <p> Posted by: {{thread.user}}</p>
+    </li>
+    <!---
     <li *ngFor="let comment of thread.comments">
       <div class="comment">
         <p>Posted by: {{ comment?.User?.UserName }} on {{ comment?.CommentCreatedAt }}</p>
@@ -49,9 +53,9 @@
         </div>
       </div>
     </li>
+    -->
   </ul>
 </div>
--->
 <ul class="navbar-nav flex-grow">
   <li
     class="nav-thread"

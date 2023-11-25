@@ -1,13 +1,13 @@
-export interface Comment {
-  User: {
-    UserName: string;
-    UserIsAdmin: boolean;
-    UserId: string;
-  };
+import { Thread } from "../threads/threads";
 
-  CommentCreatedAt: string;
-  CommentBody: string;
-  CommentId: number;
-  UserId: string;
-  ChildComments?: Comment[];
+export interface Comment {
+  commentId: number;
+  commentBody: string;
+  commentCreatedAt: string;
+  commentLastEditedAt: string;
+  threadId: number;
+  thread: Thread | null;
+  parentCommentId: number | null;
+  parentComment: Comment | null;
+  createdBy: string | null;
 }

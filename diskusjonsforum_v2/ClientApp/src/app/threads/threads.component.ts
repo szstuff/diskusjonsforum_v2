@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Thread } from './threads';
-import { User } from '../users/users';
+//import { User } from '../users/users';
 
 @Component({
   selector: 'app-thread-component',
@@ -12,7 +12,7 @@ import { User } from '../users/users';
 export class ThreadsComponent implements OnInit {
   viewTitle: string = 'Table';
   threads: Thread[] = [];
-  users: User[] = [];
+  //users: User[] = [];
 
   private _listFilter: string = '';
   get listFilter(): string {
@@ -37,24 +37,24 @@ export class ThreadsComponent implements OnInit {
     });
   }
 
-  getUsers(): void {
+/*  getUsers(): void {
     this._http.get<User[]>('api/users').subscribe(data => {
       console.log('All users', JSON.stringify(data));
       this.users = data;
     });
   }
-
+*/
   performFilter(filterBy: string): Thread[] {
     filterBy = filterBy.toLocaleLowerCase();
     return this.threads.filter((thread: Thread) =>
-      thread.ThreadTitle.toLocaleLowerCase().includes(filterBy)
+      thread.threadTitle.toLocaleLowerCase().includes(filterBy)
     );
   }
 
   ngOnInit(): void {
     console.log('ThreadsComponent created');
     this.getThreads();
-    this.getUsers();
+    //this.getUsers();
   }
 
   // Placeholder for adding a comment

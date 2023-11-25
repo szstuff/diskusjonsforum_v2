@@ -1,6 +1,5 @@
 ﻿using diskusjonsforum_v2.DAL;
 using diskusjonsforum_v2.Models;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 // Add this namespace
@@ -16,19 +15,15 @@ namespace diskusjonsforum_v2.Controllers
     {
         //Initialise controllers and interfaces for constructor
         private readonly IThreadRepository _threadRepository;
-        private readonly ICategoryRepository _categoryRepository;
         private readonly ICommentRepository _commentRepository;
-        private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger<ThreadController> _logger;
 
-        public ThreadController(IThreadRepository threadDbContext, ICategoryRepository categoryRepository,
-            ICommentRepository commentRepository, UserManager<ApplicationUser> userManager,
+        public ThreadController(IThreadRepository threadDbContext,
+            ICommentRepository commentRepository,
             ILogger<ThreadController> logger)
         {
             _threadRepository = threadDbContext;
-            _categoryRepository = categoryRepository;
             _commentRepository = commentRepository;
-            _userManager = userManager;
             _logger = logger;
         }
 
@@ -176,7 +171,8 @@ namespace diskusjonsforum_v2.Controllers
         public async Task<IActionResult> Create(Thread thread)
         {
             var errorMsg = "";
-
+            
+            /*
             if (HttpContext.User.Identity!.IsAuthenticated) // Check if user is logged in
             {
                 var user = await _userManager.GetUserAsync(HttpContext.User);
@@ -193,7 +189,7 @@ namespace diskusjonsforum_v2.Controllers
                     {
                         // Content is empty, add a model error
                         ModelState.AddModelError("ThreadContent", "Thread content is required.");
-                        // Gets thread categories and passes them to View. Used to generate dropdown list of available thread categories 
+                        // Gets thread categories and passes them to View. Used to generate dropdown list of available thread categories
                         var categories = _categoryRepository.GetCategories(); // Fetch all categories from the database.
                         ViewBag.Categories = new SelectList(categories, "CategoryName", "CategoryName");
                         return BadRequest();
@@ -235,7 +231,7 @@ namespace diskusjonsforum_v2.Controllers
                 _logger.LogWarning("[ThreadController] User is not authenticated in the Create action.");
                 return BadRequest();
             }
-
+        */
             errorMsg = "[ThreadController] An error occurred in the Edit method.";
             _logger.LogError("[ThreadController] An error occurred in the Edit method.");
             return RedirectToAction("Error", "Home", new { errorMsg });
@@ -289,6 +285,7 @@ namespace diskusjonsforum_v2.Controllers
             string errorMsg = "An error occured when trying to save your edit";
             try
             {
+                /*
                 var user = await _userManager.GetUserAsync(HttpContext.User); //Gets the current user 
                 if (user != null)
                 {
@@ -337,6 +334,8 @@ namespace diskusjonsforum_v2.Controllers
                 _logger.LogError("[ThreadController] Error occurred when saving the changes you made to the thread");
                 errorMsg = "Error occurred when saving the changes you made to the thread";
                 return RedirectToAction("Error", "Home", new { errorMsg });
+                */
+                return null;
             }
             catch (Exception ex)
             {
@@ -344,6 +343,7 @@ namespace diskusjonsforum_v2.Controllers
                 _logger.LogError(ex, "[ThreadController] An error occurred in the SaveEdit method.");
                 return RedirectToAction("Error", "Home", new { errorMsg });
             }
+            
         }
 
         // Delete thread with given threadId if user has permission
@@ -351,6 +351,7 @@ namespace diskusjonsforum_v2.Controllers
         {
             Thread thread = _threadRepository.GetThreadById(threadId);
 
+            /*
             // Checks if the user is either the owner of the comment or an admin before deleting
             var user = await _userManager.GetUserAsync(HttpContext.User);
             var userRoles = await _userManager.GetRolesAsync(user);
@@ -374,6 +375,8 @@ namespace diskusjonsforum_v2.Controllers
                 errorMsg = "An error occurred while deleting the thread.";
                 return RedirectToAction("Error", "Home", new { errorMsg });
             }
+            */
+            return null;
         }
 
         // Search for posts in the database with provided search query
