@@ -12,6 +12,7 @@ import {Router} from "@angular/router";
 })
 
 export class ThreadsComponent implements OnInit {
+  viewTitle: string = 'Table';
   threads: Thread[] = [];
   private _listFilter: string = '';
   get listFilter(): string {
