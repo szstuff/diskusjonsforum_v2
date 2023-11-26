@@ -13,6 +13,7 @@ import {ActivatedRoute, NavigationExtras, Router} from "@angular/router";
 export class CommentsComponent implements OnInit {
   viewTitle: string = "Table";
   comments: Comment[] = [];
+  parentThreadId!: number;
 
   constructor(private commentsService : CommentsService,
               private _http: HttpClient,
@@ -32,6 +33,17 @@ export class CommentsComponent implements OnInit {
     });
   }
 
+  getCommentsByThread(): void{
+    if (this.parentThreadId !== undefined && this.parentThreadId !== null) {
+      this.commentsService.getCommentsByThreadId(this.parentThreadId).subscribe(
+        (comments) => (this.comments = comments),
+        (error) => console.error('Error fetching comments')
+      )
+    } else {
+      console.error('Cannot fetch comments, parentThreadId is undefined.')
+    }
+  }
+
   navigateToCommentform(comment?: Comment){
     const navigationExtras: NavigationExtras = {
       queryParams: comment ? {commentId: comment.commentId.toString()} : undefined
@@ -41,6 +53,16 @@ export class CommentsComponent implements OnInit {
   ngOnInit(): void {
     console.log('CommentsComponent created');
     this.getComments();
+
+    //Routing for getCommentsByThread, fungerer ikke
+    /*
+    this.route.paramMap.subscribe((params) => {
+      this.parentThreadId = + params.get('parentThreadId');
+      this.getCommentsByThread();
+    });
+    */
+
+
   }
 
   // Function to add a comment

@@ -6,10 +6,10 @@ import { CommentsService} from "./comments.service";
 
 @Component({
   selector: "app-comments-commentform",
-  templateUrl: "./comments.component.html"
+  templateUrl: "./commentform.component.html"
 })
 
-export class CommentformComponent{
+export class CommentformComponent {
   commentForm: FormGroup;
   commentId: number | undefined;
 

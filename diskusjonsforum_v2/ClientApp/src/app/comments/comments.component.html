@@ -1,9 +1,9 @@
-<h2 id="tabelLabel">List of Comments</h2>
+<h2 id="tableLabel">List of Comments</h2>
 
 <table>
   <tr *ngFor="let comment of comments">
-    <p>Created at {{ comment.commentCreatedAt }}</p>
-    <p>{{ comment.commentBody }}</p>
+    <td>Created at {{ comment.commentCreatedAt }}</td>
+    <td>{{ comment.commentBody }}</td>
      <button (click)="editComment(comment.commentId)">Edit Comment</button>
       <button (click)="deleteComment(comment.commentId)">Delete Comment</button>
 

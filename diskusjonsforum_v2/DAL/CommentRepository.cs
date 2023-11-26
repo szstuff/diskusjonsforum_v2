@@ -29,9 +29,9 @@ public class CommentRepository : ICommentRepository
             .FirstOrDefault(c => c.CommentId == commentId)!;
     }
 
-    public IQueryable<Comment> GetThreadComments(Thread thread)
+    public IQueryable<Comment> GetThreadComments(int parentThreadId)
     {
-        return _threadDbContext.Comments.Where(comment => comment.ThreadId == thread.ThreadId).Include(t=>t.ParentComment);
+        return _threadDbContext.Comments.Where(comment => comment.ThreadId == parentThreadId).Include(t=>t.ParentComment);
     }
 
 

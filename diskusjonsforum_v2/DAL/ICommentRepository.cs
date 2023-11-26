@@ -8,7 +8,7 @@ public interface ICommentRepository
 {
     IEnumerable<Comment> GetAll();
     Comment GetById(int? commentId);
-    IQueryable<Comment> GetThreadComments(Thread thread);
+    IQueryable<Comment> GetThreadComments(int parentThreadId);
     Task<bool> Add(Comment comment);
     Task<bool> Update(Comment comment);
     void Remove(Comment comment);

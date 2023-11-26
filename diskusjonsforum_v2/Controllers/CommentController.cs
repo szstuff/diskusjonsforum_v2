@@ -3,9 +3,7 @@ using diskusjonsforum_v2.DAL;
 using Microsoft.AspNetCore.Mvc;
 using diskusjonsforum_v2.Models;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Thread = diskusjonsforum_v2.Models.Thread;
-
 
 
 namespace diskusjonsforum_v2.Controllers;
@@ -19,7 +17,6 @@ public class CommentController : Controller
     private readonly ICommentRepository _commentRepository;
     private readonly IThreadRepository _threadRepository;
     private readonly ILogger<CommentController> _logger;
-    private static List<Comment> Comments = new List<Comment>();
     public CommentController(ICommentRepository commentRepository, IThreadRepository threadRepository, ILogger<CommentController> logger)
     {
         _commentRepository = commentRepository;
@@ -27,10 +24,11 @@ public class CommentController : Controller
         _logger = logger;
     }
 
-    //Returns list of all comments
-    public Task<List<Comment>> GetComments()
+    //Returns list of all comments 
+    [HttpGet("getByThread/{parentThread}")]
+    public Task<IQueryable<Comment>> GetComments(int parentThreadId)
     {
-        var comments = new List<Comment>();
+        var comments = _commentRepository.GetThreadComments(parentThreadId);
         return Task.FromResult(comments);
     }
     
@@ -43,15 +41,17 @@ public class CommentController : Controller
             return BadRequest("Invalid item data.");
         }
 
-        newComment.CommentId = GetNextCommentId();
-        Comments.Add(newComment);
+        //newComment.CommentId = GetNextCommentId(); //Kommentert ut for den gjør ingenting. ID settes automatisk av DB 
+        _commentRepository.Add(newComment);
 
         var response = new { success = true, message = "Thread" + newComment.CommentId + " created successfully" };
         return Ok(response);
 
     }
 
-    private static int GetNextCommentId()
+    //Denne koden gjør ingenting? Comments er en lokal variabel som er tom ved initialisering (slettet nå)
+
+    /*private static int GetNextCommentId()
     {
         if (Comments.Count == 0)
         {
@@ -59,50 +59,8 @@ public class CommentController : Controller
         }
         return Comments.Max(item => item.CommentId) + 1;
     }
+    */
     
-    /*
-    //Returns Comment/Create view
-    [HttpGet("create/{parentCommentId}/{threadId}")] //URL when user replies to a comment or thread 
-    [Authorize]
-    public async Task<IActionResult> Create(int? parentCommentId, int threadId)
-    {
-        if (parentCommentId == 0) {parentCommentId = null;} //If parentCommentId == 0, the comment is a direct reply to the thread
-
-        try
-        {
-            if (HttpContext.User.Identity!.IsAuthenticated) //If user is authenticated
-            {
-                Comment parentComment = _commentRepository.GetById(parentCommentId);
-                var thread = _threadRepository.GetThreadById(threadId);
-                thread.User = await _userManager.FindByIdAsync(thread.UserId); //User needs to be set to load Thread and Comment in Comment/Create view 
-                // Retrieve query parameters
-                // Create a CommentViewModel and populate it with data
-                var viewModel = new CommentCreateViewModel()
-                {
-                    ThreadId = threadId,
-                    ParentCommentId = parentCommentId,
-                    ParentComment = parentComment,
-                    Thread = thread
-                };
-
-                // Pass the CommentViewModel to the view
-                return View(viewModel);
-            }
-            else
-            {
-                //Redirects to login page if user not logged in
-                return RedirectToPage("/Account/Login", new { area = "Identity" });
-
-            }
-        }
-        catch (Exception ex)
-        {
-            var errormsg = "[CommentController] An error occurred in the Create action";
-            _logger.LogError(ex, "[CommentController] An error occurred in the Create action");
-            return RedirectToAction("Error", "Home", new { errormsg });
-        }
-    }
-*/
     //Saves comment submitted through the Create view 
     [HttpPost("save")]
     [Authorize]

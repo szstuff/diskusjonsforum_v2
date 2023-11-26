@@ -54,7 +54,7 @@ namespace diskusjonsforum_v2.Controllers
         {
             try
             {
-                return _commentRepository.GetThreadComments(thread);
+                return _commentRepository.GetThreadComments(thread.ThreadId);
             }
             catch (Exception ex)
             {

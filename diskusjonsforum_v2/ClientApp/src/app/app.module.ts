@@ -30,6 +30,7 @@ import {CommentformComponent} from "./comments/commentform.component";
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'threads', component: ThreadsComponent},
+      { path: 'comments', component: CommentsComponent},
       {path: 'threadForm', component: ThreadformComponent},
       {path: 'commentForm', component: CommentformComponent},
       {path: '**', redirectTo: '', pathMatch: 'full'}

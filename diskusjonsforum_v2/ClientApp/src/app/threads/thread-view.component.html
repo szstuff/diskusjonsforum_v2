@@ -1,10 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Title</title>
-</head>
-<body>
+<div *ngIf="thread">
+  <h2>{{ thread.threadTitle }}</h2>
+  <p>Created by: {{ thread.createdBy }}</p>
+  <p>Category: {{ thread.category?.categoryName }}</p>
+  <p>{{ thread.threadBody }}</p>
 
-</body>
-</html>
+  <h3>Comments</h3>
+  <div *ngFor="let comment of thread.threadComments">
+    <p>{{ comment.commentBody }}</p>
+    <!-- Add more details as needed -->
+  </div>
+</div>
