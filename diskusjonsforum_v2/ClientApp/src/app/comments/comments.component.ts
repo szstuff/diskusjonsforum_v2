@@ -1,13 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Comment } from './comments';
-import {ThreadService} from "../threads/threads.service";
-import {Router} from "@angular/router";
-import {FormBuilder} from "@angular/forms";
 import {CommentsService} from "./comments.service";
-
-
-//import { User } from '../users/users';
+import {ActivatedRoute, NavigationExtras, Router} from "@angular/router";
 
 @Component({
   selector: 'app-comment-component',
@@ -18,34 +13,35 @@ import {CommentsService} from "./comments.service";
 export class CommentsComponent implements OnInit {
   viewTitle: string = "Table";
   comments: Comment[] = [];
-  //users: User[] = []; // Assuming you want to use the User interface here
 
-
-
-  ngOnInit(): void {
-    console.log('CommentsComponent created');
-    this.getComments();
-    // If you want to get users, you can call a method to fetch them here
-    // this.getUsers();
-  }
-  constructor(private commentsService : CommentsService, private _http: HttpClient , private _router: HttpClient) {
+  constructor(private commentsService : CommentsService,
+              private _http: HttpClient,
+              private _router: Router,
+              private route: ActivatedRoute) {
   }
   getComments(): void{
     this._http.get<Comment[]>('api/comments').subscribe(data => {
       console.log('All', JSON.stringify(data));
       this.comments = data;
+      },
+      (error) => {
+        console.error('Error getting comments', error);
+        // Handle the error, e.g., display an error message to the user
+        // For now, let's log a generic error message to the console
+        console.error('An error occurred while fetching comments. Please try again later.')
     });
   }
 
-
-
-  /*
-  getUsers(): void {
-    this._http.get<User[]>('api/users').subscribe(data => {
-      console.log('All users', JSON.stringify(data));
-      this.users = data;
-    });
-  } */
+  navigateToCommentform(comment?: Comment){
+    const navigationExtras: NavigationExtras = {
+      queryParams: comment ? {commentId: comment.commentId.toString()} : undefined
+    };
+    this._router.navigate(['/commentForm'], navigationExtras);
+  }
+  ngOnInit(): void {
+    console.log('CommentsComponent created');
+    this.getComments();
+  }
 
   // Function to add a comment
   addComment() {

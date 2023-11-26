@@ -10,4 +10,5 @@ export interface Comment {
   parentCommentId: number | null;
   parentComment: Comment | null;
   createdBy: string | null;
+  childComments: Comment[];
 }

@@ -1,29 +1,28 @@
 <h2 id="tabelLabel">List of Comments</h2>
-<p> not implemented </p>
-<!--
+
 <table>
   <tr *ngFor="let comment of comments">
-    <p><strong>{{ comment.User.UserName }}</strong> on {{ comment.CommentCreatedAt }}</p>
-    <p>{{ comment.CommentBody }}</p>
+    <p>Created at {{ comment.commentCreatedAt }}</p>
+    <p>{{ comment.commentBody }}</p>
+     <button (click)="editComment(comment.commentId)">Edit Comment</button>
+      <button (click)="deleteComment(comment.commentId)">Delete Comment</button>
 
-    <div *ngIf="comment.User.UserId === UserId || comment.User.UserIsAdmin">
-      <button (click)="editComment(comment.CommentId)">Edit Comment</button>
-      <button (click)="deleteComment(comment.CommentId)">Delete Comment</button>
-    </div>
-
-    <div *ngIf="comment.ChildComments && comment.ChildComments.length > 0">
+    <div *ngIf="comment.childComments && comment.childComments.length > 0">
       <div class="child-comments">
-        <div *ngFor="let childComment of comment.ChildComments" class="comment-item">
-          <p><strong>{{ childComment.User.UserName }}</strong> on {{ childComment.CommentCreatedAt }}</p>
-          <p>{{ childComment.CommentBody }}</p>
+        <div *ngFor="let childComment of comment.childComments" class="comment-item">
+          <p>Created at {{ childComment.commentCreatedAt }}</p>
+          <p>{{ childComment.commentBody }}</p>
 
-          <div *ngIf="childComment.User.UserId === UserId || childComment.User.UserIsAdmin">
-            <button (click)="editComment(childComment.CommentId)">Edit Comment</button>
-            <button (click)="deleteComment(childComment.CommentId)">Delete Comment</button>
+            <button (click)="editComment(childComment.commentId)">Edit Comment</button>
+            <button (click)="deleteComment(childComment.commentId)">Delete Comment</button>
           </div>
         </div>
       </div>
-    </div>
+    <!-- Button Inside the Loop (Create New Thread for Each Comment) -->
+    <button class="btn btn-primary" (click)="navigateToCommentform(comment)">Create New Thread</button>
   </tr>
 </table>
--->
+
+<!-- Single Button for Creating a New Thread (Outside the Loop) -->
+<button class="btn btn-primary" (click)="navigateToCommentform()">Create New Thread</button>
+
