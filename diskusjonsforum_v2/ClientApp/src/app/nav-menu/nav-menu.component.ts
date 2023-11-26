@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-nav-menu',
   templateUrl: './nav-menu.component.html',
-  styleUrls: ['./nav-menu.component.css']
+  styleUrls: ['../../css/nav-menu.component.css']
 })
 export class NavMenuComponent {
   isExpanded = false; //sets the value to false tells us if the navmenu is expanded or not
