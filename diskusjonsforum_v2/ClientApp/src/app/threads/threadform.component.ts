@@ -5,8 +5,8 @@ import { HttpClient } from '@angular/common/http';
 import { ThreadService } from './threads.service';
 
 @Component({
-  selector: 'app-threads-threadform',
-  templateUrl: './threadform.component.html',
+  selector: 'app-threads-threadform', // custom HTML tag
+  templateUrl: './threadform.component.html', // path to the HTML file
   //styleUrls: ['./thread-form.component.css'],
 })
 

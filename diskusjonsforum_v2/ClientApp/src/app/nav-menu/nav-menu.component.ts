@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-nav-menu',
-  templateUrl: './nav-menu.component.html',
-  styleUrls: ['../../css/nav-menu.component.css']
+  selector: 'app-nav-menu', // custom HTML tag
+  templateUrl: './nav-menu.component.html', //path to the HTML file structure
+  styleUrls: ['../../css/nav-menu.component.css']// template for css file
 })
 export class NavMenuComponent {
   isExpanded = false; //sets the value to false tells us if the navmenu is expanded or not
