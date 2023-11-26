@@ -1,71 +1,30 @@
-<h1 id="tabelLabel">List of Threads ({{viewTitle}} View)</h1>
+<h1 id="tabelLabel">Explore discussions</h1>
 
-<button class='btn btn-primary' (click)="getThreads()">Get Threads</button>
-
-<div class="row">
-  <div class='col-md-2'>Filter by:</div>
-  <div class='col-md-4'>
-    <input type="text" [(ngModel)]="listFilter" />
-  </div>
-</div>
-
-<div class="row">
-  <div class="col-md-6">
-    <h4>Filtered by: {{listFilter}}</h4>
-  </div>
-</div>
-
-<div *ngFor="let thread of threads" class="col-md-6">
-  <a [routerLink]="['/Thread/Thread', thread.threadId]">
-    <div class="post">
-      <div>
-        <p class="thread-information">
-          <b>{{ thread.createdBy }}</b>
-          <b>{{ thread.threadCreatedAt | date: 'yyyy-MM-dd HH:mm' }}</b>
-        </p>
-      </div>
+<div class="container">
+  <div class="row">
+    <div class="col-md-2">Filter by:</div>
+    <div>
+      <input class="form-control" type="text" [(ngModel)]="listFilter" />
     </div>
-  </a>
-</div>
+  </div>
 
-  <button class="btn btn-primary" (click)="navigateToThreadform()">Create New Thread</button>
 
-<h3>Comments</h3>
-<p> not implemented </p>
-
-<!---
-<div *ngFor="let thread of threads">
-  <ul>
-    <li class="thread">
-      <p> Posted by: {{thread.createdBy}}</p>
-    </li>
-
-    <li *ngFor="let comment of thread.comments">
-      <div class="comment">
-        <p>Posted by: {{ comment?.User?.UserName }} on {{ comment?.CommentCreatedAt }}</p>
-        <p>{{ comment?.CommentBody }}</p>
-
-        <div *ngIf="UserId === comment?.User?.UserId || UserIsAdmin">
-          <button (click)="editComment(comment?.CommentId)">Edit Comment</button>
-          <button (click)="deleteComment(comment?.CommentId)">Delete Comment</button>
+  <div *ngFor="let thread of threads">
+    <a [routerLink]="['/Thread/Thread', thread.threadId]">
+      <div class="post">
+        <div>
+          <p class="thread-information">
+            <b>{{ thread.createdBy }}</b> posted on
+            <b>{{ thread.threadCreatedAt | date: 'yyyy-MM-dd HH:mm' }}</b>
+          </p>
+          <hr />
+          <p class="title-thread"><b>{{ thread.threadTitle }}</b></p>
+          <p class="thread-text">{{ thread.threadBody }}</p>
+          <p class="comment-count">{{ thread.threadComments?.length }} replies</p>
         </div>
       </div>
-    </li>
-  </ul>
-</div>
-    -->
-
-<ul class="navbar-nav flex-grow">
-  <li
-    class="nav-thread"
-    [routerLinkActive]="['link-active']"
-    [routerLinkActiveOptions]="{ exact: true}"
-  >
-    <a class="nav-link text-dark" [routerLink]="['/']">Home</a>
-  </li>
-  <li class="nav-item" [routerLinkActive]="['link-active']">
-    <a class="nav-link text-dark" [routerLink]="['/threads']">
-      Threads
     </a>
-  </li>
-</ul>
+  </div>
+</div>
+
+<button class="btn btn-primary" (click)="navigateToThreadform()">Create New Thread</button>

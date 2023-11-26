@@ -7,7 +7,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 @Component({
   selector: 'app-thread-component',
   templateUrl: './threads.component.html',
-  //styleUrls: ['./threads.component.css']
+  styleUrls: ['../../IndexStyle.css','../../thread_table.css']
 })
 
 export class ThreadsComponent implements OnInit {

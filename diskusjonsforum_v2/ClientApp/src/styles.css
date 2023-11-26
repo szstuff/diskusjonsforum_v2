@@ -15,3 +15,211 @@ code {
   border-color: #1861ac;
 }
 
+body {
+  background-color: #f3f2f2; /* Off-white background color */
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  overflow: hidden;
+  font-family: 'Ubuntu', sans-serif;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.mx-2 {
+  position: relative; /* positioned relative to its normal position */
+}
+/*pseudo-element used to create after content*/
+.mx-2::after {
+  content: ''; /*insterts empty content*/
+  opacity: 0;
+  transition: all 0.2s;
+  height: 2px;
+  width: 100%;
+  background-color: grey;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
+/*Hover function for mx-2::after*/
+.mx-2:hover::after {
+  opacity: 1;
+}
+
+.login-text {
+  position: relative;/* positioned relative to its normal position */
+}
+/*pseudo-element used to create after content*/
+.login-text::after {
+  content: '';
+  opacity: 0;
+  transition: all 0.2s;
+  height: 2px;
+  width: 100%;
+  background-color: #feeeef;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+/*Hover function*/
+.login-text:hover::after {
+  opacity: 1; /*when it's hovered over the opacity is changed to 1*/
+}
+
+.register-text {
+  border: none;
+  background: #ffc942;
+  color: #feeeef;
+  border-radius: 30px;
+  outline: none;
+  cursor: pointer;
+  transition: .3s ease-in-out /*transition effect for the element duration of 0.3 sec*/
+}
+/*Hover function*/
+.register-text:hover {
+  box-shadow: 1px 5px 7px 1px rgba(0, 0, 0, 0.2);
+}
+
+/*design for the header, fonts sizes and placement*/
+header {
+  font-family: 'Ubuntu', sans-serif;
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: #feeeef;
+}
+
+/*positioning navbar*/
+.navbar-brand {
+  font-size: 50px;
+  letter-spacing: 0.1em;
+}
+
+.custom-toggler {
+  border-color: #feeeef;
+}
+
+.offcanvas-header {
+  color: grey;
+  font-style: italic;
+}
+
+/* media query that specifies condition based on maximum screen width*/
+@media (max-width: 991px) {
+  #offcanvasNavbar {
+    background-color: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+  }
+  #searchBar {
+    width: 90%; /* Adjust the width for smaller screens as needed */
+    max-width: 37.5rem; /* You can set a max-width to control the maximum width */
+    margin: 0 auto;
+  }
+
+}
+
+.thread-button{
+  display: inline;
+}
+
+.outermost-container {
+  padding: 10px; /* Padding for spacing */
+  margin-bottom: 20px; /* Margin to separate containers */
+}
+
+/* Style for nested containers for comments */
+.nested-container {
+  /* Contains the orange border to left */
+  border-left: 2px solid #ff6a52;
+  padding: 10px;
+  margin-top: 10px;
+  position: relative; /* Set position to relative */
+  overflow: hidden;
+  height: 40%;
+  width: 100%;
+}
+
+/* Additional styles for clarity (optional) */
+.nested-container .nested-container {
+  margin-top: 5px; /* Reduce margin for deeper nesting */
+}
+
+/* The inner container for the comment text, made it longer so "Last edited..." is on one line */
+.commentBody {
+  display: inline-block;
+  width: 90%;
+}
+
+#searchBar{
+  border-radius: 20px 20px 0 0;
+  display: flex;
+  width: 400px;
+}
+
+#searchBar {
+  border-radius: 20px;
+  display: flex;
+  width: 400px;
+}
+
+#searchBar:focus {
+  border-radius: 20px 20px 0 0;
+}
+
+#searchResultsDropdown{
+  position: absolute;
+  padding-top: 10px;
+  color: black;
+  font-size: 14px;
+  border-radius: 0 0 10px 10px;
+  background-color: white;
+  width: 400px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+#searchResultsDropdown ul {
+  list-style: none;
+}
+
+#searchResultsDropdown li {
+  cursor: pointer;
+  padding: 5px;
+}
+
+#searchResultsDropdown li:hover {
+  background-color:#e2e7ed;
+}
+
+#explore {
+  display: inline-block; /* This makes the element inline and allows for the underline effect */
+  font-size: 18px;
+  position: relative; /* Position relative to its normal position */
+}
+
+#explore::before {
+  content: ''; /* Insert empty content before the text */
+  border-bottom: 2.5px solid transparent; /* Create an initially transparent underline */
+  width: 100%; /* Make the underline span the full width of the element */
+  position: absolute; /* Position the underline absolutely */
+  bottom: 0; /* Position it at the bottom of the element */
+  left: 0; /* Align it to the left */
+  transition: border-color 0.2s; /* Add a transition for smooth effect */
+}
+
+#explore:hover::before {
+  border-color: grey; /* Change the underline color on hover */
+}
+
+/*footer placement and design*/
+.footer{
+  background-color: white;
+  padding-top: 10px;
+  padding-bottom: 40px;
+}
+
+.login-container-new, .register-container-new {
+  padding-top: 60px;
+}
+
+
