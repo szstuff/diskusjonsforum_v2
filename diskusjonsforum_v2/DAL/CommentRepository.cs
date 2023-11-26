@@ -65,9 +65,18 @@ public class CommentRepository : ICommentRepository
         }
     }
 
-    public void Remove(Comment comment)
+    public async Task<bool> Remove(int commentId)
     {
-        _threadDbContext.Comments.Remove(comment);
+        var comment = _threadDbContext.Comments.Find(commentId);
+
+        if (comment != null)
+        {
+            _threadDbContext.Comments.Remove(comment);
+            await _threadDbContext.SaveChangesAsync();
+            return true;
+        }
+
+        return false;
     }
 
     public async Task SaveChangesAsync()

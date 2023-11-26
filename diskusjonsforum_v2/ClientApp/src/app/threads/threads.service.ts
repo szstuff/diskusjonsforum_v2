@@ -21,22 +21,22 @@ export class ThreadService {
   }
 
   createThread(newThread: Thread): Observable<any> {
-    const createUrl = 'api/thread/create';
+    const createUrl = `${this.apiUrl}/create`;
     return this._http.post<any>(createUrl, newThread);
   }
 
   updateThread(thread: Thread): Observable<any>{
-    const url ='api/thread/update/${thread.id}';
+    const url = `${this.apiUrl}/update/${thread.threadId}`;
     return this._http.put(url, thread);
   }
 
   deleteThread(threadId: number): Observable<any>{
-    const url = `api/thread/delete/${threadId}`;
+    const url = `${this.apiUrl}/delete/${threadId}`;
     return this._http.delete(url);
   }
 
   searchThreads(searchQuery: string): Observable<any> {
-    const url = `api/thread/search?searchQuery=${searchQuery}`;
+    const url = `${this.apiUrl}/search?searchQuery=${searchQuery}`;
     return this._http.get(url);
   }
 

@@ -1,12 +1,10 @@
-﻿using diskusjonsforum_v2.DAL;
+﻿using Microsoft.AspNetCore.Mvc;
 using diskusjonsforum_v2.Models;
-using Microsoft.AspNetCore.Mvc;
-
+using diskusjonsforum_v2.DAL;
 using Thread = diskusjonsforum_v2.Models.Thread;
 
 //The comment below disables certain irrelevant warnings in JetBrains IDE
 // ReSharper disable RedundantAssignment
-
 namespace diskusjonsforum_v2.Controllers
 {
     [Route("api/threads")]
@@ -44,7 +42,7 @@ namespace diskusjonsforum_v2.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "[ThreadController] An error occurred in the Table action.");
+                _logger.LogError(ex, "[ThreadController] An error occurred in the GetThreads action.");
               return StatusCode(500, "An error occurred while loading threads");
 
             }
@@ -66,11 +64,11 @@ namespace diskusjonsforum_v2.Controllers
 
         //Returns an individual thread 
         [HttpGet("getThread/{id}")]
-        public ActionResult<Thread> GetThread(int threadId)
+        public ActionResult<Thread> GetThread(int id)
         {
             try
             {
-                var thread = _threadRepository.GetThreadById(threadId);
+                var thread = _threadRepository.GetThreadById(id);
 
                 if (thread == null)
                 {
@@ -84,7 +82,7 @@ namespace diskusjonsforum_v2.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "[ThreadController] An error occurred in the Thread action for thread ID: {0},",
-                    threadId);
+                    id);
                 // Redirect to Error view if error occurs
                 return RedirectToAction("Error", "Home",
                     new { errorMsg = "An error occurred while loading the thread." });
@@ -137,7 +135,7 @@ namespace diskusjonsforum_v2.Controllers
         }
 
         [HttpPost("create")]
-        public async Task<IActionResult> CreateThread([FromBody] Thread newThread)
+        public async Task<ActionResult> CreateThread([FromBody] Thread newThread)
         {
             if (newThread == null)
             {
@@ -170,17 +168,17 @@ namespace diskusjonsforum_v2.Controllers
 
     // Saves edits made to a thread
     [HttpPut("update/{id}")]
-    public async Task<IActionResult> UpdateThread([FromBody] Thread thread)
+    public async Task<ActionResult> UpdateThread(int id, [FromBody] Thread thread)
     {
         string errorMsg = "An error occured when trying to save your edit";
         try
         {
             // Add custom validation for the thread content
-            if (string.IsNullOrWhiteSpace(thread.ThreadBody) || string.IsNullOrWhiteSpace(thread.ThreadTitle))
+            if (string.IsNullOrWhiteSpace(thread?.ThreadBody) || string.IsNullOrWhiteSpace(thread.ThreadTitle))
             {
                 // Content is empty, add a model error
-                Thread threadToEdit = _threadRepository.GetThreadById(thread.ThreadId);
-                return BadRequest("Invalid thread data. Content is required");
+                ModelState.AddModelError("ThreadContent", "Thread content is required.");
+                return BadRequest(ModelState);
             }
 
             bool returnOk = await _threadRepository.Update(thread);
@@ -190,7 +188,7 @@ namespace diskusjonsforum_v2.Controllers
         catch (Exception ex)
         {
             errorMsg = "Could not edit your thread due to a database error.";
-            _logger.LogError(ex, "[ThreadController] Error editing thread: {0}", thread.ThreadId);
+            _logger.LogError(ex, "[ThreadController] Error editing thread: {0}", id);
         }
         return StatusCode(500, new {message = errorMsg});
     }
@@ -198,7 +196,7 @@ namespace diskusjonsforum_v2.Controllers
     
     // Delete thread with given threadId if user has permission
     [HttpDelete("delete/{id}")]
-    public async Task<IActionResult> DeleteThread(int threadId) {
+    public async Task<ActionResult> DeleteThread(int threadId) {
         try
         {
             Thread thread = _threadRepository.GetThreadById(threadId);

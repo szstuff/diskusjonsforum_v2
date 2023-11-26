@@ -11,7 +11,7 @@ public interface ICommentRepository
     IQueryable<Comment> GetThreadComments(int parentThreadId);
     Task<bool> Add(Comment comment);
     Task<bool> Update(Comment comment);
-    void Remove(Comment comment);
+    Task<bool> Remove(int commentId);
     Task SaveChangesAsync();
     List<Comment> GetChildren(Comment parentComment);
 
