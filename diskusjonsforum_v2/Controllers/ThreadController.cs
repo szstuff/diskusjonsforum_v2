@@ -217,7 +217,7 @@ namespace diskusjonsforum_v2.Controllers
     } 
 
 
-         [HttpPost("find/{id}")]
+         [HttpPost("find/{searchTerm}")]
         // Search for posts in the database with provided search query
         public IActionResult SearchThreads(string searchQuery)
         {

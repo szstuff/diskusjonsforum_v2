@@ -1,4 +1,17 @@
- <header>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const searchBar = document.getElementById("searchBar");
+    const searchResultsDropdown = document.getElementById('searchResultsDropdown');
+
+    searchResultsDropdown.style.display = 'none';
+
+    searchBar.addEventListener("input", function () {
+      handleSearchInput();
+    });
+  });
+</script>
+
+<header>
   <nav
     class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3"
   >
@@ -19,6 +32,10 @@
         class="navbar-collapse collapse d-sm-inline-flex justify-content-end"
         [ngClass]="{ show: isExpanded }"
       >
+        <div class="position-relative">
+          <input id="searchBar" class="form-control" placeholder="Search" type="text">
+          <div id="searchResultsDropdown" class="search-results"></div>
+        </div>
         <ul class="navbar-nav flex-grow">
           <li
             class="nav-item"

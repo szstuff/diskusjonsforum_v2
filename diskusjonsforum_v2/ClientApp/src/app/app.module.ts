@@ -9,9 +9,10 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
 import { ThreadsComponent } from './threads/threads.component';
 import { CommentsComponent } from './comments/comments.component';
-import {ThreadformComponent} from "./threads/threadform.component";
-import {CommentformComponent} from "./comments/commentform.component";
-import {ThreadViewComponent} from "./threads/thread-view.component";
+import { ThreadformComponent} from "./threads/threadform.component";
+import { CommentformComponent} from "./comments/commentform.component";
+import { ThreadViewComponent } from "./threads/thread-view.component";
+
 
 @NgModule({
   declarations: [
@@ -35,7 +36,7 @@ import {ThreadViewComponent} from "./threads/thread-view.component";
       { path: 'comments', component: CommentsComponent},
       {path: 'threadForm', component: ThreadformComponent},
       {path: 'commentForm', component: CommentformComponent},
-      {path: 'threadView', component: ThreadViewComponent},
+      {path: 'thread-view/:id', component: ThreadViewComponent },
       {path: '**', redirectTo: '', pathMatch: 'full'}
     ])
   ],
@@ -43,4 +44,3 @@ import {ThreadViewComponent} from "./threads/thread-view.component";
   bootstrap: [AppComponent]
 })
 export class AppModule { }
-
