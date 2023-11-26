@@ -65,7 +65,7 @@ namespace diskusjonsforum_v2.Controllers
         }
 
         //Returns an individual thread 
-        [HttpGet("get/{id}")]
+        [HttpGet("getThread/{id}")]
         public ActionResult<Thread> GetThread(int threadId)
         {
             try
