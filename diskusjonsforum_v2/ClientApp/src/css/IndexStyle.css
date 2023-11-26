@@ -1,10 +1,16 @@
 .post {
-    background-color: white;
-    border-radius: 5px;
-    padding: 10px;
-    margin: 5px;
-    color: black;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 20px;
+  padding: 1.25em;
+  margin: 20px;
+  margin-bottom: 40px;
+  color: black;
+  box-shadow: 3px 4px 5px 0px rgba(0, 0, 0, 0.38);
 }
+
+  .post:hover {
+    color: blue;
+  }
 
 .category {
     font-weight: bold;
@@ -16,6 +22,8 @@ a{
     cursor: pointer;
 }
 
-.recent-posts-title {
-    padding-left: 15px;
+.recent-posts-title, .tabelLabel {
+  font-size: 40px;
+  text-align: center;
+  padding: 10px 0 30px 0;
 }

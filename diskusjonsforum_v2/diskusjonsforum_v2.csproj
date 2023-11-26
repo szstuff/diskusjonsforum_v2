@@ -49,6 +49,10 @@
 
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ClientApp\src\assets\images\" />
+  </ItemGroup>
+
 
 
 

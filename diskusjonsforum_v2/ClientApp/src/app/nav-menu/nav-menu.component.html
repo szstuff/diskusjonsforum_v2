@@ -1,11 +1,13 @@
  <header>
   <nav
-    class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3"
+    class="navbar navbar-expand-lg navbar-light bg-transparent"
   >
     <div class="container">
-      <a class="navbar-brand" [routerLink]="['/']">ArcaNet</a>
+      <a class="navbar-brand custom-font fs-4 text-light em-wide" [routerLink]="['/']">
+        <img src="../../assets/images/bicycle.png" alt="..." height="35" />ArcaNet</a>
+
       <button
-        class="navbar-toggler"
+        class="navbar-toggler btn-close-white shadow-none border-0"
         type="button"
         data-toggle="collapse"
         data-target=".navbar-collapse"
@@ -21,13 +23,13 @@
       >
         <ul class="navbar-nav flex-grow">
           <li
-            class="nav-item"
+            class="login-text nav-link text-light"
             [routerLinkActive]="['link-active']"
             [routerLinkActiveOptions]="{ exact: true }"
           >
           </li>
-          <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/threads']"> Explore </a>
+          <li class="d-flex flex-column flex-lg-row justify-content-center align-items-center gap-3" [routerLinkActive]="['link-active']">
+            <a class="login-text nav-link text-light" [routerLink]="['/threads']"> Explore </a>
           </li>
         </ul>
       </div>

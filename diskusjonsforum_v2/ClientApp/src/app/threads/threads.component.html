@@ -1,10 +1,12 @@
-<h1 id="tabelLabel">Explore discussions</h1>
+<h1 class="tabelLabel text-white">Explore discussions</h1>
 
 <div class="container">
   <div class="row">
-    <div class="col-md-2">Filter by:</div>
-    <div>
+    <div class="col-8">
       <input class="form-control" type="text" [(ngModel)]="listFilter" />
+    </div>
+    <div class="col-sm-3">
+      <button class="btn btn-primary submit" (click)="navigateToThreadform()">Create New Thread</button>
     </div>
   </div>
 
@@ -27,4 +29,4 @@
   </div>
 </div>
 
-<button class="btn btn-primary" (click)="navigateToThreadform()">Create New Thread</button>
+
