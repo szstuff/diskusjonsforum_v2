@@ -5,7 +5,7 @@ import { Thread } from '../threads/threads'; // Adjust the path accordingly
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['../../IndexStyle.css','../../thread_table.css']
+  styleUrls: ['../../css/IndexStyle.css','../../css/thread_table.css']
 })
 
 export class HomeComponent implements OnInit {
