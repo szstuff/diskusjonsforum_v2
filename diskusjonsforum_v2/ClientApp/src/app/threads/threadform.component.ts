@@ -11,41 +11,43 @@ import { ThreadService } from './threads.service';
 })
 
 export class ThreadformComponent {
-  threadForm: FormGroup;
+  threadForm: FormGroup; // provides the object FormGRoup as threadForm
 
   constructor(
-    private _formBuilder: FormBuilder,
-    private _router: Router,
-    private _threadService: ThreadService,
-    private _http: HttpClient)
+    private _formBuilder: FormBuilder, // the form for creating threads
+    private _router: Router, //lets us nagivate to different routers within the angular application
+    private _threadService: ThreadService, //encapsulate functionality linked to ThreadService
+    private _http: HttpClient) // sends HTTP requests and receives HTTP responses
   {
     this.threadForm = _formBuilder.group({
-      title: ['', Validators.required],
-      body: ['', Validators.required]
+      // uses _formBuilder to create threadForm a formgroup
+      title: ['', Validators.required], // Validators.required ensures the input title is not empty
+      body: ['', Validators.required] // ensures the input of the body is not empty
     });
   }
 
 
-  onSubmit() {
-    console.log("ThreadCreate from submitted:");
-    console.log(this.threadForm);
-    console.log('The thread ' + this.threadForm.value.title + ' is created.');
-    console.log(this.threadForm.touched);
-    const newThread = this.threadForm.value;
-    const createUrl = "api/thread/create";
-    this._threadService.createThread(newThread)
+  onSubmit() { // the method gets triggered when a thread is submitted
+    console.log("ThreadCreate from submitted:"); // Logs when the thread has been submitted
+    console.log(this.threadForm); // logs the object "threadForm"
+    console.log('The thread ' + this.threadForm.value.title + ' is created.'); // logs a message telling the thread has been created
+    console.log(this.threadForm.touched); //Logs if the threadForm control has been touched or not
+    const newThread = this.threadForm.value; //Gets the current values of the threadForm control
+    const createUrl = "api/thread/create"; //navigates to the URL for creating new thread
+    this._threadService.createThread(newThread) //makes http post request with the data from newThread
       .subscribe(response => {
       if (response.success) {
+        // if the response is a sucsess a message is logged from the server
         console.log(response.message);
-        this._router.navigate(['/threads']);
+        this._router.navigate(['/threads']);  // navigates back to /threads
       }
-      else {
+      else { // if it's not succesfull a failed success message is logged
         console.log('Thread creation failed');
       }
     });
   }
 
   backToThreads() {
-    this._router.navigate(['/threads']);
+    this._router.navigate(['/threads']); //navigates back to the threads
   }
 }

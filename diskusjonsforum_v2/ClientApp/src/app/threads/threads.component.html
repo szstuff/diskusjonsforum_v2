@@ -12,7 +12,7 @@
 
 
   <div *ngFor="let thread of threads">
-    <a [routerLink]="['/threads', thread.threadId]">
+    <a [routerLink]="['/thread-view', thread.threadId]">
       <div class="post">
         <div>
           <p class="thread-information">

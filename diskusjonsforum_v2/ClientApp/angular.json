@@ -32,11 +32,8 @@
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/styles.css"
-              //"src/css/IndexStyle.css",
-              //"src/css/nav-meny.component.css",
-              //"thread_table.css"
             ],
-            "scripts": []
+            "scripts": ["src/javascript/site.js"]
           },
           "configurations": {
             "production": {
