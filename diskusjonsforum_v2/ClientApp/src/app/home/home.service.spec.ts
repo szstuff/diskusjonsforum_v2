@@ -2,6 +2,7 @@
 
 import { HomeService } from './home.service';
 
+// checks if it can be instantiated wothout errors
 describe('HomeService', () => {
   let service: HomeService;
 

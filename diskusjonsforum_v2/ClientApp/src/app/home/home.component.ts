@@ -9,26 +9,26 @@ import { Thread } from '../threads/threads'; // Adjust the path accordingly
 })
 
 export class HomeComponent implements OnInit {
-  threads: Thread[] = [];
+  threads: Thread[] = []; //empty array to store threads
 
-  constructor(private threadService: ThreadService) {}
+  constructor(private threadService: ThreadService) {} //fetches data related to threads
 
-  ngOnInit(): void {
+  ngOnInit(): void { // calls loadThreads when it is initialized
     this.loadThreads();
   }
 
-  loadThreads() {
+  loadThreads() { // gets the threads
     this.threadService.getThreads().subscribe(
       (threads: Thread[]) => {
         this.threads = threads;
       },
-      (error) => {
+      (error) => { // if there is a problem fetching the thread an error occurs with a error message
         console.error('Error fetching threads', error);
       }
     );
   }
 
-  redirectToCreatePage() {
+  redirectToCreatePage() { // navigates to "/Thread/Create"
     window.location.href = '/Thread/Create';
   }
 }

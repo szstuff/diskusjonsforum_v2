@@ -2,6 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { CommentsService } from './comments.service';
 
+//checks if the instance of CommentService is able to be created without errors.
 describe('CommentsService', () => {
   let service: CommentsService;
 
