@@ -11,6 +11,7 @@ import { ThreadsComponent } from './threads/threads.component';
 import { CommentsComponent } from './comments/comments.component';
 import {ThreadformComponent} from "./threads/threadform.component";
 import {CommentformComponent} from "./comments/commentform.component";
+import {ThreadViewComponent} from "./threads/thread-view.component";
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import {CommentformComponent} from "./comments/commentform.component";
     ThreadsComponent,
     CommentsComponent,
     ThreadformComponent,
-    CommentformComponent
+    CommentformComponent,
+    ThreadViewComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -33,6 +35,7 @@ import {CommentformComponent} from "./comments/commentform.component";
       { path: 'comments', component: CommentsComponent},
       {path: 'threadForm', component: ThreadformComponent},
       {path: 'commentForm', component: CommentformComponent},
+      {path: 'threadView', component: ThreadViewComponent},
       {path: '**', redirectTo: '', pathMatch: 'full'}
     ])
   ],
