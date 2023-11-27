@@ -32,15 +32,6 @@
 
       <div id="displayComments" *ngIf="thread">
         <h3 class="comments-header">Comments</h3>
-
-        <!-- Input box for adding comments -->
-        <div id="textBox">
-          <textarea [(ngModel)]="newCommentBody" placeholder="What are your thoughts?" class="comment-input"></textarea>
-          <div>
-            <button (click)="addComment()" class="add-comment-button">Add Comment</button>
-          </div>
-        </div>
-
         <!-- Display existing comments -->
         <div class="actual-comment">
           <div *ngIf="!thread.threadComments || thread.threadComments.length === 0">
@@ -50,6 +41,15 @@
             <p>{{ comment.commentBody }}</p>
           </div>
         </div>
+        <!-- Input box for adding comments -->
+        <div id="textBox">
+          <textarea [(ngModel)]="newCommentBody" placeholder="What are your thoughts?" class="comment-input"></textarea>
+          <div>
+            <button (click)="addComment()" class="add-comment-button">Add Comment</button>
+          </div>
+        </div>
+
+
       </div>
     </div>
   </div>
