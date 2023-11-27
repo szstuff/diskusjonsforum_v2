@@ -37,22 +37,22 @@ namespace diskusjonsforum_v2.Controllers
             }
         }
 
-        //create a new comment
-        [HttpPost("create")]
-        public ActionResult Create([FromBody] Comment newComment)
+        [HttpPost("addComment/{threadId}")]
+        public ActionResult Create(int threadId, [FromBody] Comment newComment)
         {
             try
             {
-                if (newComment == null)
-                {
-                    return BadRequest("Invalid item data.");
-                }
+                newComment.ThreadId = threadId;
 
-                //newComment.CommentId = GetNextCommentId(); //Kommentert ut for den gjør ingenting. ID settes automatisk av DB 
+                newComment.CreatedBy = "Sys";
+
                 _commentRepository.Add(newComment);
 
                 var response = new
-                    { success = true, message = $"$Comment {newComment.CommentId} created successfully" };
+                {
+                    success = true,
+                    message = $"Comment {newComment.CommentId} created successfully"
+                };
                 return Ok(response);
             }
             catch (Exception ex)
@@ -62,17 +62,6 @@ namespace diskusjonsforum_v2.Controllers
             }
         }
 
-        //Denne koden gjør ingenting? Comments er en lokal variabel som er tom ved initialisering (slettet nå)
-
-        /*private static int GetNextCommentId()
-        {
-            if (Comments.Count == 0)
-            {
-                return 1;
-            }
-            return Comments.Max(item => item.CommentId) + 1;
-        }
-        */
 
         [HttpPut("update/{id}")]
         public async Task<IActionResult> UpdateComment(int id, [FromBody] Comment comment)
@@ -125,4 +114,3 @@ namespace diskusjonsforum_v2.Controllers
         }
     }
 }
-

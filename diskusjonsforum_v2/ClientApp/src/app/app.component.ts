@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html'
+  selector: 'app-root', // custom HTML tag
+  templateUrl: './app.component.html' //path to the HTML file structure
 })
 export class AppComponent {
-  title = 'ArcaNet';
+  title = 'ArcaNet'; // holds property title with value ArcaNet
 }
 

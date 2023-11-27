@@ -43,7 +43,7 @@ namespace diskusjonsforum_v2.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "[ThreadController] An error occurred in the GetThreads action.");
-              return StatusCode(500, "An error occurred while loading threads");
+                return StatusCode(500, "An error occurred while loading threads");
 
             }
         }
@@ -160,65 +160,67 @@ namespace diskusjonsforum_v2.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogError( "[ThreadController] CreateThread error.");
+                _logger.LogError("[ThreadController] CreateThread error.");
                 return StatusCode(500, "Error occurred while creating the thread.");
             }
         }
-        
 
-    // Saves edits made to a thread
-    [HttpPut("update/{id}")]
-    public async Task<ActionResult> UpdateThread(int id, [FromBody] Thread thread)
-    {
-        string errorMsg = "An error occured when trying to save your edit";
-        try
+
+        // Saves edits made to a thread
+        [HttpPut("update/{id}")]
+        public async Task<ActionResult> UpdateThread(int id, [FromBody] Thread thread)
         {
-            // Add custom validation for the thread content
-            if (string.IsNullOrWhiteSpace(thread?.ThreadBody) || string.IsNullOrWhiteSpace(thread.ThreadTitle))
+            string errorMsg = "An error occured when trying to save your edit";
+            try
             {
-                // Content is empty, add a model error
-                ModelState.AddModelError("ThreadContent", "Thread content is required.");
-                return BadRequest(ModelState);
+                // Add custom validation for the thread content
+                if (string.IsNullOrWhiteSpace(thread?.ThreadBody) || string.IsNullOrWhiteSpace(thread.ThreadTitle))
+                {
+                    // Content is empty, add a model error
+                    ModelState.AddModelError("ThreadContent", "Thread content is required.");
+                    return BadRequest(ModelState);
+                }
+
+                bool returnOk = await _threadRepository.Update(thread);
+                if (returnOk)
+                    return NoContent();
+            }
+            catch (Exception ex)
+            {
+                errorMsg = "Could not edit your thread due to a database error.";
+                _logger.LogError(ex, "[ThreadController] Error editing thread: {0}", id);
             }
 
-            bool returnOk = await _threadRepository.Update(thread);
-            if (returnOk)
+            return StatusCode(500, new { message = errorMsg });
+        }
+
+
+        // Delete thread with given threadId if user has permission
+        [HttpDelete("delete/{id}")]
+        public async Task<ActionResult> DeleteThread(int threadId)
+        {
+            try
+            {
+                Thread thread = _threadRepository.GetThreadById(threadId);
+                if (thread == null)
+                {
+                    return NotFound();
+                }
+
+                await _threadRepository.Remove(thread);
+                await _threadRepository.SaveChangesAsync();
                 return NoContent();
-        }
-        catch (Exception ex)
-        {
-            errorMsg = "Could not edit your thread due to a database error.";
-            _logger.LogError(ex, "[ThreadController] Error editing thread: {0}", id);
-        }
-        return StatusCode(500, new {message = errorMsg});
-    }
-
-    
-    // Delete thread with given threadId if user has permission
-    [HttpDelete("delete/{id}")]
-    public async Task<ActionResult> DeleteThread(int threadId) {
-        try
-        {
-            Thread thread = _threadRepository.GetThreadById(threadId);
-            if (thread == null)
-            {
-                return NotFound();
             }
-                        
-            await _threadRepository.Remove(thread);
-            await _threadRepository.SaveChangesAsync();
-            return NoContent();
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "[ThreadController] Error deleting thread with ID: {0}", threadId);
+            }
+
+            return StatusCode(500, "Error deleting thread.");
         }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "[ThreadController] Error deleting thread with ID: {0}", threadId);
-        }
-        return StatusCode(500, "Error deleting thread."); 
-    } 
 
 
-         [HttpPost("find/{searchTerm}")]
-        // Search for posts in the database with provided search query
+        [HttpGet("search/{searchQuery}")]
         public IActionResult SearchThreads(string searchQuery)
         {
             try
@@ -243,8 +245,6 @@ namespace diskusjonsforum_v2.Controllers
                 _logger.LogError(ex, "[ThreadController] Error in searching thread.");
                 return StatusCode(500, "Error while searching threads.");
             }
-
         }
-        
     }
 }

@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, Validators, FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { ThreadService } from './threads.service';
 
 @Component({
-  selector: 'app-threads-threadform',
-  templateUrl: './threadform.component.html',
+  selector: 'app-threads-threadform', // custom HTML tag
+  templateUrl: './threadform.component.html', // path to the HTML file
   //styleUrls: ['./thread-form.component.css'],
 })
 
