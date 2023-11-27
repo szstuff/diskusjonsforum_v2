@@ -194,30 +194,31 @@ namespace diskusjonsforum_v2.Controllers
 
             return StatusCode(500, new { message = errorMsg });
         }
-
-
+        
         // Delete thread with given threadId if user has permission
         [HttpDelete("delete/{id}")]
-        public async Task<ActionResult> DeleteThread(int threadId)
+        public async Task<IActionResult> DeleteThread(int id)
         {
             try
             {
-                Thread thread = _threadRepository.GetThreadById(threadId);
-                if (thread == null)
+                var threadToDelete = _threadRepository.GetThreadById(id);
+
+                if (threadToDelete == null)
                 {
                     return NotFound();
                 }
 
-                await _threadRepository.Remove(thread);
+                await _threadRepository.Remove(threadToDelete);
                 await _threadRepository.SaveChangesAsync();
-                return NoContent();
+
+                var response = new { success = true, message = "Thread " + id.ToString() + " deleted successfully" };
+                return Ok(response);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "[ThreadController] Error deleting thread with ID: {0}", threadId);
+                _logger.LogError(ex, "[ThreadController] An error occurred while deleting the thread with ID: {threadId}", id);
+                return StatusCode(500, "Error deleting thread.");
             }
-
-            return StatusCode(500, "Error deleting thread.");
         }
 
 
