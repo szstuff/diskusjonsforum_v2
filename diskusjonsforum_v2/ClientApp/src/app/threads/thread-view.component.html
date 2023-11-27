@@ -20,8 +20,8 @@
           </div>
           <div><p class="comment-count"><img src="../../assets/images/message-detail-regular-24.png" alt="..." height="20" />
             {{ thread.threadComments?.length }}</p></div>
-          <button (click)="toggleEdit()">Edit</button>
-          <button (click)="deletePost(thread)" [routerLink]="['/threads']" class="delete-thread-button">Delete</button>
+          <button (click)="toggleEdit()" class="editDelBtn">Edit</button>
+          <button (click)="deletePost(thread)" [routerLink]="['/threads']" class="editDelBtn">Delete</button>
         </div>
 
         <ng-template #editMode>
@@ -84,4 +84,6 @@
     </div>
   </div>
 </div>
+
+
 

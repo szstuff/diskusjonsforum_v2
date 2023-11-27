@@ -185,3 +185,32 @@
   padding: 20px 20px 0px 20px;
   background-color: rgba(255, 255, 255, 0.8);
 }
+.comment-input{
+  border-radius: 7px;
+  box-shadow: inset 0 1px 3px #ddd;
+  border: 1px solid #ccc;
+  margin-bottom: 5px;
+}
+
+.editDelBtn{
+
+  font-size: 13px;
+  font-weight: 700;
+  color: white;
+  height: 30px;
+  margin-top: 7px;
+  margin-left: 2px;
+  margin-bottom: 20px;
+  width: 18%;
+  border: none;
+  border-radius: 7px;
+  outline: none;
+  background-color: rgba(29, 150, 53, 0.9);
+  box-shadow: 1px 5px 7px 1px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: .2s ease-out;
+}
+.editDelBtn:hover {
+  background: rgb(29, 150, 53, 07);
+  box-shadow: 1px 5px 7px 1px rgba(0, 0, 0, 0.2);
+}
