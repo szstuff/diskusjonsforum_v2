@@ -3,8 +3,8 @@
   <div class="create-container">
     <div class="form-group">
       <div *ngIf="thread.threadId; else notFound">
-        <div id="displayPost">
-          <!-- Thread title -->
+        <div *ngIf="!isEditing; else editMode" id="displayPost">
+          <!-- Display content when not editing -->
           <h1 class="thread-title-current">{{ thread.threadTitle }}</h1>
 
           <div class="thread-information">
@@ -21,8 +21,30 @@
           </div>
           <div><p class="comment-count"><img src="../../assets/images/message-detail-regular-24.png" alt="..." height="20" />
             {{ thread.threadComments?.length }}</p></div>
+          <button (click)="toggleEdit()">Edit</button>
+          <button (click)="deletePost(thread)" [routerLink]="['/threads']" class="delete-thread-button">Delete</button>
         </div>
-        <button (click)="deletePost(thread)" [routerLink]="['/threads']" class="delete-thread-button">Delete</button>
+
+        <ng-template #editMode>
+          <!-- Display editable content when editing -->
+          <input type="text" [(ngModel)]="editedTitle" />
+          <div class="thread-information">
+            <!-- Thread information: user, post date, last edited date -->
+            <p>
+              Posted by <b>{{ thread.createdBy }}</b> on the <b>{{ thread.threadCreatedAt | date: 'yyyy-MM-dd HH:mm' }}</b>.
+              <!-- Display last edited date if different -->
+              <span *ngIf="thread.threadCreatedAt !== thread.threadLastEditedAt">
+                <i>Last edited: {{ thread.threadLastEditedAt | date: 'yyyy-MM-dd HH:mm' }}</i>
+              </span>
+            </p>
+            <hr />
+            <textarea [(ngModel)]="editedContent"></textarea>
+          </div>
+          <div><p class="comment-count"><img src="../../assets/images/message-detail-regular-24.png" alt="..." height="20" />
+            {{ thread.threadComments?.length }}</p></div>
+          <button (click)="saveChanges()" [routerLink]="['/thread-view/', thread.threadId]" >Save</button>
+          <button (click)="cancelEdit()">Cancel</button>
+        </ng-template>
       </div>
 
 
@@ -60,9 +82,6 @@
             <hr>
           </div>
         </div>
-
-
-
       </div>
     </div>
   </div>

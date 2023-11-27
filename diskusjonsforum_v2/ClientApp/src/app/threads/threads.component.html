@@ -22,7 +22,8 @@
           <hr />
           <p class="title-thread"><b>{{ thread.threadTitle }}</b></p>
           <p class="thread-text">{{ thread.threadBody }}</p>
-          <p class="comment-count">{{ thread.threadComments?.length }} replies</p>
+          <p class="comment-count"><img src="../../assets/images/message-detail-regular-24.png" alt="..." height="20" />
+            {{ thread.threadComments?.length }}</p>
 
           <button class="btn btn-danger" (click)="delete(thread.threadId)">Delete</button>
 

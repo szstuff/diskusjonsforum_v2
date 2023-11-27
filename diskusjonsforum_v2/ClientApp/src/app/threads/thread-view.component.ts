@@ -15,6 +15,9 @@ export class ThreadViewComponent implements OnInit, OnDestroy {
   thread: Thread = {} as Thread;
   newCommentBody: string = '';
   newCommentCreatedBy: string = '';
+  isEditing = false;
+  editedTitle!: string;
+  editedContent!: string;
 
   private unsubscribe$ = new Subject<void>();
 
@@ -88,6 +91,35 @@ export class ThreadViewComponent implements OnInit, OnDestroy {
     }
   }
 
+  toggleEdit() {
+    this.isEditing = !this.isEditing;
+  }
+
+  saveChanges(): void {
+    // Perform the logic to save changes, update thread.title and thread.body
+    // Call the service method to update the thread
+    this.thread.threadTitle = this.editedTitle;
+    this.thread.threadBody = this.editedContent;
+
+    this.threadService.updateThread(this.thread).subscribe(
+      (response) => {
+        console.log(response.message);
+        // Reset isEditing flag after successful save
+        this.isEditing = false;
+      },
+      (error) => {
+        console.error('Error saving changes', error);
+      }
+    );
+  }
+
+  cancelEdit(): void {
+    // Reset editedTitle and editedContent with the current values
+    this.editedTitle = this.thread.threadTitle;
+    this.editedContent = this.thread.threadBody;
+    // Reset isEditing flag
+    this.isEditing = false;
+  }
 
   ngOnDestroy(): void {
     this.unsubscribe$.next();
