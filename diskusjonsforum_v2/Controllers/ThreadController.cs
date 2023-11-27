@@ -16,7 +16,7 @@ namespace diskusjonsforum_v2.Controllers
         private readonly ICommentRepository _commentRepository;
         private readonly ILogger<ThreadController> _logger;
         //private static List<Thread> Threads = new List<Thread>();
-
+        
         public ThreadController(IThreadRepository threadRepository,
             ICommentRepository commentRepository,
             ILogger<ThreadController> logger)
@@ -26,7 +26,7 @@ namespace diskusjonsforum_v2.Controllers
             _logger = logger;
         }
 
-        //Returns all threads
+        //Returns all threads 
         [HttpGet("getall")]
         public ActionResult<IEnumerable<Thread>> GetThreads()
         {
@@ -62,7 +62,7 @@ namespace diskusjonsforum_v2.Controllers
             }
         }
 
-        //Returns an individual thread 
+        // Returns an individual thread 
         [HttpGet("getThread/{id}")]
         public ActionResult<Thread> GetThread(int id)
         {

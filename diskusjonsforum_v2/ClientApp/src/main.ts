@@ -8,18 +8,16 @@ export function getBaseUrl() {
   return document.getElementsByTagName('base')[0].href;
 }
 
-// dependency injection gets configurated
+// configurates tje dependency injection
 const providers = [
   { provide: 'BASE_URL', useFactory: getBaseUrl, deps: [] }
 ];
 
-// checks if the enviroment is set
+// checks the enviroment
 if (environment.production) {
-  // enable production mode if it is in production
   enableProdMode();
 }
 
-// bootstraps the angular application
-platformBrowserDynamic(providers).bootstrapModule(AppModule)
-  .catch(err => console.log(err)); // error handling
 
+platformBrowserDynamic(providers).bootstrapModule(AppModule)
+  .catch(err => console.log(err));

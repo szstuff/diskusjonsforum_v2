@@ -5,41 +5,43 @@ import { ThreadService } from "./threads.service";
 import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
-  selector: 'app-thread-component', // custom HTML tag
+  selector: 'app-thread-component',
   templateUrl: './threads.component.html', // path to the HTML file structure
   styleUrls: ['../../css/IndexStyle.css','../../css/thread_table.css'] // path to the css file
 })
 
 export class ThreadsComponent implements OnInit {
   viewTitle: string = 'Table';
-  threads: Thread[] = []; // sets an empty array to store the threads
+  threads: Thread[] = [];
   private _listFilter: string = '';
 
-  // Getter for the listfilter
+  // calls on the filtered list
   get listFilter(): string {
     return this._listFilter;
   }
-  // Setter  for the listFilter
+  // filters the threads depending on the "value" and updates the liist
   set listFilter(value: string) {
     this._listFilter = value;
     console.log('In setter:', value);
-    this.filteredThreads = this.performFilter(value); // updates the filtered threads with the value coming in from this.performFilter(Value)
+    this.filteredThreads = this.performFilter(value);
   }
-  // updates/stores the array with threads after it has been filtered
+  // stores the filtered list in an array
   filteredThreads: Thread[] = this.threads;
+
+  // initialises routes and service for the constructor
   constructor(
-    private _threadService: ThreadService, //encapsulate functionality linked to CommentService
-    private _http: HttpClient, // sends HTTP requests and receives HTTP responses
-    private _router: Router, //lets us nagivate to different routers within the angular application
-    private route: ActivatedRoute) { } //informs about the route activated
-  // gets threads from the ThreadService
+    private _threadService: ThreadService,
+    private _http: HttpClient,
+    private _router: Router,
+    private route: ActivatedRoute) { }
+ // retrieves the threads by calling on the service and updates the list to display the threads
   getThreads(): void {
     // calls getThreads of the _threadService
     this._threadService.getThreads()
       .subscribe(data => {
         console.log('All', JSON.stringify(data));
-        this.threads = data; //the data is assigned to the threads property
-        this.filteredThreads = this.threads; // updating the property of filteredThread
+        this.threads = data;
+        this.filteredThreads = this.threads;
       },
       (error) => {
         console.error('Error getting threads', error);
@@ -50,13 +52,10 @@ export class ThreadsComponent implements OnInit {
     );
   }
 
-  // Filters the threads
+  // converts the string to lowercase and returns the l
   performFilter(filterBy: string): Thread[] {
-    filterBy = filterBy.toLocaleLowerCase();  // converts the string to lowercase
+    filterBy = filterBy.toLocaleLowerCase();
     return this.threads.filter((thread: Thread) =>
-      // checks if the lowercase ver in threadTitle
-      // contains the lowercase ver of filterby. If it does
-      // the thread matches the criteria for filtering
       thread.threadTitle.toLocaleLowerCase().includes(filterBy)
     );
   }
@@ -70,29 +69,27 @@ export class ThreadsComponent implements OnInit {
     this.getThreads(); // refreshes
   }
 
-  // updates the thread
+  // updates the threads and logs it in the console by calling on updateThread from threads service
   update(thread: Thread): void {
-    // calls on updateThread
     this._threadService.updateThread(thread).subscribe(
       ()=>{
-        console.log('Thread updated'); // logs to the console if the thread is successfully updatet
+        console.log('Thread updated');
       },
       (error) =>{
-        console.error('Error updating thread', error); // an error message occurs if the thread is not successfully updatet
+        console.error('Error updating thread', error);
       }
     );
   }
 
-  // deleting a thread
+  // deleting a thread and logs it to the console. after deleting, the website refreshes with the nondeleted threads
+  // deletes by calling on deleteThread from the service
   delete(threadId: number): void{
-    // calls on deleteThread
     this._threadService.deleteThread(threadId).subscribe(
       ()=>{
-        console.log('Thread deleted'); // logs to the console if the thread is successfully deleted
-        // Refresh the thread list or perform other actions after deletion
+        console.log('Thread deleted');
         this.getThreads();
       },
-      (error) => { // if it doesn't successfully delete an error message occurs
+      (error) => {
         console.error('Error deleting thread', error);
       }
     );

@@ -14,13 +14,15 @@ export class CommentsComponent implements OnInit {
   viewTitle: string = "Table";
   comments: Comment[] = [];
   parentThreadId!: number;
-
+ // initialises routes and service for the constructor
   constructor(
-              private commentsService : CommentsService, //provides methods from CommentService for interaction with the API
-              private _http: HttpClient, // sends HTTP requests and receives HTTP responses
-              private _router: Router, // allows us to navigate through different views
-              private route: ActivatedRoute) {} // gives us info about the current activated route
-  getComments(): void{ //gets the comments using HttpClient from "api/comments"
+              private commentsService : CommentsService,
+              private _http: HttpClient,
+              private _router: Router,
+              private route: ActivatedRoute) {}
+
+  //gets the comments using HttpClient from "api/comments"
+  getComments(): void{
     this._http.get<Comment[]>('api/comments').subscribe(data => {
       console.log('All', JSON.stringify(data));
       this.comments = data;
@@ -32,25 +34,27 @@ export class CommentsComponent implements OnInit {
         console.error('An error occurred while fetching comments. Please try again later.')
     });
   }
-
-  getCommentsByThread(): void{ // Gets comments based on the "parentThreadId" by using CommentService and updates the array.
-    if (this.parentThreadId !== undefined && this.parentThreadId !== null) { // it gets the comment and updates the array if the parentThreadId is defined
+  // retrieves the comments that belongs to the thread by threadId with an if statement
+  getCommentsByThread(): void{
+    if (this.parentThreadId !== undefined && this.parentThreadId !== null) {
       this.commentsService.getCommentsByThreadId(this.parentThreadId).subscribe(
         (comments) => (this.comments = comments),
         (error) => console.error('Error fetching comments')
       )
-    } else { // if the parentThreadId is null or not defined the error is handled and the errormessage is logged to the console
+    } else {
+      // if the parentThreadId is null or not defined the error is handled and the errormessage is logged to the console
       console.error('Cannot fetch comments, parentThreadId is undefined.')
     }
   }
-
+  // gives the comment an commentId and sets parentThreadID to the thread it belongs to
   navigateToCommentform(comment?: Comment) {
     const navigationExtras: NavigationExtras = {
       queryParams: {
         commentId: comment ? comment.commentId.toString() : undefined,
-        parentThreadId: this.parentThreadId.toString()  // Set the parentThreadId
+        parentThreadId: this.parentThreadId.toString()
       }
     };
+    // navigates to /commentForm and specified nagivationExtras
     this._router.navigate(['/commentForm'], navigationExtras);
   }
   ngOnInit(): void {

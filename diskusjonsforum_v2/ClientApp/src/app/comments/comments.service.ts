@@ -17,17 +17,19 @@ export class CommentsService {
   //creates a new comment
   createComment(newComment: Comment):Observable<any>{
     const url = `${this.apiUrl}/create`;
-    return this._http.post<void>(url, newComment); // makes a Post request with the data from the new comment
+    return this._http.post<void>(url, newComment);
   }
 
-  updateComment(comment: Comment): Observable<any> { // updates the comment that already exists
+  // updates the comment
+  updateComment(comment: Comment): Observable<any> {
     const url = `${this.apiUrl}/update/${comment.commentId}`;
-    return this._http.put<any>(url, comment); // makes a PUT request  with the updated comment
+    return this._http.put<any>(url, comment);
   }
 
-  deleteComment(commentId: number): Observable<any> { // deletes comment by specified commentId
+  // deletes comment by commentID
+  deleteComment(commentId: number): Observable<any> {
     const url = `${this.apiUrl}/deleteComment/${commentId}`;
-    return this._http.delete<any>(url); // makes a DELETE request
+    return this._http.delete<any>(url);
   }
 }
 
