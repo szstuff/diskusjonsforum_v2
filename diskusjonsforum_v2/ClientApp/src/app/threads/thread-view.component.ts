@@ -14,6 +14,7 @@ import { Subject } from 'rxjs';
 export class ThreadViewComponent implements OnInit, OnDestroy {
   thread: Thread = {} as Thread;
   newCommentBody: string = '';
+  newCommentCreatedBy: string = '';
 
   private unsubscribe$ = new Subject<void>();
 
@@ -55,7 +56,7 @@ export class ThreadViewComponent implements OnInit, OnDestroy {
       thread: null,
       parentCommentId: null,
       parentComment: null,
-      createdBy: null,
+      createdBy: this.newCommentCreatedBy,
       childComments: [],
     };
   // adds the new comments to the thread it belongs to by the threadId
@@ -63,6 +64,7 @@ export class ThreadViewComponent implements OnInit, OnDestroy {
       (updatedThread: Thread) => {
         this.thread = updatedThread;
         this.newCommentBody = '';
+        this.newCommentCreatedBy = '';
       },
       (error) => {
         console.error('Error adding comment', error);
