@@ -26,7 +26,7 @@ export class ThreadService {
 
   // New method to get comments for a thread
   getCommentsForThread(threadId: number): Observable<Comment[]> {
-    const url = `${this.apiUrl}/getComments/${threadId}`;
+    const url = `${this.apiCommentUrl}/getByThread/${threadId}`;
     return this._http.get<Comment[]>(url);
   }
   addCommentToThread(threadId: number, newComment: Comment): Observable<Thread> {

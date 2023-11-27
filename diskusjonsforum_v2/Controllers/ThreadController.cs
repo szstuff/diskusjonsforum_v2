@@ -28,23 +28,26 @@ namespace diskusjonsforum_v2.Controllers
 
         //Returns all threads 
         [HttpGet("getall")]
-        public ActionResult<IEnumerable<Thread>> GetThreads()
+        public IActionResult GetThreads()
         {
             try
             {
                 var threads = _threadRepository.GetAll().ToList();
+        
                 foreach (var thread in threads)
                 {
-                    thread.ThreadComments?.AddRange(GetComments(thread));
+                    var comments = GetComments(thread).ToList();
+            
+                    // To avoid depth error
+                    thread.ThreadComments = comments.Select(c => new Comment { CommentId = c.CommentId }).ToList();
                 }
 
                 return Ok(threads); // Use Ok() to return a 200 status code along with the threads
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "[ThreadController] An error occurred in the GetThreads action.");
+                _logger.LogError(ex, "[ThreadController] An error occurred in the GetAllThreads action.");
                 return StatusCode(500, "An error occurred while loading threads");
-
             }
         }
 
@@ -57,10 +60,10 @@ namespace diskusjonsforum_v2.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "[ThreadController] An error occurred in the GetComments method.");
-                return Enumerable.Empty<Comment>().AsQueryable(); //Returns empty collection
-
+                return Enumerable.Empty<Comment>().AsQueryable(); // Returns empty collection
             }
         }
+
 
         // Returns an individual thread 
         [HttpGet("getThread/{id}")]
