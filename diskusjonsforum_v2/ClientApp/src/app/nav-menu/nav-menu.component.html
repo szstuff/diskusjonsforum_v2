@@ -18,8 +18,15 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="position-relative">
-        <input id="searchBar" class="form-control" placeholder="Search" type="text">
-        <div id="searchResultsDropdown" class="search-results"></div>
+        <input id="searchBar" class="form-control" placeholder="Search" type="text" [(ngModel)]="handlesearchinput" (input)="handleSearchInput()">
+        <div id="searchResultsDropdown" class="search-results" *ngIf="searchResults.length > 0">
+          <!-- Display your search results here -->
+          <div *ngFor="let result of searchResults">
+            <a (click)="navigateToThreadform(result)">
+              {{ result.threadTitle }}
+            </a>
+          </div>
+        </div>
       </div>
       <div
         class="navbar-collapse collapse d-sm-inline-flex justify-content-end"

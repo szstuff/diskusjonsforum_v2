@@ -4,6 +4,7 @@ import { Thread } from '../threads/threads';
 import { ActivatedRoute, Router } from "@angular/router";
 import { HttpClient } from "@angular/common/http";
 
+
 @Component({
   selector: 'app-home', // custom HTML tag
   templateUrl: './home.component.html', //path to the HTML file structure
@@ -26,13 +27,14 @@ export class HomeComponent implements OnInit {
   navigateToThreadform() {
     this._router.navigate(['/threadForm']); // navigates to the thread form /threadForm
   }
+
   // uses threadSerice to load/fetch the threads
   loadThreads() {
     this.threadService.getThreads().subscribe(
       (threads: Thread[]) => {
-        this.threads = threads; // updates threads with the fetched data
+        this.threads = threads;
       },
-      (error) => { // error handling
+      (error) => {
         console.error('Error fetching threads', error);
       }
     );
