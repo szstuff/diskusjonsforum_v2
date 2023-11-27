@@ -3,8 +3,8 @@ import { Thread } from "../threads/threads";
 export interface Comment {
   commentId: number; //represents unique id
   commentBody: string; // holds text
-  commentCreatedAt: string; //represents timestamp when the comment was create
-  commentLastEditedAt: string; //represents when the comment was last edited
+  commentCreatedAt: Date; //represents timestamp when the comment was create
+  commentLastEditedAt: Date; //represents when the comment was last edited
   threadId: number; //represents unique id for the thread
   thread: Thread | null; //if the comment is not associated with any thread it can be null
   parentCommentId: number | null; //represents the id of the parent comment

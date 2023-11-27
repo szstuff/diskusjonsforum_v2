@@ -1,13 +1,17 @@
+<!DOCTYPE html>
 <h2>Make a Comment</h2>
 
 <form [formGroup]="commentForm" (ngSubmit)="onSubmit()">
+  <input type="hidden" id="threadId" formControlName="threadId" />
+  <input type="hidden" id="parentCommentId" formControlName="parentCommentId" />
+
   <div class="form-group">
-    <label for="title">Title:</label>
-    <input type="text" id="title" formControlName="title" class="form-control" />
+    <label for="commentBody">Comment Body:</label>
+    <input type="text" id="commentBody" formControlName="commentBody" class="form-control" />
   </div>
   <div class="form-group">
-    <label for="body">Body:</label>
-    <input type="text" id="body" formControlName="body" class="form-control" />
+    <label for="createdBy">Created By:</label>
+    <input type="text" id="createdBy" formControlName="createdBy" class="form-control" />
   </div>
   <button type="submit" class="btn btn-primary" [disabled]="commentForm.invalid">Create Comment</button>
   <button class="btn btn-secondary" (click)="backToThreads()">Cancel</button>
