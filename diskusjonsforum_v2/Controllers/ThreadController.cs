@@ -94,18 +94,17 @@ namespace diskusjonsforum_v2.Controllers
 
         }
 
-        // Sort comments based on their parent-child
         private List<Comment> SortComments(List<Comment> comments)
         {
             try
             {
                 var sortedComments = new List<Comment>();
+                var visitedComments = new HashSet<int>(); // Use a HashSet to efficiently check visited comments
 
                 // Go through comments without a parent comment and sorts them
                 foreach (var comment in comments.Where(c => c.ParentCommentId == null))
                 {
-                    sortedComments.Add(comment);
-                    AddChildComments(comment, comments, sortedComments);
+                    AddChildComments(comment, comments, sortedComments, visitedComments);
                 }
 
                 return sortedComments;
@@ -113,13 +112,12 @@ namespace diskusjonsforum_v2.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "[ThreadController] An error occurred in the SortComments method.");
-                return new List<Comment>(); //Returns no comments so that the Thread can be displayed without comments
-                //instead of crashing/showing an error message. 
+                return new List<Comment>(); // Returns no comments to prevent crashing/showing an error message.
             }
         }
 
         // Add child comment to sortedComments list
-        private void AddChildComments(Comment parent, List<Comment> allComments, List<Comment> sortedComments)
+        private void AddChildComments(Comment parent, List<Comment> allComments, List<Comment> sortedComments, HashSet<int> visitedComments)
         {
             try
             {
@@ -128,7 +126,7 @@ namespace diskusjonsforum_v2.Controllers
                 foreach (var comment in childComments)
                 {
                     sortedComments.Add(comment);
-                    AddChildComments(comment, allComments, sortedComments); // Find children of this child comment
+                    AddChildComments(comment, allComments, sortedComments, visitedComments); // Find children of this child comment
                 }
             }
             catch (Exception ex)

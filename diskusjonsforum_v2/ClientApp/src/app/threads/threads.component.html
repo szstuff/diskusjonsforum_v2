@@ -23,10 +23,13 @@
           <p class="title-thread"><b>{{ thread.threadTitle }}</b></p>
           <p class="thread-text">{{ thread.threadBody }}</p>
           <p class="comment-count">{{ thread.threadComments?.length }} replies</p>
+
+          <button class="btn btn-danger" (click)="delete(thread.threadId)">Delete</button>
+
+          <button class="btn btn-warning" (click)="update(thread)">Edit</button>
         </div>
       </div>
     </a>
   </div>
 </div>
-
 
