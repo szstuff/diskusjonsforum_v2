@@ -44,13 +44,14 @@ export class CommentsComponent implements OnInit {
     }
   }
 
-  navigateToCommentform(comment?: Comment){
+  navigateToCommentform(comment?: Comment) {
     const navigationExtras: NavigationExtras = {
-      //sets the parameters, if there is an object, an object with single propert "commentId" is created with the string "commentId".
-      // if there is no comment the parameter is set undefined
-      queryParams: comment ? {commentId: comment.commentId.toString()} : undefined
+      queryParams: {
+        commentId: comment ? comment.commentId.toString() : undefined,
+        parentThreadId: this.parentThreadId.toString()  // Set the parentThreadId
+      }
     };
-    this._router.navigate(['/commentForm'], navigationExtras); //navigates to commentForm
+    this._router.navigate(['/commentForm'], navigationExtras);
   }
   ngOnInit(): void {
     console.log('CommentsComponent created');

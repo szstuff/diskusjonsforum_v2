@@ -44,6 +44,8 @@ namespace diskusjonsforum_v2.Controllers
             {
                 newComment.ThreadId = threadId;
 
+                newComment.CreatedBy = "Sys";
+
                 _commentRepository.Add(newComment);
 
                 var response = new
