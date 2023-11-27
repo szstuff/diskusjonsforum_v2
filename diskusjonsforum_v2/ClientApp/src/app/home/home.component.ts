@@ -12,30 +12,29 @@ import { HttpClient } from "@angular/common/http";
 })
 export class HomeComponent implements OnInit {
   threads: Thread[] = [];
-
+  // initialises routes and service for the constructor
   constructor(
-    private threadService: ThreadService, //encapsulate functionality linked to ThreadService
-    private _http: HttpClient, // sends HTTP requests and receives HTTP responses
-    private _router: Router, //lets us nagivate to different routers within the angular application
-    private route: ActivatedRoute //informs about the route activated
+    private threadService: ThreadService,
+    private _http: HttpClient,
+    private _router: Router,
+    private route: ActivatedRoute
   ) {}
-
+  // initializes the data
   ngOnInit(): void {
     this.loadThreads();
   }
-
   navigateToThreadform() {
-    this._router.navigate(['/threadForm']); // navigates to the thread form /threadForm
+    this._router.navigate(['/threadForm']);
   }
 
-  // uses threadSerice to load/fetch the threads
+  // loads the threads by calling getThreads from threadService
   loadThreads() {
     this.threadService.getThreads().subscribe(
       (threads: Thread[]) => {
-        this.threads = threads;
+        this.threads = threads; // updates the threads with the fetched data
       },
       (error) => {
-        console.error('Error fetching threads', error);
+        console.error('Error fetching threads', error); //error is logged if it occurs
       }
     );
   }

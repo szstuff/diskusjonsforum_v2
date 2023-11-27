@@ -12,11 +12,12 @@ export class CommentformComponent implements OnInit{
   @Input() threadId!: number;
   @Input() parentCommentId: number = 0;
   commentForm!: FormGroup;
-  commentId: number | undefined; //identifier for comment
+  commentId: number | undefined;
+
 
   constructor(
     private _formBuilder: FormBuilder, //the form for creating a comment
-    private _router: Router, //lets us nagivate to different routers within the angular application
+    private _router: Router, // makes it lets us nagivate to different routers within the angular application
     private _route: ActivatedRoute, //informs about the route activated
     private _commentService: CommentsService, //encapsulate functionality linked to CommentService
     private _http: HttpClient // sends HTTP requests and receives HTTP responses
@@ -30,7 +31,7 @@ export class CommentformComponent implements OnInit{
     });
   }
 
-
+  // Validator for creating a comment
   createForm(): void{
     this.commentForm = this._formBuilder.group({
       commentBody: ['', Validators.required],
@@ -39,25 +40,28 @@ export class CommentformComponent implements OnInit{
       parentCommentId: [this.parentCommentId]
     });
   }
-
+  // sumbits the comment
   onSubmit() {
-    console.log("CommentCreate form submitted:"); //Logs that the comment form is being submitted
-    console.log(this.commentForm); //Logs the commentForm object also controls and their current values
-    console.log('Touched: ', this.commentForm.touched); //Logs if the commentForm control has been touched or not
+    // logs the status of the comment
+    console.log("CommentCreate form submitted:");
+    console.log(this.commentForm);
+    console.log('Touched: ', this.commentForm.touched);
 
     const newComment = this.commentForm.value; //Gets the current values of the commentForm control
-
-    if (this.commentId !== undefined){ //checks if commentId is undefined
-      newComment.commentId = this.commentId; //if it is undefined CommentId is added to the object newComment
+    //checks if commentId is undefined
+    if (this.commentId !== undefined){
+      newComment.commentId = this.commentId;
     }
-    const createUrl = "api/comment/create"; //navigates to the URL for creating new comment
-    this._commentService.createComment(newComment).subscribe(response => { //makes http post request with the data from newComment
-      if (response.success){ //check if the post request is successful
-        console.log(response.message); //Logs a success message if the post request is successful
+    //navigates to the URL for creating new comment
+    const createUrl = "api/comment/create";
+    this._commentService.createComment(newComment).subscribe(response => {
+      // checks the response received
+      if (response.success){
+        console.log(response.message);
         this._router.navigate(["/comments"]);
       }
       else {
-        console.log("Comment failed"); //if not successfull a a failed success message is logged
+        console.log("Comment failed");
       }
       },
       (error) => {

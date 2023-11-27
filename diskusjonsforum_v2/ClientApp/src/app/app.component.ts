@@ -5,6 +5,6 @@ import { Component } from '@angular/core';
   templateUrl: './app.component.html' //path to the HTML file structure
 })
 export class AppComponent {
-  title = 'ArcaNet'; // holds property title with value ArcaNet
+  title = 'ArcaNet';
 }
 
