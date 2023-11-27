@@ -20,8 +20,8 @@
           </div>
           <div><p class="comment-count"><img src="../../assets/images/message-detail-regular-24.png" alt="..." height="20" />
             {{ thread.threadComments?.length }}</p></div>
-          <button (click)="toggleEdit()" class="editDelBtn">Edit</button>
-          <button (click)="deletePost(thread)" [routerLink]="['/threads']" class="editDelBtn">Delete</button>
+          <button (click)="toggleEdit()" class="editBtn">Edit</button>
+          <button (click)="deletePost(thread)" [routerLink]="['/threads']" class="editBtn">Delete</button>
         </div>
 
         <ng-template #editMode>
@@ -37,12 +37,12 @@
               </span>
             </p>
             <hr />
-            <textarea [(ngModel)]="editedContent"></textarea>
+            <textarea [(ngModel)]="editedContent" class="editBox"></textarea>
           </div>
           <div><p class="comment-count"><img src="../../assets/images/message-detail-regular-24.png" alt="..." height="20" />
             {{ thread.threadComments?.length }}</p></div>
-          <button (click)="saveChanges()" [routerLink]="['/thread-view/', thread.threadId]" >Save</button>
-          <button (click)="cancelEdit()">Cancel</button>
+          <button (click)="saveChanges()" [routerLink]="['/thread-view/', thread.threadId]" class="editBtn">Save</button>
+          <button (click)="cancelEdit()" class="editBtn">Cancel</button>
         </ng-template>
       </div>
 
@@ -57,7 +57,7 @@
 
         <!-- Input box for adding comments -->
         <div id="textBox">
-          <textarea [(ngModel)]="newCommentCreatedBy" placeholder="Display name" class="comment-input"></textarea>
+          <input [(ngModel)]="newCommentCreatedBy" placeholder="Display name" class="comment-input">
           <textarea [(ngModel)]="newCommentBody" placeholder="What are your thoughts?" class="comment-input"></textarea>
           <div>
             <button (click)="addComment()" class="add-comment-button">Add Comment</button>
