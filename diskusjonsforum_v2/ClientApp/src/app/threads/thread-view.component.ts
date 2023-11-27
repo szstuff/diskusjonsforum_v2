@@ -9,7 +9,7 @@ import { Subject } from 'rxjs';
 @Component({
   selector: 'app-thread-view',
   templateUrl: './thread-view.component.html',
-  styleUrls: ['../../css/ThreadStyle.css']
+  styleUrls: ['../../css/thread_view.css']
 })
 export class ThreadViewComponent implements OnInit, OnDestroy {
   thread: Thread = {} as Thread;

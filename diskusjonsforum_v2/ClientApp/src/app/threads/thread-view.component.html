@@ -1,45 +1,57 @@
-<div class="container mt-5" *ngIf="thread.threadId; else notFound">
-  <div id="displayPost">
-    <!-- Thread title -->
-    <h1 class="thread-title-current">{{ thread.threadTitle }}</h1>
 
-    <div class="thread-information">
-      <!-- Thread information: user, post date, last edited date -->
-      <p>
-        Posted by <b>{{ thread.createdBy }}</b> on the <b>{{ thread.threadCreatedAt | date: 'yyyy-MM-dd HH:mm' }}</b>.
-        <!-- Display last edited date if different -->
-        <span *ngIf="thread.threadCreatedAt !== thread.threadLastEditedAt">
-          <i>Last edited: {{ thread.threadLastEditedAt | date: 'yyyy-MM-dd HH:mm' }}</i>
-        </span>
-      </p>
-      <hr />
-      <p>{{ thread.threadBody }}</p>
+<div class="form-box">
+  <div class="create-container">
+    <div class="form-group">
+      <div *ngIf="thread.threadId; else notFound">
+        <div id="displayPost">
+          <!-- Thread title -->
+          <h1 class="thread-title-current">{{ thread.threadTitle }}</h1>
+
+          <div class="thread-information">
+            <!-- Thread information: user, post date, last edited date -->
+            <p>
+              Posted by <b>{{ thread.createdBy }}</b> on the <b>{{ thread.threadCreatedAt | date: 'yyyy-MM-dd HH:mm' }}</b>.
+              <!-- Display last edited date if different -->
+              <span *ngIf="thread.threadCreatedAt !== thread.threadLastEditedAt">
+                <i>Last edited: {{ thread.threadLastEditedAt | date: 'yyyy-MM-dd HH:mm' }}</i>
+              </span>
+            </p>
+            <hr />
+            <p class="thread-body">{{ thread.threadBody }}</p>
+          </div>
+          <div><p class="comment-count"><img src="../../assets/images/message-detail-regular-24.png" alt="..." height="20" />    {{ thread.threadComments?.length }}</p></div>
+        </div>
+      </div>
+
+
+      <ng-template #notFound>
+        <div class="container">
+          <p>The requested thread was not found.</p>
+        </div>
+      </ng-template>
+
+      <div id="displayComments" *ngIf="thread">
+        <h3 class="comments-header">Comments</h3>
+
+        <!-- Input box for adding comments -->
+        <div id="textBox">
+          <textarea [(ngModel)]="newCommentBody" placeholder="What are your thoughts?" class="comment-input"></textarea>
+          <div>
+            <button (click)="addComment()" class="add-comment-button">Add Comment</button>
+          </div>
+        </div>
+
+        <!-- Display existing comments -->
+        <div class="actual-comment">
+          <div *ngIf="!thread.threadComments || thread.threadComments.length === 0">
+            <p>No comments yet.</p>
+          </div>
+          <div *ngFor="let comment of thread.threadComments">
+            <p>{{ comment.commentBody }}</p>
+          </div>
+        </div>
+      </div>
     </div>
-    <div><p class="comment-count">{{ thread.threadComments?.length }} Comments</p></div>
-  </div>
-</div>
-
-<ng-template #notFound>
-  <div class="container mt-5">
-    <p>The requested thread was not found.</p>
-  </div>
-</ng-template>
-
-<div id="displayComments" *ngIf="thread">
-  <h3>Comments</h3>
-
-  <!-- Input box for adding comments -->
-  <div id="textBox">
-    <textarea [(ngModel)]="newCommentBody" placeholder="What are your thoughts?"></textarea>
-    <button (click)="addComment()">Add Comment</button>
-  </div>
-
-  <!-- Display existing comments -->
-  <div *ngIf="!thread.threadComments || thread.threadComments.length === 0">
-    <p>No comments yet.</p>
-  </div>
-  <div *ngFor="let comment of thread.threadComments">
-    <p>{{ comment.commentBody }}</p>
   </div>
 </div>
 
