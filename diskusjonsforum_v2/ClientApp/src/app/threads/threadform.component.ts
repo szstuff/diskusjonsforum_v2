@@ -8,7 +8,7 @@ import {Comment} from "../comments/comments";
 @Component({
   selector: 'app-threads-threadform',
   templateUrl: './threadform.component.html', // path to the HTML component
-  //styleUrls: ['./thread-form.component.css'],
+  styleUrls: [/*'../../css/IndexStyle.css', '../../css/thread_table.css'*/'../../css/thread_view.css'],
 })
 
 export class ThreadformComponent {

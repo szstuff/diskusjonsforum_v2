@@ -1,24 +1,33 @@
 .post {
   background-color: rgba(255, 255, 255, 0.9);
-  border-radius: 20px;
+  border-radius: 7px;
   padding: 1.25em;
   margin: 20px;
   margin-bottom: 40px;
-  color: black;
+/*  margin: 20px auto;
+  margin-bottom: 40px auto;*/
+  color: #002c45;
   box-shadow: 3px 4px 5px 0px rgba(0, 0, 0, 0.38);
+  transition: 0.5s ease; /* Animation */
 }
 
   .post:hover {
-    color: blue;
+/*    -webkit-transform: scale(1.2);
+    -ms-transform: scale(1.2);*/
+    transform: scale(1.1);
+/*    transition: 1s ease;*/
   }
 
+.thread-table-container {
+    max-width: 1000px;
+}
+
 .category {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 a{
     text-decoration: none;
-    color: black;
     cursor: pointer;
 }
 

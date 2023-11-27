@@ -1,19 +1,30 @@
-<h2>Create Thread</h2>
+<h2 class="tabelLabel text-white">Create Thread</h2>
 
-<form [formGroup]="threadForm" (ngSubmit)="onSubmit()">
-  <div class="form-group">
-    <label for="createdBy">Username:</label>
-    <input type="text" id="createdBy" formControlName="createdBy" class="form-control" />
-  </div>
-  <div class="form-group">
-    <label for="threadTitle">Title:</label>
-    <input type="text" id="threadTitle" formControlName="threadTitle" class="form-control" />
-  </div>
-  <div class="form-group">
-    <label for="threadBody">Body:</label>
-    <input type="text" id="threadBody" formControlName="threadBody" class="form-control" />
-  </div>
-  <button type="submit" class="btn btn-primary" [disabled]="threadForm.invalid">Create Thread</button>
-  <button class="btn btn-secondary" (click)="backToThreads()">Cancel</button>
+<div class="form-box">
+  <div class="create-container">
+    <form [formGroup]="threadForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <div class="create-information">
+          <label class="input-label" for="createdBy">Username:</label>
+            <input type="text" id="createdBy" formControlName="createdBy" class="form-control username-input" />
+        </div>
+        <div class="create-information">
+          <label class="input-label" for="threadTitle">Title:</label>
+            <input type="text" id="threadTitle" formControlName="threadTitle" class="form-control title-input" />
+        </div>
+        <div class="create-information">
+          <label class="input-label" for="threadBody">Body:</label>
+            <textarea type="text" id="threadBody" formControlName="threadBody" class="form-control body-input"></textarea>
+            
+        </div>
+      </div>
 
-</form>
+      <div class="create-thread-buttons">
+        <button type="submit" class="btn btn-primary create-button" [disabled]="threadForm.invalid">Create Thread</button>
+        <button class="btn btn-secondary cancel-button" (click)="backToThreads()">Cancel</button>
+      </div>
+      
+
+    </form>
+  </div>
+</div>

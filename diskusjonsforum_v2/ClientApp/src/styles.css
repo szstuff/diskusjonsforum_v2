@@ -28,6 +28,7 @@ body {
   display: flex;
   flex-direction: column;
   overflow-y: auto;
+  color: #002c45;
 }
 
 .mx-2 {
@@ -211,15 +212,16 @@ header {
 }
 
 #explore:hover::before {
-  border-color: grey; /* Change the underline color on hover */
+  border-color: white; /* Change the underline color on hover */
 }
 
 /*footer placement and design*/
 .footer-content{
   background-color: transparent;
   padding-top: 10px;
-  padding-bottom: 30px;
+  padding-bottom: 15px;
   margin-left: 20px;
+  color: white;
 }
 
 .login-container-new, .register-container-new {

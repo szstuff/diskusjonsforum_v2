@@ -108,8 +108,8 @@
 
 /* Style comment count */
 .comment-count {
-    color: #363636;
-    font-size: 0.9em;
+  color: #002c45;
+  font-size: 0.9em;
 }
 
 /* Designs border for the threads*/
@@ -266,6 +266,3 @@
     font-weight: 500;
 }*/
 
-.post:hover{
-    color: blue;
-}
