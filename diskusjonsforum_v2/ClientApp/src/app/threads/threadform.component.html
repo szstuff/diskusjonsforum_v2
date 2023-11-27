@@ -2,12 +2,16 @@
 
 <form [formGroup]="threadForm" (ngSubmit)="onSubmit()">
   <div class="form-group">
-    <label for="title">Title:</label>
-    <input type="text" id="title" formControlName="title" class="form-control" />
+    <label for="createdBy">Username:</label>
+    <input type="text" id="createdBy" formControlName="createdBy" class="form-control" />
   </div>
   <div class="form-group">
-    <label for="body">Body:</label>
-    <input type="text" id="body" formControlName="body" class="form-control" />
+    <label for="threadTitle">Title:</label>
+    <input type="text" id="threadTitle" formControlName="threadTitle" class="form-control" />
+  </div>
+  <div class="form-group">
+    <label for="threadBody">Body:</label>
+    <input type="text" id="threadBody" formControlName="threadBody" class="form-control" />
   </div>
   <button type="submit" class="btn btn-primary" [disabled]="threadForm.invalid">Create Thread</button>
   <button class="btn btn-secondary" (click)="backToThreads()">Cancel</button>
