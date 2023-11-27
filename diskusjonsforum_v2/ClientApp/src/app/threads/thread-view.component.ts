@@ -72,6 +72,22 @@ export class ThreadViewComponent implements OnInit, OnDestroy {
     );
   }
 
+  deletePost(thread: Thread){
+    const confirmDelete = confirm(`Are you sure you want to delete "${thread.threadTitle}"`);
+    if (confirmDelete){
+      this.threadService.deleteThread(thread.threadId).subscribe(
+        (response) => {
+          if (response.success){
+            console.log(response.message);
+          }
+        },
+        error => {
+          console.error('Error deleting item', error)
+        }
+      )
+    }
+  }
+
 
   ngOnDestroy(): void {
     this.unsubscribe$.next();

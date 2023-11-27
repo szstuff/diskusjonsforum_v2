@@ -19,8 +19,10 @@
             <hr />
             <p class="thread-body">{{ thread.threadBody }}</p>
           </div>
-          <div><p class="comment-count"><img src="../../assets/images/message-detail-regular-24.png" alt="..." height="20" />    {{ thread.threadComments?.length }}</p></div>
+          <div><p class="comment-count"><img src="../../assets/images/message-detail-regular-24.png" alt="..." height="20" />
+            {{ thread.threadComments?.length }}</p></div>
         </div>
+        <button (click)="deletePost(thread)" [routerLink]="['/threads']" class="delete-thread-button">Delete</button>
       </div>
 
 
@@ -58,6 +60,15 @@
             <hr>
           </div>
         </div>
+        <!-- Input box for adding comments -->
+        <div id="textBox">
+          <textarea [(ngModel)]="newCommentBody" placeholder="What are your thoughts?" class="comment-input"></textarea>
+          <div>
+            <button (click)="addComment()" class="add-comment-button">Add Comment</button>
+          </div>
+        </div>
+
+
       </div>
     </div>
   </div>
