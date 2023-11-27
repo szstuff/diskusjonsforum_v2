@@ -2,25 +2,38 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Thread } from "./threads";
+import { Comment } from '../comments/comments'
 
 @Injectable({
   providedIn: 'root',
 })
 
 export class ThreadService {
-  private apiUrl = 'api/threads'; // navigates to the API endpoints for threads
+  private apiUrl = 'api/threads';
+  private apiCommentUrl = 'api/comments';
   constructor(private _http: HttpClient) {}
 
   // Gets all the threads with GET request
   getThreads(): Observable<Thread[]> {
     return this._http.get<Thread[]>(`${this.apiUrl}/getall`);
   }
-  // Gets a thread by threadId with GET request
+
+  // Updated getThread to include comments
   getThread(threadId: number): Observable<Thread> {
-    const url = '${this.apiUrl)/getThread/${threadId}';
+    const url = `${this.apiUrl}/getThread/${threadId}`;
     return this._http.get<Thread>(url);
   }
-  // Creates a new thread by threatId with POST request
+
+  // New method to get comments for a thread
+  getCommentsForThread(threadId: number): Observable<Comment[]> {
+    const url = `${this.apiUrl}/getComments/${threadId}`;
+    return this._http.get<Comment[]>(url);
+  }
+  addCommentToThread(threadId: number, newComment: Comment): Observable<Thread> {
+    const url = `${this.apiCommentUrl}/addComment/${threadId}`;
+    return this._http.post<Thread>(url, newComment);
+  }
+
   createThread(newThread: Thread): Observable<any> {
     const createUrl = `${this.apiUrl}/create`;
     return this._http.post<any>(createUrl, newThread);
