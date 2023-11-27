@@ -49,8 +49,8 @@ export class ThreadViewComponent implements OnInit, OnDestroy {
     const newComment = {
       commentId: 0,
       commentBody: this.newCommentBody,
-      commentCreatedAt: '',
-      commentLastEditedAt: '',
+      commentCreatedAt: new Date(),
+      commentLastEditedAt:new Date(),
       threadId: this.thread.threadId,
       thread: null,
       parentCommentId: null,
@@ -69,6 +69,7 @@ export class ThreadViewComponent implements OnInit, OnDestroy {
       }
     );
   }
+
 
   ngOnDestroy(): void {
     this.unsubscribe$.next();

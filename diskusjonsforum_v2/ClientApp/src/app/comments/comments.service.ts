@@ -17,7 +17,7 @@ export class CommentsService {
   //creates a new comment
   createComment(newComment: Comment):Observable<any>{
     const url = `${this.apiUrl}/create`;
-    return this._http.post<any>(url, newComment); // makes a Post request with the data from the new comment
+    return this._http.post<void>(url, newComment); // makes a Post request with the data from the new comment
   }
 
   updateComment(comment: Comment): Observable<any> { // updates the comment that already exists

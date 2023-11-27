@@ -1,16 +1,17 @@
-import {Component} from "@angular/core";
-import { FormControl, FormGroup, Validators, FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import {Component, Input, OnInit} from "@angular/core";
+import {FormGroup, Validators, FormBuilder} from '@angular/forms';
 import {ActivatedRoute, Router} from "@angular/router";
 import {HttpClient} from "@angular/common/http";
 import { CommentsService} from "./comments.service";
-
 @Component({
   selector: "app-comments-commentform", //custom html tag
   templateUrl: "./commentform.component.html" //path to the HTML file structure
 })
 
-export class CommentformComponent {
-  commentForm: FormGroup;
+export class CommentformComponent implements OnInit{
+  @Input() threadId!: number;
+  @Input() parentCommentId: number = 0;
+  commentForm!: FormGroup;
   commentId: number | undefined; //identifier for comment
 
   constructor(
@@ -19,24 +20,31 @@ export class CommentformComponent {
     private _route: ActivatedRoute, //informs about the route activated
     private _commentService: CommentsService, //encapsulate functionality linked to CommentService
     private _http: HttpClient // sends HTTP requests and receives HTTP responses
-  ) {
+  ) {}
 
-    this.commentForm = _formBuilder.group({ //capture input when submitting a comment
-      comment: ['', Validators.required], //makes sure input is not empty
-      body: ['', Validators.required] //makes sure input is not empty
+  ngOnInit(): void {
+    this.parentCommentId = this.parentCommentId || 0;
+    this.createForm();
+    this._route.queryParams.subscribe(params => {
+      this.commentId = params['commentId'] ? +params['commentId'] : undefined;
     });
   }
 
-  ngOnInit(): void { //ngOnInit is a lifecycle hook
-    this._route.queryParams.subscribe(params => { //subscribes to queryParams. refers to ActivatedRoute
-      this.commentId = params['commentId'] ? +params['commentId'] : undefined; //checks if commentId exists and assign its value to this.commentId if it do. If the commentId doesn't exist the value is set undefined.
+
+  createForm(): void{
+    this.commentForm = this._formBuilder.group({
+      commentBody: ['', Validators.required],
+      createdBy: ['', Validators.required],
+      threadId: [this.threadId],
+      parentCommentId: [this.parentCommentId]
     });
   }
 
   onSubmit() {
     console.log("CommentCreate form submitted:"); //Logs that the comment form is being submitted
     console.log(this.commentForm); //Logs the commentForm object also controls and their current values
-    console.log(this.commentForm.touched); //Logs if the commentForm control has been touched or not
+    console.log('Touched: ', this.commentForm.touched); //Logs if the commentForm control has been touched or not
+
     const newComment = this.commentForm.value; //Gets the current values of the commentForm control
 
     if (this.commentId !== undefined){ //checks if commentId is undefined
@@ -51,9 +59,12 @@ export class CommentformComponent {
       else {
         console.log("Comment failed"); //if not successfull a a failed success message is logged
       }
-    })
-  };
-
+      },
+      (error) => {
+        console.error("Error creating comment:", error);
+      }
+    );
+  }
   backToThreads(){
     this._router.navigate(["/threads"]); //navigates back to the thread
   }
