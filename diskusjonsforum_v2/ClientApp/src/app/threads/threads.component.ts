@@ -97,17 +97,4 @@ export class ThreadsComponent implements OnInit {
       }
     );
   }
-
-  // method to search threads
-  search(searchQuery: string): void {
-    this._threadService.searchThreads(searchQuery).subscribe(
-      (searchResults) => { // starts a search operation
-        console.log('Search results', searchResults); // logs to console if the search was successful
-        // Handle the search results as needed
-      },
-      (error) => { // an error message occurs if the search is not successful
-        console.error('Error searching threads', error);
-      }
-    );
-  }
 }

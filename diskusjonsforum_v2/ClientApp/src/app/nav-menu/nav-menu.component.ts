@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';  // Import Router
-import { NavMenuService } from './nav-menu.service';
+import { Router } from '@angular/router';
 import { Thread } from '../threads/threads';
+import { NavMenuService } from './nav-menu.service';
 import { ThreadService } from "../threads/threads.service";
 
 @Component({
@@ -11,40 +11,26 @@ import { ThreadService } from "../threads/threads.service";
 })
 export class NavMenuComponent {
   isExpanded = false;
+  searchResults: Thread[] = [];
+  handlesearchinput: string = '';
 
   toggle() {
     this.isExpanded = !this.isExpanded;
   }
 
-  searchResults: any[] = [];
-
   constructor(
-      private navMenuService: NavMenuService,
-      private threadService: ThreadService,
-      private router: Router  // Inject Router
+    private navMenuService: NavMenuService,
+    private threadService: ThreadService,
+    private router: Router
   ) {}
 
-  ngOnInit(): void {
-    const searchBar = document.getElementById('searchBar');
-    const searchResultsDropdown = document.getElementById('searchResultsDropdown');
-
-    if (searchBar) {
-      searchBar.addEventListener('input', () => {
-        this.handleSearchInput();
-      });
-    }
-  }
   handleSearchInput() {
-    const searchBar = document.getElementById('searchBar') as HTMLInputElement;
-
-    const searchTerm = searchBar.value.trim().toLowerCase();
+    const searchTerm = this.handlesearchinput.trim().toLowerCase();
 
     if (searchTerm.length >= 1) {
       this.navMenuService.searchThreads(searchTerm).subscribe({
         next: (data) => {
           this.searchResults = data;
-          const searchResults = document.getElementById('searchResultsDropdown') as HTMLElement;
-          searchResults.style.display = this.searchResults.length > 0 ? 'block' : 'none';
         },
         error: (error) => {
           console.error('Error:', error);
@@ -52,8 +38,6 @@ export class NavMenuComponent {
       });
     } else {
       this.searchResults = [];
-      const searchResults = document.getElementById('searchResultsDropdown') as HTMLElement;
-      searchResults.style.display = 'none';
     }
   }
   navigateToThreadform(thread: Thread) {
