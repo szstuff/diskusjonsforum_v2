@@ -17,7 +17,29 @@
     <div id="topBtn">
       <a id="top" href="#">^</a>
     </div>
+    <script>
+      // kode fra chatgpt må kanskje forrandres, men den funker
+      // JavaScript to handle smooth scroll to top
+      document.addEventListener('DOMContentLoaded', function() {
+        var scrollToTopBtn = document.getElementById('top');
 
+        // Show/hide the "TOP" link based on scroll position
+        window.onscroll = function() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            scrollToTopBtn.style.display = 'block';
+          } else {
+            scrollToTopBtn.style.display = 'none';
+          }
+        };
+
+        // Add click event listener to scroll to top
+        scrollToTopBtn.addEventListener('click', function(event) {
+          event.preventDefault(); // Prevent the default behavior of the anchor tag
+          document.body.scrollTop = 0; // For Safari
+          document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE, and Opera
+        });
+      });
+    </script>
     <footer class="footer">
       <div class="container footer-content">
         &copy; 2023 - forum
