@@ -80,6 +80,7 @@ namespace diskusjonsforum_v2.Controllers
 
                 // Update the properties of the existing comment
                 existingComment.CommentBody = comment.CommentBody; 
+                existingComment.CommentLastEditedAt = DateTime.Now;
 
                 // Call the repository method to update the comment
                 bool updateSuccess = await _commentRepository.Update(existingComment);
