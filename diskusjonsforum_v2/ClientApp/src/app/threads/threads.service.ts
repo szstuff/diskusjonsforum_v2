@@ -40,7 +40,6 @@ export class ThreadService {
     return this._http.get<Thread[]>(`${this.apiUrl}/getall`);
   }
 
-
   getThread(threadId: number): Observable<Thread> {
     const url = `${this.apiUrl}/getThread/${threadId}`;
     return this._http.get<Thread>(url);
@@ -60,6 +59,7 @@ export class ThreadService {
     const createUrl = `${this.apiUrl}/create`;
     return this._http.post<any>(createUrl, newThread);
   }
+
   // updates the thread by threadId with PUT request
   updateThread(thread: Thread): Observable<any>{
     const url = `${this.apiUrl}/update/${thread.threadId}`;
@@ -76,4 +76,12 @@ export class ThreadService {
     return this._http.get(url);
   }
 
+  updateComment(comment: Comment){
+    const url = `${this.apiCommentUrl}/update/${comment.commentId}`;
+    return this._http.put(url, comment);
+  }
+  deleteComment(commentId: number): Observable<any> {
+    const url = `${this.apiCommentUrl}/delete/${commentId}`;
+    return this._http.delete<any>(url);
+  }
 }

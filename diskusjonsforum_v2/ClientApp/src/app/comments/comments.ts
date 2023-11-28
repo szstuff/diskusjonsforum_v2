@@ -11,4 +11,7 @@ export interface Comment {
   parentComment: Comment | null; // represent/references to the comment of the parent
   createdBy: string | null; // the info of the user who created the comment
   childComments: Comment[]; //if there are replies to the comment the array of child represents it
+
+  isEditing?: boolean;
+  editedBody?: string;
 }

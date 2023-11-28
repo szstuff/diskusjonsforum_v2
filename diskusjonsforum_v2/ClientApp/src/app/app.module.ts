@@ -12,6 +12,7 @@ import { CommentsComponent } from './comments/comments.component';
 import { ThreadformComponent} from "./threads/threadform.component";
 import { CommentformComponent} from "./comments/commentform.component";
 import { ThreadViewComponent } from "./threads/thread-view.component";
+import {NgOptimizedImage} from "@angular/common";
 
 // defines the components
 @NgModule({
@@ -26,21 +27,22 @@ import { ThreadViewComponent } from "./threads/thread-view.component";
     ThreadViewComponent
   ],
   // imports necessary modules and templates
-  imports: [
-    BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
-    HttpClientModule,
-    FormsModule,
-    ReactiveFormsModule,
-    RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'threads', component: ThreadsComponent},
-      { path: 'comments', component: CommentsComponent},
-      {path: 'threadForm', component: ThreadformComponent},
-      {path: 'commentForm', component: CommentformComponent},
-      {path: 'thread-view/:id', component: ThreadViewComponent },
-      {path: '**', redirectTo: '', pathMatch: 'full'}
-    ])
-  ],
+    imports: [
+        BrowserModule.withServerTransition({appId: 'ng-cli-universal'}),
+        HttpClientModule,
+        FormsModule,
+        ReactiveFormsModule,
+        RouterModule.forRoot([
+            {path: '', component: HomeComponent, pathMatch: 'full'},
+            {path: 'threads', component: ThreadsComponent},
+            {path: 'comments', component: CommentsComponent},
+            {path: 'threadForm', component: ThreadformComponent},
+            {path: 'commentForm', component: CommentformComponent},
+            {path: 'thread-view/:id', component: ThreadViewComponent},
+            {path: '**', redirectTo: '', pathMatch: 'full'}
+        ]),
+        NgOptimizedImage
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

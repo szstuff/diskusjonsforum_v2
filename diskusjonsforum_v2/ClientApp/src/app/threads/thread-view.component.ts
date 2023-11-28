@@ -5,8 +5,6 @@ import { Thread } from './threads';
 import { Comment } from '../comments/comments';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import {CommentsService} from "../comments/comments.service";
-
 @Component({
   selector: 'app-thread-view',
   templateUrl: './thread-view.component.html',
@@ -69,6 +67,8 @@ export class ThreadViewComponent implements OnInit, OnDestroy {
         this.thread = updatedThread;
         this.newCommentBody = '';
         this.newCommentCreatedBy = '';
+
+        window.location.reload();
       },
       (error) => {
         console.error('Error adding comment', error);
@@ -123,10 +123,43 @@ export class ThreadViewComponent implements OnInit, OnDestroy {
     this.isEditing = false;
   }
 
+  deleteComment(commentId: number): void {
+    this.threadService.deleteComment(commentId).subscribe(
+      () => {
+        console.log('Comment deleted');
+        window.location.reload(); //Manually reload same site
+        },
+      (error) => console.error('Error deleting comment', error)
+    );
+  }
+
+  toggleEditComment(comment: Comment): void {
+    comment.isEditing = !comment.isEditing;
+    comment.editedBody = comment.commentBody;
+  }
+
+  saveChangesComment(comment: Comment): void {
+    if (comment.editedBody !== undefined) {
+      comment.commentBody = comment.editedBody;
+      this.threadService.updateComment(comment).subscribe(
+        (response) => {
+          console.log("Comment has been updated");
+          comment.isEditing = false;
+        },
+        (error) => {
+          console.error('Error saving changes', error);
+        }
+      );
+    } else {
+      console.error('Attempted to save changes with undefined editedBody');
+    }
+  }
+  cancelEditComment(comment: Comment): void {
+    comment.editedBody = comment.commentBody;
+    comment.isEditing = false;
+  }
   ngOnDestroy(): void {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
   }
-
-  protected readonly CommentsService = CommentsService;
 }

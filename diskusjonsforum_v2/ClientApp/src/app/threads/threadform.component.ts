@@ -3,7 +3,6 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { ThreadService } from './threads.service';
-import {Comment} from "../comments/comments";
 
 @Component({
   selector: 'app-threads-threadform',
@@ -36,7 +35,6 @@ export class ThreadformComponent {
     console.log('The thread ' + this.threadForm.value.title + ' is created.');
     console.log(this.threadForm.touched);
     const newThread = this.threadForm.value; // Creates a Thread object with values from the form
-    const createUrl = "api/thread/create"; //navigates to the URL for creating new thread
     this._threadService.createThread(newThread) //Send the new thread to ThreadService->ThreadController to save
       .subscribe(response => {
       if (response.success) {

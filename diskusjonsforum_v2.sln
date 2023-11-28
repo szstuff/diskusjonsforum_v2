@@ -5,6 +5,8 @@ VisualStudioVersion = 25.0.1706.6
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "diskusjonsforum_v2", "diskusjonsforum_v2\diskusjonsforum_v2.csproj", "{784C5EFD-970D-40FF-BCA6-2E9C848D3AAF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "xUnitTestDiskusjonsforum", "xUnitTestDiskusjonsforum\xUnitTestDiskusjonsforum.csproj", "{03CDE380-C77B-474C-B56C-4C856C4665F2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{784C5EFD-970D-40FF-BCA6-2E9C848D3AAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{784C5EFD-970D-40FF-BCA6-2E9C848D3AAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{784C5EFD-970D-40FF-BCA6-2E9C848D3AAF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03CDE380-C77B-474C-B56C-4C856C4665F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03CDE380-C77B-474C-B56C-4C856C4665F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03CDE380-C77B-474C-B56C-4C856C4665F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03CDE380-C77B-474C-B56C-4C856C4665F2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

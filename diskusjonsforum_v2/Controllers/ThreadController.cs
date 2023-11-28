@@ -86,9 +86,7 @@ namespace diskusjonsforum_v2.Controllers
             {
                 _logger.LogError(ex, "[ThreadController] An error occurred in the Thread action for thread ID: {0},",
                     id);
-                // Redirect to Error view if error occurs
-                return RedirectToAction("Error", "Home",
-                    new { errorMsg = "An error occurred while loading the thread." });
+                return StatusCode(500, "An error occurred while loading the thread");
 
             }
 
@@ -159,7 +157,7 @@ namespace diskusjonsforum_v2.Controllers
                     return BadRequest(response);
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 _logger.LogError("[ThreadController] CreateThread error.");
                 return StatusCode(500, "Error occurred while creating the thread.");
@@ -171,20 +169,40 @@ namespace diskusjonsforum_v2.Controllers
         [HttpPut("update/{id}")]
         public async Task<ActionResult> UpdateThread(int id, [FromBody] Thread thread)
         {
+            thread.ThreadLastEditedAt = DateTime.Now;
             string errorMsg = "An error occured when trying to save your edit";
             try
             {
                 // Add custom validation for the thread content
-                if (string.IsNullOrWhiteSpace(thread?.ThreadBody) || string.IsNullOrWhiteSpace(thread.ThreadTitle))
+                if (string.IsNullOrWhiteSpace(thread.ThreadBody) || string.IsNullOrWhiteSpace(thread.ThreadTitle))
                 {
-                    // Content is empty, add a model error
-                    ModelState.AddModelError("ThreadContent", "Thread content is required.");
-                    return BadRequest(ModelState);
+                    // Content is empty, return bad request error 
+                    return BadRequest();
                 }
 
-                bool returnOk = await _threadRepository.Update(thread);
-                if (returnOk)
-                    return NoContent();
+                bool updateSuccess = await _threadRepository.Update(thread);
+
+                if (updateSuccess)
+                {
+                    // Fetch the updated thread after the update
+                    Thread updatedThread = _threadRepository.GetThreadById(id);
+
+                    if (updatedThread != null)
+                    {
+                        // Return the updated thread in the response
+                        return Ok(updatedThread);
+                    }
+                    else
+                    {
+                        // This should not happen, but handle it just in case
+                        errorMsg = "Could not retrieve the updated thread.";
+                    }
+                }
+                else
+                {
+                    // Thread update failed
+                    errorMsg = "Thread update failed.";
+                }
             }
             catch (Exception ex)
             {
@@ -217,7 +235,7 @@ namespace diskusjonsforum_v2.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "[ThreadController] An error occurred while deleting the thread with ID: {threadId}", id);
-                return StatusCode(500, "Error deleting thread.");
+                return StatusCode(500, "An error occurred while deleting your thread");
             }
         }
 

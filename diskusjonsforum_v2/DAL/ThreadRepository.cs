@@ -41,7 +41,7 @@ public class ThreadRepository : IThreadRepository
         }
         catch (Exception e)
         {
-            _logger.LogError("[ItemRepository] item creation failed for thread {@thread}, error message: {e}", thread, e.Message);
+            _logger.LogError("[ThreadRepository] creation failed for thread {@thread}, error message: {e}", thread, e.Message);
             return false;
         }
     }

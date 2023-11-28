@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Thread } from './threads';
 import { ThreadService } from "./threads.service";
-import {ActivatedRoute, Router} from "@angular/router";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-thread-component',
@@ -31,9 +31,8 @@ export class ThreadsComponent implements OnInit {
   // initialises routes and service for the constructor
   constructor(
     private _threadService: ThreadService,
-    private _http: HttpClient,
-    private _router: Router,
-    private route: ActivatedRoute) { }
+    public _http: HttpClient,
+    private _router: Router) { }
  // retrieves the threads by calling on the service and updates the list to display the threads
   getThreads(): void {
     // calls getThreads of the _threadService
@@ -78,6 +77,7 @@ export class ThreadsComponent implements OnInit {
     this._threadService.updateThread(thread).subscribe(
       ()=>{
         console.log('Thread updated');
+        this.getThreads();
       },
       (error) =>{
         console.error('Error updating thread', error);

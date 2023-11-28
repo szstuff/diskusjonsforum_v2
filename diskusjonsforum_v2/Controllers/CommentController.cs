@@ -14,7 +14,7 @@ namespace diskusjonsforum_v2.Controllers
         private readonly ICommentRepository _commentRepository;
         private readonly ILogger<CommentController> _logger;
 
-        public CommentController(ICommentRepository commentRepository, 
+        public CommentController(ICommentRepository commentRepository,
             ILogger<CommentController> logger)
         {
             _commentRepository = commentRepository;
@@ -23,26 +23,29 @@ namespace diskusjonsforum_v2.Controllers
 
         // Return all comments 
         [HttpGet("getByThread/{parentThreadId}")]
-        public IActionResult GetComments(int parentThreadId)
+        public ActionResult GetComments(int parentThreadId)
         {
             try
             {
-                
+
                 var comments = _commentRepository.GetThreadComments(parentThreadId);
                 return Ok(comments);
             }
-            catch (Exception ex) 
-            {   // if an exception occurs an error is logged
+            catch (Exception ex)
+            {
+                // if an exception occurs an error is logged
                 _logger.LogError(ex, "[CommentController] An error occurred in GetComments action.");
                 return StatusCode(500, "An error occurred while fetching comments");
             }
         }
-         // Adds comment to the thread it belongs to by threadID
+
+        // Adds comment to the thread it belongs to by threadID
         [HttpPost("addComment/{threadId}")]
         public ActionResult Create(int threadId, [FromBody] Comment newComment)
         {
             try
-            {   // set comment details for user and adds the new comment
+            {
+                // set comment details for user and adds the new comment
                 newComment.ThreadId = threadId;
                 _commentRepository.Add(newComment);
                 // success message when the comment is successfully made
@@ -59,35 +62,57 @@ namespace diskusjonsforum_v2.Controllers
                 return StatusCode(500, "Error occurred while creating the comment.");
             }
         }
-        
+
         // updates comment by id
         [HttpPut("update/{id}")]
-        public async Task<IActionResult> UpdateComment(int id, [FromBody] Comment comment)
-        {   
+        public async Task<ActionResult> UpdateComment(int id, [FromBody] Comment comment)
+        {
             try
-            {   // returns NoContent if the update is successful and if not it returns a Badrequest response
-                bool returnOk = await _commentRepository.Update(comment);
-                if (returnOk)
+            {
+                // Retrieve the existing comment from the repository
+                Comment existingComment = _commentRepository.GetById(id);
+
+                // If the comment with the specified id doesn't exist, return NotFound
+                if (existingComment == null)
                 {
-                    return NoContent();
+                    return NotFound($"Comment with ID {id} not found.");
                 }
 
-                return BadRequest("Comment updated failed.");
+                // Update the properties of the existing comment
+                existingComment.CommentBody = comment.CommentBody; 
+
+                // Call the repository method to update the comment
+                bool updateSuccess = await _commentRepository.Update(existingComment);
+
+                if (updateSuccess)
+                {
+                    // Return the updated comment in the response
+                    return Ok(existingComment);
+                }
+
+                return BadRequest("Comment update failed.");
             }
             catch (Exception ex)
-            {   // the error is logged if an axception occurs an returns a statuscode
+            {
+                // Log the error and return a status code
                 _logger.LogError(ex, "[CommentController] An error occurred in UpdateComment action.");
                 return StatusCode(500, "Error occurred while updating the comment.");
             }
         }
+
         // deletes comment by id
         [HttpDelete("delete/{id}")]
         public IActionResult DeleteComment(int id)
         {
             try
-            {   
-                _commentRepository.Remove(id); 
-                return NoContent();
+            {
+                var deletedComment = _commentRepository.Remove(id);
+                if (deletedComment == null)
+                {
+                    return NotFound(); // Return NotFound if the comment was not found
+                }
+
+                return Ok(new { success = true, message = "Comment deleted successfully", deletedComment });
             }
             catch (Exception ex)
             {
@@ -95,7 +120,6 @@ namespace diskusjonsforum_v2.Controllers
                 return StatusCode(500, "Error occurred while deleting the comment.");
             }
         }
-
 
         //recursively finds all replies to the comment 
         private List<Comment> AddChildren(Comment parentComment)
