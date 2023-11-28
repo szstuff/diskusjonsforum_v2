@@ -1,8 +1,8 @@
-<h1 class="tabelLabel text-white">Explore discussions</h1>
+<h2 class="tabelLabel text-white">Explore discussions</h2>
 
 <div class="container thread-table-container">
   <div class="row">
-    <div class="col-7">
+    <div class="col-sm-7">
       <input class="form-control" type="text" placeholder="Filter by title" [(ngModel)]="listFilter" />
     </div>
     <div class="col-sm-3">
@@ -25,10 +25,16 @@
             <b>{{ thread.threadCreatedAt | date: 'yyyy-MM-dd HH:mm' }}</b>
           </p>
           <hr />
-          <p class="title-thread"><b>{{ thread.threadTitle }}</b></p>
-          <p class="thread-text">{{ thread.threadBody }}</p>
-          <p class="comment-count"><img ngSrc="../../assets/images/message-detail-regular-24.png" alt="..." height="20" />
-            {{ thread.threadComments?.length }}</p>
+          <p class="title-thread"><b>{{ thread.threadTitle }}</b>
+          <span *ngIf="thread.threadBody.length > 800">(…)</span></p>
+          <p class="thread-text">
+            {{ thread.threadBody | slice: 0:800}}
+            <span *ngIf="thread.threadBody.length > 800">(…)</span>
+          </p>
+          <p class="comment-count">
+            <img src="../../assets/images/message-detail-regular-24.png" alt="..." height="20" />
+            {{ thread.threadComments?.length }}
+          </p>
         </div>
       </div>
     </a>

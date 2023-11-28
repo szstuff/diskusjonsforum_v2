@@ -140,20 +140,7 @@ header {
   color: white;
 }
 
-a{
-  color: #f8f9fa; /* Set the text color */
-  text-decoration: none; /* Remove default underline */
-  font-weight: bold;
-  margin-left: 10px;
-  border-radius: 7px;
 
-
-
-}
-
-a:hover{
-  color: lightgray;
-}
 
 #topBtn{
   position: sticky;

@@ -90,7 +90,7 @@
     color: #002c45;
     text-decoration: none;
     font-weight: 400;
-    font-size: 1.25em;
+    font-size: 1.1em;
     margin-bottom: 10px;
 }
 
@@ -216,9 +216,8 @@
 }
 
 .submit {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 700;
-  /*color: #002c45;*/
   color: white;
   height: 45px;
   margin: 20px;
@@ -256,13 +255,3 @@
     box-shadow: 1px 5px 7px 1px rgba(0, 0, 0, 0.2);
     border: none;
   }
-
-/*.filter_header {
-    margin: 10px;
-    margin-left: 2%;
-    font-size: 1.15rem;
-    display: flex;
-    justify-content: start;
-    font-weight: 500;
-}*/
-

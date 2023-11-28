@@ -7,7 +7,7 @@ import { ThreadService } from './threads.service';
 @Component({
   selector: 'app-threads-threadform',
   templateUrl: './threadform.component.html', // path to the HTML component
-  styleUrls: [/*'../../css/IndexStyle.css', '../../css/thread_table.css'*/'../../css/thread_view.css'],
+  styleUrls: ['../../css/thread_view.css'],
 })
 
 export class ThreadformComponent {
@@ -22,8 +22,8 @@ export class ThreadformComponent {
     this.threadForm = _formBuilder.group({
       // Define FormBuilder input validation rules
       createdBy: ['', Validators.required],
-      threadTitle: ['', Validators.required],
-      threadBody: ['', Validators.required],
+      threadTitle: ['', [Validators.required, Validators.maxLength(100)]],
+      threadBody: ['', [Validators.required, Validators.maxLength(2500)]],
 
     });
   }
