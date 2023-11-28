@@ -1,10 +1,28 @@
-<h3 class="recent-posts-title text-white">Recent posts</h3>
-<div class="container">
-  <input name="PostText" class="form-control" placeholder="Create Post" type="text" (click)="navigateToThreadform()">
-</div>
+<h3 class="recent-posts-title text-white">Here are the most recent posts!</h3>
 
-<div class="container">
+<div class="container thread-table-container">
   <div class="row">
+    <div class="col-md-8">
+      <input name="PostText" class="form-control" placeholder="Create Post" type="text" (click)="navigateToThreadform()">
+    </div>
+    <div class="col-sm-2">
+      <div class="dropdown-filter" [ngClass]="{ 'open': isDropdownOpen }" (click)="toggleDropdown()">
+        <button class="btn btn-primary submit">
+          Filter by...
+        </button>
+        <div class="dropdown-content">
+          <button id="dropdown-filter-results" class="dropdown-item" (click)="filterBy('recent')">Most recent</button>
+          <button id="dropdown-filter-results" class="dropdown-item" (click)="filterBy('comments')">Most comments</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-1">
+      <button class="table-change" (click)="navigateToThreads()">
+        <img src="../../assets/images/icons8-rows-48 (1).png" alt="..." height="40" />
+      </button>
+    </div>
+
+
     <div *ngFor="let thread of threads | slice:0:6" class="col-md-6">
       <a [routerLink]="['/thread-view', thread.threadId]">
         <div class="post">
@@ -15,17 +33,21 @@
             </p>
           </div>
           <hr />
-          <div><p class="title-thread"><b>{{ thread.threadTitle }}</b></p></div>
+          <div>
+            <p class="title-thread">
+              <b>{{ thread.threadTitle | slice: 0:35 }}</b>
+              <span *ngIf="thread.threadTitle.length > 35">(…)</span>
+            </p>
+          </div>
           <div>
             <p class="thread-text">
-              {{ thread.threadBody | slice: 0:75 }}
-              <span *ngIf="thread.threadBody.length > 75">(…)</span>
+              {{ thread.threadBody | slice: 0:49 }}
+              <span *ngIf="thread.threadBody.length > 49">(…)</span>
             </p>
           </div>
           <div><p class="comment-count"><img src="../../assets/images/message-detail-regular-24.png" alt="..." height="20" />    {{ thread.threadComments?.length }}</p></div>
         </div>
       </a>
-      <p></p>
-    </div>
+    </div>  
   </div>
 </div>

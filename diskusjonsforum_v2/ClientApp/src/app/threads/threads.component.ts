@@ -19,7 +19,7 @@ export class ThreadsComponent implements OnInit {
   get listFilter(): string {
     return this._listFilter;
   }
-  // filters the threads depending on the "value" and updates the liist
+  // filters the threads depending on the "value" and updates the list
   set listFilter(value: string) {
     this._listFilter = value;
     console.log('In setter:', value);
@@ -61,6 +61,10 @@ export class ThreadsComponent implements OnInit {
 
   navigateToThreadform(){
     this._router.navigate(['/threadForm']); // navigates to the thread form
+  }
+
+  navigateToHome() {
+    this._router.navigate(['/home']);
   }
 
   ngOnInit(): void {

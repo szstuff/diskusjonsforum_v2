@@ -2,11 +2,16 @@
 
 <div class="container thread-table-container">
   <div class="row">
-    <div class="col-8">
-      <input class="form-control" type="text" placeholder="Filter" [(ngModel)]="listFilter" />
+    <div class="col-7">
+      <input class="form-control" type="text" placeholder="Filter by title" [(ngModel)]="listFilter" />
     </div>
     <div class="col-sm-3">
       <button class="btn btn-primary submit" (click)="navigateToThreadform()">Create New Thread</button>
+    </div>
+    <div class="col-sm-1">
+      <button class="table-change" (click)="navigateToHome()">
+        <img src="../../assets/images/icons8-grid-48.png" alt="..." height="40" />
+      </button>
     </div>
   </div>
 

@@ -11,7 +11,29 @@ import { Comment } from '../comments/comments'
 export class ThreadService {
   private apiUrl = 'api/threads';
   private apiCommentUrl = 'api/comments';
-  constructor(private _http: HttpClient) {}
+  constructor(private _http: HttpClient) { }
+
+  getThreadsByRecent(): Observable<Thread[]> {
+    const url = `${this.apiUrl}/getByRecent`;
+    return this._http.get<Thread[]>(url);
+  }
+
+  getThreadsByComments(): Observable<Thread[]> {
+    const url = `${this.apiUrl}/getByComments`;
+    return this._http.get<Thread[]>(url);
+  }
+
+  // Updated filtering logic in the service
+  filterBy(option: string): Observable<Thread[]> {
+    if (option === 'recent') {
+      return this.getThreadsByRecent();
+    } else if (option === 'comments') {
+      return this.getThreadsByComments();
+    } else {
+      // Handle other filtering options or default behavior
+      return this.getThreads(); // Default to fetching all threads
+    }
+  }
 
   // Gets all the threads with GET request
   getThreads(): Observable<Thread[]> {
