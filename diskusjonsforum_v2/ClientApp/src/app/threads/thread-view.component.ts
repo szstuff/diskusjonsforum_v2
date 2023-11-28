@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import { ThreadService } from './threads.service';
 import { Thread } from './threads';
 import { Comment } from '../comments/comments';
@@ -19,10 +19,14 @@ export class ThreadViewComponent implements OnInit, OnDestroy {
   isEditing = false;
   editedTitle!: string;
   editedContent!: string;
+  comments: Comment[] = [];
 
   private unsubscribe$ = new Subject<void>();
 
-  constructor(private route: ActivatedRoute, private threadService: ThreadService) {}
+  constructor(private route: ActivatedRoute,
+              private threadService: ThreadService,
+              private commentsService: CommentsService,
+              private router: Router) {}
   // fetches the thread and the comments under the thread
   ngOnInit(): void {
     this.route.paramMap.pipe(
@@ -63,15 +67,33 @@ export class ThreadViewComponent implements OnInit, OnDestroy {
       createdBy: this.newCommentCreatedBy,
       childComments: [],
     };
-  // adds the new comments to the thread it belongs to by the threadId
+
     this.threadService.addCommentToThread(this.thread.threadId, newComment).subscribe(
       (updatedThread: Thread) => {
         this.thread = updatedThread;
         this.newCommentBody = '';
         this.newCommentCreatedBy = '';
+
+        // Refresh comments for the current thread
+        this.getCommentsByThread();
+
+        // Redirect back to the thread view page
+        this.router.navigate(['/thread-view/', {id: this.thread.threadId}]);
       },
       (error) => {
         console.error('Error adding comment', error);
+      }
+    );
+  }
+
+  // Refresh comments for the current thread
+  getCommentsByThread() {
+    this.commentsService.getCommentsByThreadId(this.thread.threadId).subscribe(
+      (comments) => {
+        this.comments = comments;
+      },
+      (error) => {
+        console.error('Error fetching comments', error);
       }
     );
   }
