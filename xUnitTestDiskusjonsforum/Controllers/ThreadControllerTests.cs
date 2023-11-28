@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using diskusjonsforum_v2.Models;
 using Microsoft.Extensions.Logging;
 using Moq;
+using NuGet.Protocol;
 using Thread = diskusjonsforum_v2.Models.Thread;
 
 namespace xUnitTestDiskusjonsforum.Controllers;
@@ -248,9 +249,51 @@ public class ThreadControllerTests
         Assert.Equal(404, result1.StatusCode);
     }
 
-    public Task SearchThreadsTest()
+    [Fact]
+    public async Task SearchThreadsTest()
     {
-        throw new NotImplementedException();
+    //Arrange
+        var threadList = new List<Thread>
+        {
+            new Thread
+            {
+                ThreadId = 1,
+                ThreadBody = "Test body",
+                ThreadComments = new List<Comment>(),
+                ThreadTitle = "Test title",
+                ThreadCreatedAt = new DateTime(2023, 10, 10, 10, 10, 10),
+                ThreadLastEditedAt = new DateTime(2023, 10, 10, 10, 10, 10),
+                CreatedBy = "Stilian"
+            }, new Thread
+            {
+                ThreadId = 2,
+                ThreadBody = "Test body 2",
+                ThreadComments = new List<Comment>(),
+                ThreadTitle = "Test title 2",
+                ThreadCreatedAt = new DateTime(2023, 10, 10, 10, 10, 10),
+                ThreadLastEditedAt = new DateTime(2023, 11, 10, 10, 10, 10),
+                CreatedBy = "Jovia"
+            }
+        };
+        
+        var mockThreadRepository = new Mock<IThreadRepository>();
+        var mockCommentRepository = new Mock<ICommentRepository>();
+        mockThreadRepository.Setup(repo => repo.GetAll()).Returns(threadList);
+        //commentRepository.GetThreadComments returns list of comments that belong to a specific thread 
+        //It.IsAny<int> represents the argument of type Thread, which is used to pass the ThreadId to the method in ThreadController. 
+        var mockLogger = new Mock<ILogger<ThreadController>>();
+        var threadController =
+            new ThreadController(mockThreadRepository.Object, null, mockLogger.Object);
+        
+        //Act
+        var result = threadController.SearchThreads(threadList[1].ThreadTitle);
+        
+        //Assert that result object is OkObjectResult and that the object contains the title that was passed as a search query
+        var viewResult = Assert.IsType<OkObjectResult>(result);
+        Assert.Equal(200, viewResult.StatusCode);
+        var searchResult = viewResult.Value;
+        Assert.Contains(threadList[1].ThreadTitle, searchResult.ToJson());
+
     }
 
     

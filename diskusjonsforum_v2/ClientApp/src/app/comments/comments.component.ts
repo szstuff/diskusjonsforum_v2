@@ -5,7 +5,7 @@ import {CommentsService} from "./comments.service";
 import {ActivatedRoute, NavigationExtras, Router} from "@angular/router";
 
 @Component({
-  selector: 'app-comment-component', // custom HTML tag
+  selector: 'app-comment-component',
   templateUrl: './comments.component.html'//path to the HTML file structure
 })
 
@@ -20,7 +20,6 @@ export class CommentsComponent implements OnInit {
     private commentsService: CommentsService,
     private _http: HttpClient,
     private _router: Router,
-    private route: ActivatedRoute,
     private _commentService: CommentsService) {
   }
 

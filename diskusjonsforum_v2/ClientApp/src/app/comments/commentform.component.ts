@@ -4,10 +4,8 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {HttpClient} from "@angular/common/http";
 import { CommentsService} from "./comments.service";
 @Component({
-  selector: "app-comments-commentform", //custom html tag{ Comment
+  selector: "app-comments-commentform",
   templateUrl: "./commentform.component.html", //path to the HTML file structure
-  /*styleUrls: ['../../css/thread_view.css'],
-  templateUrl: './thread-view.component.html',*/
 })
 
 export class CommentformComponent implements OnInit{
@@ -22,7 +20,6 @@ export class CommentformComponent implements OnInit{
     private _router: Router,
     private _route: ActivatedRoute,
     private _commentService: CommentsService,
-    private _http: HttpClient
   ) {}
 
   ngOnInit(): void {

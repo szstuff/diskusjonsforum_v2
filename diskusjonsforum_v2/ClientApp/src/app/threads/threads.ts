@@ -8,4 +8,7 @@ export interface Thread {
   threadLastEditedAt: string; // timestamp string for when the thread was last edited
   createdBy: string | null; // the info of the user who created the thread
   threadComments: Comment[] | null; // holds comments in an array if there is any or null if there are none
+
+  isEditing?: boolean;
+  editedBody?: string;
 }
