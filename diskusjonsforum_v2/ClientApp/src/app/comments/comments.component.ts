@@ -6,7 +6,7 @@ import {ActivatedRoute, NavigationExtras, Router} from "@angular/router";
 
 @Component({
   selector: 'app-comment-component', // custom HTML tag
-  templateUrl: './thread-view.component.html', //path to the HTML file structure
+  templateUrl: './comments.component.html'//path to the HTML file structure
 
   // styleUrls: ['./comment.component.css']
 })
@@ -86,7 +86,7 @@ export class CommentsComponent implements OnInit {
   }
   /*
   cancelCommentEdit(): void{
-    this.editComment = this.comments.ommentBody;
+    this.editComment = this.comments.commentBody;
     // reset isEditing flag
     this.isEditing = false;
 
@@ -95,7 +95,7 @@ export class CommentsComponent implements OnInit {
 
   // Function to delete a comment
 
-   deleteComment(comment: Comment){
+   /*deleteComment(comment: Comment){
      const confirmDelete = confirm(`Are you sure you want to delete the comment`);
      if(confirmDelete){
        this._commentService.deleteComment(comment.commentId).subscribe(
@@ -110,5 +110,5 @@ export class CommentsComponent implements OnInit {
        )
      }
 
-   }
+   } */
 }

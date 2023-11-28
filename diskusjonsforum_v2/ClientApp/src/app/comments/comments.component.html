@@ -6,7 +6,7 @@
     <td>Created at {{ comment.commentCreatedAt }}</td>
     <td>{{ comment.commentBody }}</td>
      <button (click)="editComment(comment.commentId)">Edit Comment</button>
-      <button (click)="deleteComment(comment.commentId)">Delete Comment</button>
+      <button >Delete Comment</button>
 
     <div *ngIf="comment.childComments && comment.childComments.length > 0">
       <div class="child-comments">
@@ -14,8 +14,8 @@
           <p>Created at {{ childComment.commentCreatedAt }}</p>
           <p>{{ childComment.commentBody }}</p>
 
-            <button (click)="editComment(childComment.commentId)">Edit Comment</button>
-            <button (click)="deleteComment(childComment.commentId)">Delete Comment</button>
+            <button>Edit Comment</button>
+            <button>Delete Comment</button>
           </div>
         </div>
       </div>
@@ -25,5 +25,5 @@
 </table>
 
 <!-- Single Button for Creating a New Thread (Outside the Loop) -->
-<button class="btn btn-primary" (click)="navigateToCommentform()">Create New Thread</button>
+<button class="btn btn-primary">Create New Thread</button>
 
