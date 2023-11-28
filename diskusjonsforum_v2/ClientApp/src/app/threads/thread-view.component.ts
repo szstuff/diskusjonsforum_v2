@@ -132,10 +132,34 @@ export class ThreadViewComponent implements OnInit, OnDestroy {
     );
   }
 
+  toggleEditComment(comment: Comment): void {
+    comment.isEditing = !comment.isEditing;
+    comment.editedBody = comment.commentBody;
+  }
+
+  saveChangesComment(comment: Comment): void {
+    if (comment.editedBody !== undefined) {
+      comment.commentBody = comment.editedBody;
+      this.threadService.updateComment(comment).subscribe(
+        (response) => {
+          console.log("Comment has been updated");
+          comment.isEditing = false;
+        },
+        (error) => {
+          console.error('Error saving changes', error);
+        }
+      );
+    } else {
+      console.error('Attempted to save changes with undefined editedBody');
+    }
+  }
+  cancelEditComment(comment: Comment): void {
+    comment.editedBody = comment.commentBody;
+    comment.isEditing = false;
+  }
   ngOnDestroy(): void {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
   }
-
   protected readonly CommentsService = CommentsService;
 }

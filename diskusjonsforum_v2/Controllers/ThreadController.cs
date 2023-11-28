@@ -169,10 +169,11 @@ namespace diskusjonsforum_v2.Controllers
 
         // Saves edits made to a thread
         [HttpPut("update/{id}")]
-        public async Task<ActionResult> UpdateThread(int id, [FromBody] Thread thread)
+        public async Task<ActionResult<Thread>> UpdateThread(int id, [FromBody] Thread thread)
         {
             thread.ThreadLastEditedAt = DateTime.Now;
-            string errorMsg = "An error occured when trying to save your edit";
+            string errorMsg = "An error occurred when trying to save your edit";
+
             try
             {
                 // Add custom validation for the thread content
@@ -182,9 +183,29 @@ namespace diskusjonsforum_v2.Controllers
                     return BadRequest();
                 }
 
-                bool returnOk = await _threadRepository.Update(thread);
-                if (returnOk)
-                    return Ok(thread);
+                bool updateSuccess = await _threadRepository.Update(thread);
+
+                if (updateSuccess)
+                {
+                    // Fetch the updated thread after the update
+                    Thread updatedThread = _threadRepository.GetThreadById(id);
+
+                    if (updatedThread != null)
+                    {
+                        // Return the updated thread in the response
+                        return Ok(updatedThread);
+                    }
+                    else
+                    {
+                        // This should not happen, but handle it just in case
+                        errorMsg = "Could not retrieve the updated thread.";
+                    }
+                }
+                else
+                {
+                    // Thread update failed
+                    errorMsg = "Thread update failed.";
+                }
             }
             catch (Exception ex)
             {
@@ -194,6 +215,8 @@ namespace diskusjonsforum_v2.Controllers
 
             return StatusCode(500, new { message = errorMsg });
         }
+
+
         
         // Delete thread with given threadId if user has permission
         [HttpDelete("delete/{id}")]
