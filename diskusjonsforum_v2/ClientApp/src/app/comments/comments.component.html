@@ -5,8 +5,11 @@
   <tr *ngFor="let comment of comments">
     <td>Created at {{ comment.commentCreatedAt }}</td>
     <td>{{ comment.commentBody }}</td>
-     <button (click)="editComment(comment.commentId)">Edit Comment</button>
-      <button >Delete Comment</button>
+    <td>
+      <button (click)="updateComment(comment)">Edit Comment</button>
+      <button (click)="deleteComment(comment.commentId)">Delete Comment</button>
+    </td>
+
 
     <div *ngIf="comment.childComments && comment.childComments.length > 0">
       <div class="child-comments">

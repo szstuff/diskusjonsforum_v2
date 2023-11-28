@@ -1,8 +1,6 @@
 using diskusjonsforum_v2.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
-using ILogger = Castle.Core.Logging.ILogger;
-using Thread = diskusjonsforum_v2.Models.Thread;
 
 namespace diskusjonsforum_v2.DAL;
 

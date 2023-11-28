@@ -159,7 +159,7 @@ namespace diskusjonsforum_v2.Controllers
                     return BadRequest(response);
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 _logger.LogError("[ThreadController] CreateThread error.");
                 return StatusCode(500, "Error occurred while creating the thread.");
@@ -175,7 +175,7 @@ namespace diskusjonsforum_v2.Controllers
             try
             {
                 // Add custom validation for the thread content
-                if (string.IsNullOrWhiteSpace(thread?.ThreadBody) || string.IsNullOrWhiteSpace(thread.ThreadTitle))
+                if (string.IsNullOrWhiteSpace(thread.ThreadBody) || string.IsNullOrWhiteSpace(thread.ThreadTitle))
                 {
                     // Content is empty, add a model error
                     ModelState.AddModelError("ThreadContent", "Thread content is required.");

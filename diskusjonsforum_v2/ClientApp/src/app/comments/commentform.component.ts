@@ -3,7 +3,6 @@ import {FormGroup, Validators, FormBuilder} from '@angular/forms';
 import {ActivatedRoute, Router} from "@angular/router";
 import {HttpClient} from "@angular/common/http";
 import { CommentsService} from "./comments.service";
-import { Comment } from "./comments";
 @Component({
   selector: "app-comments-commentform", //custom html tag{ Comment
   templateUrl: "./commentform.component.html", //path to the HTML file structure
@@ -56,7 +55,6 @@ export class CommentformComponent implements OnInit{
       newComment.commentId = this.commentId;
     }
     //navigates to the URL for creating new comment
-    const createUrl = "api/comment/create";
     this._commentService.createComment(newComment).subscribe(response => {
       // checks the response received
       if (response.success){
