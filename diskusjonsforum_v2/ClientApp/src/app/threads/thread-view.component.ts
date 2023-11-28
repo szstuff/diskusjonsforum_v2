@@ -162,5 +162,4 @@ export class ThreadViewComponent implements OnInit, OnDestroy {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
   }
-  protected readonly CommentsService = CommentsService;
 }
