@@ -171,20 +171,20 @@ namespace diskusjonsforum_v2.Controllers
         [HttpPut("update/{id}")]
         public async Task<ActionResult> UpdateThread(int id, [FromBody] Thread thread)
         {
+            thread.ThreadLastEditedAt = DateTime.Now;
             string errorMsg = "An error occured when trying to save your edit";
             try
             {
                 // Add custom validation for the thread content
                 if (string.IsNullOrWhiteSpace(thread.ThreadBody) || string.IsNullOrWhiteSpace(thread.ThreadTitle))
                 {
-                    // Content is empty, add a model error
-                    ModelState.AddModelError("ThreadContent", "Thread content is required.");
-                    return BadRequest(ModelState);
+                    // Content is empty, return bad request error 
+                    return BadRequest();
                 }
 
                 bool returnOk = await _threadRepository.Update(thread);
                 if (returnOk)
-                    return NoContent();
+                    return Ok(thread);
             }
             catch (Exception ex)
             {

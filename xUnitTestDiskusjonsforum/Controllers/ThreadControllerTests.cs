@@ -2,6 +2,7 @@ using diskusjonsforum_v2.Controllers;
 using diskusjonsforum_v2.DAL;
 using Microsoft.AspNetCore.Mvc;
 using diskusjonsforum_v2.Models;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.Logging;
 using Moq;
 using Thread = diskusjonsforum_v2.Models.Thread;
@@ -96,12 +97,30 @@ public class ThreadControllerTests
         var validThread = new Thread
         {
             ThreadBody = "Test body",
-            ThreadComments = new List<Comment>(),
             ThreadTitle = "Test title",
-            ThreadCreatedAt = new DateTime(2023, 10, 10, 10, 10, 10),
-            ThreadLastEditedAt = new DateTime(2023, 10, 10, 10, 10, 10),
             CreatedBy = "Stilian"
         };
+        
+        var mockThreadRepository = new Mock<IThreadRepository>();
+        var mockCommentRepository = new Mock<ICommentRepository>();
+        var mockLogger = new Mock<ILogger<ThreadController>>();
+        mockThreadRepository.Setup(repo => repo.Add(validThread)).ReturnsAsync(true);
+
+        var threadController =
+            new ThreadController(mockThreadRepository.Object, null, mockLogger.Object);
+
+        //Act
+        var result = threadController.CreateThread(validThread);
+
+        //Assert 
+        Assert.IsType<OkObjectResult>(result.Result);
+        
+    }
+    
+     [Fact]
+    public async Task TestCreateThread_Invalid()
+    {
+        //Assert
         var invalidThread1 = new Thread();
         var invalidThread2 = new Thread
         {
@@ -128,27 +147,49 @@ public class ThreadControllerTests
             new ThreadController(mockThreadRepository.Object, mockCommentRepository.Object, mockLogger.Object);
 
         //Act
-        var result1 = threadController.CreateThread(validThread);
-        var result2 = threadController.CreateThread(invalidThread1);
-        var result3 = threadController.CreateThread(invalidThread2);
-        var result4 = threadController.CreateThread(invalidThread3);
+        var result1 = threadController.CreateThread(invalidThread1);
+        var result2 = threadController.CreateThread(invalidThread2);
+        var result3 = threadController.CreateThread(invalidThread3);
 
         //Assert 
-        var viewResult = Assert.IsType<OkObjectResult>(result1.Result);
-        var threadListResult = Assert.IsAssignableFrom<List<Thread>>(viewResult.Value);
-        Assert.Single(threadListResult);
-
-        Assert.IsType<BadRequestResult>(result2.GetType());
-        Assert.IsType<BadRequestResult>(result3.GetType());
-        Assert.IsType<BadRequestResult>(result4.GetType());
+        Assert.IsType<BadRequestObjectResult>(result1.Result);
+        Assert.IsType<BadRequestObjectResult>(result2.Result);
+        Assert.IsType<BadRequestObjectResult>(result3.Result);
 
         
     }
 
     [Fact]
-    public Task UpdateThreadTest()
+    public async Task UpdateThreadTest()
     {
-        throw new NotImplementedException();
+        //Assert
+        var thread1 = new Thread
+        {
+            ThreadBody = "Test body",
+            ThreadTitle = "Test title",
+            CreatedBy = "Stilian"
+        };
+        
+        //Assert
+        var thread2 = new Thread
+        {
+            ThreadBody = "Test body2",
+            ThreadTitle = "Test title2",
+            CreatedBy = "Jovia"
+        };
+        
+        var mockThreadRepository = new Mock<IThreadRepository>();
+        var mockLogger = new Mock<ILogger<ThreadController>>();
+
+        mockThreadRepository.Setup(repo => repo.Update(thread1)).ReturnsAsync(true);
+        var threadController = new ThreadController(mockThreadRepository.Object, null, mockLogger.Object);
+
+        // Act
+        var result = await threadController.UpdateThread(thread1.ThreadId, thread1);
+
+        // Assert
+        var noContentResult = Assert.IsType<NoContentResult>(result);
+        Assert.Equal(204, noContentResult.StatusCode);
     }
     
     public Task DeleteThreadTest()
