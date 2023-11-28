@@ -23,7 +23,7 @@ namespace diskusjonsforum_v2.Controllers
 
         // Return all comments 
         [HttpGet("getByThread/{parentThreadId}")]
-        public IActionResult GetComments(int parentThreadId)
+        public ActionResult GetComments(int parentThreadId)
         {
             try
             {

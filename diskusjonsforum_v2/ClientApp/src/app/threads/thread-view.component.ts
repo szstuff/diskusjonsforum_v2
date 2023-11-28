@@ -149,15 +149,23 @@ export class ThreadViewComponent implements OnInit, OnDestroy {
     this.threadService.deleteComment(commentId).subscribe(
       () => {
         console.log('Comment deleted');
+
+        // Refresh comments for the current thread
+        this.getCommentsByThread();
+
+        // Optional: Redirect back to the thread details page
+        setTimeout(() => {
+          this.router.navigate([`/threads/${this.thread.threadId}`]);
+        }, 0);
       },
       (error) => console.error('Error deleting comment', error)
     );
   }
 
-  ngOnDestroy(): void {
-    this.unsubscribe$.next();
-    this.unsubscribe$.complete();
-  }
+
 
   protected readonly CommentsService = CommentsService;
+
+  ngOnDestroy(): void {
+  }
 }
