@@ -33,7 +33,6 @@ namespace diskusjonsforum_v2.Controllers
             }
             catch (Exception ex)
             {
-                // if an exception occurs an error is logged
                 _logger.LogError(ex, "[CommentController] An error occurred in GetComments action.");
                 return StatusCode(500, "An error occurred while fetching comments");
             }
@@ -80,7 +79,6 @@ namespace diskusjonsforum_v2.Controllers
             }
             catch (Exception ex)
             {
-                // the error is logged if an axception occurs an returns a statuscode
                 _logger.LogError(ex, "[CommentController] An error occurred in UpdateComment action.");
                 return StatusCode(500, "Error occurred while updating the comment.");
             }
