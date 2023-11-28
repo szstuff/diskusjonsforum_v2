@@ -24,10 +24,6 @@
           <p class="thread-text">{{ thread.threadBody }}</p>
           <p class="comment-count"><img src="../../assets/images/message-detail-regular-24.png" alt="..." height="20" />
             {{ thread.threadComments?.length }}</p>
-
-          <button class="btn btn-danger" (click)="delete(thread.threadId)">Delete</button>
-
-          <button class="btn btn-warning" (click)="update(thread)">Edit</button>
         </div>
       </div>
     </a>
