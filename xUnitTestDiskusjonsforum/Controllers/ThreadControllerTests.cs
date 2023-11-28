@@ -95,7 +95,6 @@ public class ThreadControllerTests
         //Assert
         var validThread = new Thread
         {
-            ThreadId = 1,
             ThreadBody = "Test body",
             ThreadComments = new List<Comment>(),
             ThreadTitle = "Test title",
@@ -106,7 +105,6 @@ public class ThreadControllerTests
         var invalidThread1 = new Thread();
         var invalidThread2 = new Thread
         {
-            ThreadId = 1,
             ThreadBody = "Test body",
             ThreadComments = new List<Comment>(),
             ThreadTitle = "Test title",
@@ -116,7 +114,6 @@ public class ThreadControllerTests
         };
         var invalidThread3 = new Thread
         {
-            ThreadId = 1,
             ThreadBody = "Test body",
             ThreadComments = new List<Comment>(),
             ThreadTitle = "Test title",
@@ -139,7 +136,7 @@ public class ThreadControllerTests
         //Assert 
         var viewResult = Assert.IsType<OkObjectResult>(result1.Result);
         var threadListResult = Assert.IsAssignableFrom<List<Thread>>(viewResult.Value);
-        Assert.Equal(1, threadListResult.Count);
+        Assert.Single(threadListResult);
 
         Assert.IsType<BadRequestResult>(result2.GetType());
         Assert.IsType<BadRequestResult>(result3.GetType());
@@ -147,9 +144,23 @@ public class ThreadControllerTests
 
         
     }
+
+    [Fact]
+    public Task UpdateThreadTest()
+    {
+        throw new NotImplementedException();
+    }
     
-    
-    
+    public Task DeleteThreadTest()
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task SearchThreadsTest()
+    {
+        throw new NotImplementedException();
+    }
+
     
 }
 
