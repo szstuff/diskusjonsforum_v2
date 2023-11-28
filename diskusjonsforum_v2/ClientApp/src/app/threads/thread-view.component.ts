@@ -130,7 +130,7 @@ export class ThreadViewComponent implements OnInit, OnDestroy {
     this.threadService.deleteComment(commentId).subscribe(
       () => {
         console.log('Comment deleted');
-        window.location.reload();
+        window.location.reload(); //Manually reload same site
         },
       (error) => console.error('Error deleting comment', error)
     );
