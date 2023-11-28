@@ -47,20 +47,25 @@ namespace diskusjonsforum_v2.Controllers
             {
                 // set comment details for user and adds the new comment
                 newComment.ThreadId = threadId;
-                _commentRepository.Add(newComment);
+                var ok = _commentRepository.Add(newComment);
                 // success message when the comment is successfully made
                 var response = new
                 {
                     success = true,
                     message = $"Comment {newComment.CommentId} created successfully"
                 };
-                return Ok(response);
+
+                if (ok.Result)
+                {
+                    return Ok(response);
+                }
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "[CommentController] An error occurred in Create action.");
                 return StatusCode(500, "Error occurred while creating the comment.");
             }
+            return StatusCode(500, "Error occurred while creating the comment.");
         }
 
         // updates comment by id
@@ -109,12 +114,13 @@ namespace diskusjonsforum_v2.Controllers
             try
             {
                 var deletedComment = _commentRepository.Remove(id);
-                if (deletedComment == null)
+                if (deletedComment.Result)
                 {
+                    return Ok(new { success = true, message = "Comment deleted successfully", deletedComment });
+                }else{
                     return NotFound(); // Return NotFound if the comment was not found
                 }
 
-                return Ok(new { success = true, message = "Comment deleted successfully", deletedComment });
             }
             catch (Exception ex)
             {
@@ -124,6 +130,7 @@ namespace diskusjonsforum_v2.Controllers
         }
 
         //recursively finds all replies to the comment 
+        //Child comment functionaity is not implemented in this assignment
         private List<Comment> AddChildren(Comment parentComment)
         {
             List<Comment> newChildren = _commentRepository.GetChildren(parentComment);
