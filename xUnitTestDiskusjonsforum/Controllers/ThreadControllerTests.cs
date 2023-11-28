@@ -90,6 +90,38 @@ public class ThreadControllerTests
         //we also test the functionality of the GetThreadComments method
         
     }
+    
+    [Fact]
+    public async Task TestGetThread()
+    { 
+        //Arrange
+        Thread thread = new Thread
+        {
+            ThreadId = 1,
+            ThreadBody = "Test body",
+            ThreadComments = new List<Comment>(),
+            ThreadTitle = "Test title",
+            ThreadCreatedAt = new DateTime(2023, 10, 10, 10, 10, 10),
+            ThreadLastEditedAt = new DateTime(2023, 10, 10, 10, 10, 10),
+            CreatedBy = "Stilian"
+        };
+      
+        var mockThreadRepository = new Mock<IThreadRepository>();
+        var mockCommentRepository = new Mock<ICommentRepository>();
+        mockThreadRepository.Setup(repo => repo.GetThreadById(thread.ThreadId)).Returns(thread);
+        var mockLogger = new Mock<ILogger<ThreadController>>();
+        var threadController =
+            new ThreadController(mockThreadRepository.Object, null, mockLogger.Object);
+        
+        //Act
+        var result = threadController.GetThread(thread.ThreadId);
+        
+        //Assert that result object is OkObjectResult and that it returns the expected thread
+        var viewResult = Assert.IsType<OkObjectResult>(result);
+        Assert.Equal(200, viewResult.StatusCode);
+        var threadResult = Assert.IsAssignableFrom<Thread>(viewResult.Value);
+        Assert.Equal(thread, threadResult);
+    }
 
     [Fact]
     public async Task TestCreateThread()
@@ -166,7 +198,7 @@ public class ThreadControllerTests
     }
 
     [Fact]
-    public async Task UpdateThreadTest()
+    public async Task TestUpdateThread()
     {
         //Arrange
         var thread1 = new Thread
@@ -180,6 +212,7 @@ public class ThreadControllerTests
         var mockLogger = new Mock<ILogger<ThreadController>>();
 
         mockThreadRepository.Setup(repo => repo.Update(thread1)).ReturnsAsync(true);
+        mockThreadRepository.Setup(repo => repo.GetThreadById(thread1.ThreadId)).Returns(thread1);
         var threadController = new ThreadController(mockThreadRepository.Object, null!, mockLogger.Object);
 
         // Act
@@ -191,7 +224,7 @@ public class ThreadControllerTests
     }
     
     [Fact]
-    public async Task UpdateThreadTest_invalid()
+    public async Task TestUpdateThread_invalid()
     {
         //Arrange
         var thread1 = new Thread
@@ -214,7 +247,7 @@ public class ThreadControllerTests
     }
     
     [Fact]
-    public async Task DeleteThreadTest()
+    public async Task TestDeleteThread()
     {
         // Arrange
         int threadIdToDelete = 1;
@@ -232,7 +265,7 @@ public class ThreadControllerTests
     }
 
     [Fact]
-    public async Task DeleteThreadTest_Invalid()
+    public async Task TestDeleteThread_Invalid()
     {
         // Arrange
         int threadId = 20;
@@ -250,7 +283,7 @@ public class ThreadControllerTests
     }
 
     [Fact]
-    public async Task SearchThreadsTest()
+    public async Task TestSearchThreads()
     {
     //Arrange
         var threadList = new List<Thread>
