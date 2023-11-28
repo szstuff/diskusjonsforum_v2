@@ -2,12 +2,12 @@
 
 <div class="container thread-table-container">
   <div class="row">
-    <div class="col-md-8">
+    <div class="col-sm-8">
       <input name="PostText" class="form-control" placeholder="Create Post" type="text" (click)="navigateToThreadform()">
     </div>
     <div class="col-sm-2">
       <div class="dropdown-filter" [ngClass]="{ 'open': isDropdownOpen }" (click)="toggleDropdown()">
-        <button class="btn btn-primary submit">
+        <button class="btn btn-primary filter-button">
           Filter by...
         </button>
         <div class="dropdown-content">
@@ -41,8 +41,8 @@
           </div>
           <div>
             <p class="thread-text">
-              {{ thread.threadBody | slice: 0:49 }}
-              <span *ngIf="thread.threadBody.length > 49">(…)</span>
+              {{ thread.threadBody | slice: 0:44 }}
+              <span *ngIf="thread.threadBody.length > 44">(…)</span>
             </p>
           </div>
           <div><p class="comment-count"><img src="../../assets/images/message-detail-regular-24.png" alt="..." height="20" />    {{ thread.threadComments?.length }}</p></div>

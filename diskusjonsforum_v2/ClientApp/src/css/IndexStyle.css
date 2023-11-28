@@ -43,6 +43,29 @@ a{
   padding: 50px 0 20px 0;
 }
 
+
+.filter-button {
+  font-size: 16px;
+  font-weight: 700;
+  color: white;
+  height: 46px;
+  margin-top: 18px;
+  margin-bottom: 20px;
+  width: 100%;
+  margin-left: 15%;
+  border: none;
+  border-radius: 20px;
+  outline: none;
+  background-color: rgba(0, 44, 69, 0.9);
+  cursor: pointer;
+  transition: .3s ease-in-out;
+}
+
+  .filter-button:hover {
+    background: rgb(0, 44, 69, 07);
+    box-shadow: 1px 5px 7px 1px rgba(0, 0, 0, 0.2);
+  }
+
 .table-change {
   height: auto;
   margin: 20px;
@@ -61,11 +84,7 @@ a{
     /*background: rgb(0, 44, 69, 07);*/
     /*border: 1px solid rgba(0, 44, 69, 0.9);*//*
     box-shadow: 1px 5px 7px 1px rgba(0, 0, 0, 0.2);*/
-    transform: rotate(15deg);
-  }
-
-  .table-change:hover:after {
-
+    transform: scale(0.8);
   }
 
 .dropdown-filter .dropdown-content {

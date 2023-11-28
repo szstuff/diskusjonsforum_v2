@@ -11,11 +11,16 @@
         <div class="create-information">
           <label class="input-label" for="threadTitle">Title:</label>
             <input type="text" id="threadTitle" formControlName="threadTitle" class="form-control title-input" />
+            <div class="error-form" *ngIf="threadForm.get('threadTitle')?.hasError('maxlength')">
+              <b>Maximum length exceeded (max 50 characters).</b>
+            </div>
         </div>
         <div class="create-information">
           <label class="input-label" for="threadBody">Body:</label>
             <textarea type="text" id="threadBody" formControlName="threadBody" class="form-control body-input"></textarea>
-            
+            <div class="error-form" *ngIf="threadForm.get('threadBody')?.hasError('maxlength')">
+              <b>Maximum length exceeded (max 1000 characters).</b>
+            </div>
         </div>
       </div>
 
@@ -23,7 +28,6 @@
         <button type="submit" class="btn btn-primary create-button" [disabled]="threadForm.invalid">Create Thread</button>
         <button class="btn btn-secondary cancel-button" (click)="backToThreads()">Cancel</button>
       </div>
-      
 
     </form>
   </div>

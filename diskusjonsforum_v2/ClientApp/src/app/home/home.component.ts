@@ -33,12 +33,13 @@ export class HomeComponent implements OnInit {
   }
 
   loadThreads() {
-    this.threadService.getThreads().subscribe(
+    this.threadService.getThreadsByRecent().subscribe(
       (threads: Thread[]) => {
         this.threads = threads;
+        this.loadCommentsForThreads(); // Load comments for the threads
       },
       (error) => {
-        console.error('Error fetching threads', error);
+        console.error('Error fetching threads by recent', error);
       }
     );
   }
