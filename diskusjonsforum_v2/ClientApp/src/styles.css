@@ -138,4 +138,23 @@ header {
   color: white;
 }
 
+a{
+  color: #f8f9fa; /* Set the text color */
+  text-decoration: none; /* Remove default underline */
+  font-weight: bold;
+  margin-left: 10px;
+  background: #66CDAA;
+  border-radius: 7px;
+  border: 10pp #66CDAA;
 
+}
+
+a:hover{
+  color: #f8f9fa;
+  background-color: #3EB489;
+}
+
+#top{
+  padding-right: 5px;
+  padding-left: 5px;
+}
