@@ -135,14 +135,14 @@
   border: none;
   border-radius: 7px;
   outline: none;
-  background-color: rgba(29, 150, 53, 0.9);
+  background-color: rgba(51, 153, 105, 0.9);
   box-shadow: 1px 5px 7px 1px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   transition: .2s ease-out;
 }
 
   .add-comment-button:hover {
-    background: rgb(29, 150, 53, 07);
+    background: rgb(51, 153, 105, 07);
     box-shadow: 1px 5px 7px 1px rgba(0, 0, 0, 0.2);
   }
 
@@ -192,28 +192,28 @@
   margin-bottom: 5px;
 }
 
-.editBtn{
-
+.editBtn {
   font-size: 13px;
   font-weight: 700;
-  color: white;
+  color: black;
   height: 30px;
   margin-top: 7px;
-  margin-left: 2px;
+  margin-right: 10px;
   margin-bottom: 20px;
-  width: 18%;
-  border: none;
+  width: 11%;
+  border: 0.5px solid #e9ecef;
   border-radius: 7px;
   outline: none;
-  background-color: rgba(29, 150, 53, 0.9);
+  background: linear-gradient(160deg, #f8f9fa, #e9ecef);
   box-shadow: 1px 5px 7px 1px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   transition: .2s ease-out;
 }
-.editBtn:hover {
-  background: rgb(29, 150, 53, 07);
-  box-shadow: 1px 5px 7px 1px rgba(0, 0, 0, 0.2);
-}
+
+  .editBtn:hover {
+    background: linear-gradient(320deg, #f8f9fa, #e9ecef);
+    box-shadow: 1px 5px 7px 1px rgba(0, 0, 0, 0.3);
+  }
 
 .editBox {
   border-radius: 7px;
@@ -226,20 +226,25 @@
 .commentBtn {
   font-size: 13px;
   font-weight: 700;
-  color: white;
+  color: black;
   height: 30px;
   margin-top: 7px;
-  margin-left: 2px;
+  margin-right: 10px;
   margin-bottom: 20px;
-  width: 18%;
-  border: none;
+  width: 11%;
+  border: 0.5px solid #e9ecef;
   border-radius: 7px;
   outline: none;
-  background-color: rgba(29, 150, 53, 0.9);
+  background: linear-gradient(160deg, #f8f9fa, #e9ecef);
   box-shadow: 1px 5px 7px 1px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   transition: .2s ease-out;
 }
+
+  .commentBtn:hover {
+    background: linear-gradient(320deg, #f8f9fa, #e9ecef);
+    box-shadow: 1px 5px 7px 1px rgba(0, 0, 0, 0.3);
+  }
 
 .editTitle{
   font-family: 'Ubuntu', sans-serif;

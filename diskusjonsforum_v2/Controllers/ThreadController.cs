@@ -37,9 +37,7 @@ namespace diskusjonsforum_v2.Controllers
                 foreach (var thread in threads)
                 {
                     var comments = GetComments(thread).ToList();
-            
-                    // To avoid depth error
-                    thread.ThreadComments = comments.Select(c => new Comment { CommentId = c.CommentId }).ToList();
+                    thread.ThreadComments = comments;
                 }
 
                 return Ok(threads); // Use Ok() to return a 200 status code along with the threads

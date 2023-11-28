@@ -6,7 +6,8 @@ import {ActivatedRoute, NavigationExtras, Router} from "@angular/router";
 
 @Component({
   selector: 'app-comment-component', // custom HTML tag
-  templateUrl: './comments.component.html', //path to the HTML file structure
+  templateUrl: './thread-view.component.html', //path to the HTML file structure
+
   // styleUrls: ['./comment.component.css']
 })
 
@@ -14,12 +15,14 @@ export class CommentsComponent implements OnInit {
   viewTitle: string = "Table";
   comments: Comment[] = [];
   parentThreadId!: number;
+  isEditing = false;
  // initialises routes and service for the constructor
   constructor(
-              private commentsService : CommentsService,
-              private _http: HttpClient,
-              private _router: Router,
-              private route: ActivatedRoute) {}
+      private commentsService : CommentsService,
+      private _http: HttpClient,
+      private _router: Router,
+      private route: ActivatedRoute,
+      private _commentService: CommentsService) {}
 
   //gets the comments using HttpClient from "api/comments"
   getComments(): void{
@@ -81,10 +84,31 @@ export class CommentsComponent implements OnInit {
   editComment(commentId: number) {
     // Logic to edit a comment
   }
+  /*
+  cancelCommentEdit(): void{
+    this.editComment = this.comments.ommentBody;
+    // reset isEditing flag
+    this.isEditing = false;
+
+  }
+  */
 
   // Function to delete a comment
-  deleteComment(commentId: number) {
-    // Logic to delete a comment
-  }
 
+   deleteComment(comment: Comment){
+     const confirmDelete = confirm(`Are you sure you want to delete the comment`);
+     if(confirmDelete){
+       this._commentService.deleteComment(comment.commentId).subscribe(
+         (response)=> {
+           if (response.success){
+             console.log(response.message("successfuly  deleted"))
+           }
+         },
+         error => {
+           console.error("Error deleting comment", error)
+         }
+       )
+     }
+
+   }
 }
