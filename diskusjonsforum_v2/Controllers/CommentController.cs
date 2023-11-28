@@ -67,6 +67,7 @@ namespace diskusjonsforum_v2.Controllers
         [HttpPut("update/{id}")]
         public async Task<ActionResult> UpdateComment(int id, [FromBody] Comment comment)
         {
+            comment.CommentLastEditedAt = DateTime.Now;
             try
             {
                 // Retrieve the existing comment from the repository
