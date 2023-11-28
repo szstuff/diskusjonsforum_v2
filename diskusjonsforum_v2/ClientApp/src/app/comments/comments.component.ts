@@ -19,11 +19,11 @@ export class CommentsComponent implements OnInit {
   constructor(
     private commentsService: CommentsService,
     private _http: HttpClient,
-    private _router: Router,
-    private _commentService: CommentsService) {
+    private _router: Router
+  ) {
   }
 
-  //gets the comments using HttpClient from "api/comments"
+  //gets the comments
   getComments(): void {
     this._http.get<Comment[]>('api/comments').subscribe(data => {
         console.log('All', JSON.stringify(data));
@@ -37,7 +37,7 @@ export class CommentsComponent implements OnInit {
       });
   }
 
-  // retrieves the comments that belongs to the thread by threadId with an if statement
+  // retrieves the comments that belongs to the thread by threadId
   getCommentsByThread(): void {
     if (this.parentThreadId !== undefined && this.parentThreadId !== null) {
       this.commentsService.getCommentsByThreadId(this.parentThreadId).subscribe(
@@ -48,7 +48,7 @@ export class CommentsComponent implements OnInit {
     }
   }
 
-  // gives the comment an commentId and sets parentThreadID to the thread it belongs to
+  // navigates to commentform to create a comment
   navigateToCommentform(comment?: Comment) {
     const navigationExtras: NavigationExtras = {
       queryParams: {

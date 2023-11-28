@@ -38,10 +38,10 @@ export class NavMenuComponent {
   // initialises router and service for controllers
   constructor(
     private navMenuService: NavMenuService,
-    private threadService: ThreadService,
     private router: Router
   ) { }
 
+  // a function that handles the input in the search bar
   handleSearchInput() {
     const searchTerm = this.handlesearchinput.trim().toLowerCase();
 
