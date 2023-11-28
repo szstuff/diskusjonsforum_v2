@@ -123,6 +123,15 @@ export class ThreadViewComponent implements OnInit, OnDestroy {
     this.isEditing = false;
   }
 
+  deleteComment(commentId: number): void {
+    this.threadService.deleteComment(commentId).subscribe(
+      () => {
+        console.log('Comment deleted');
+      },
+      (error) => console.error('Error deleting comment', error)
+    );
+  }
+
   ngOnDestroy(): void {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();

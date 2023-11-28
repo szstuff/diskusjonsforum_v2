@@ -52,5 +52,8 @@ export class ThreadService {
     const url = `${this.apiUrl}/search?searchQuery=${searchQuery}`;
     return this._http.get(url);
   }
-
+  deleteComment(commentId: number): Observable<any> {
+    const url = `${this.apiCommentUrl}/delete/${commentId}`;
+    return this._http.delete<any>(url);
+  }
 }

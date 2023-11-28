@@ -79,7 +79,7 @@
             <p>{{ comment.commentBody }}</p>
             <div>
               <button  class="commentBtn">Edit</button>
-              <button class="commentBtn" >Delete</button>
+              <button class="commentBtn" (click)="deleteComment(comment.commentId)">Delete</button>
 
             </div>
             <hr>
