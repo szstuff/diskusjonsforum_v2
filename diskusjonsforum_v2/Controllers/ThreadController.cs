@@ -248,5 +248,37 @@ namespace diskusjonsforum_v2.Controllers
                 return StatusCode(500, "Error while searching threads.");
             }
         }
+
+        [HttpGet("getByRecent")]
+        public IActionResult GetThreadsByRecent()
+        {
+            try
+            {
+                // Implement logic to get threads by most recent
+                var threads = _threadRepository.GetThreadsByRecent().ToList();
+                return Ok(threads);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "[ThreadController] An error occurred in the GetThreadsByRecent action.");
+                return StatusCode(500, "An error occurred while fetching threads by recent.");
+            }
+        }
+
+        [HttpGet("getByComments")]
+        public IActionResult GetThreadsByComments()
+        {
+            try
+            {
+                // Implement logic to get threads by most comments
+                var threads = _threadRepository.GetThreadsByComments().ToList();
+                return Ok(threads);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "[ThreadController] An error occurred in the GetThreadsByComments action.");
+                return StatusCode(500, "An error occurred while fetching threads by comments.");
+            }
+        }
     }
 }
