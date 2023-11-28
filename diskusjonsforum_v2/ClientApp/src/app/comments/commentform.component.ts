@@ -76,22 +76,4 @@ export class CommentformComponent implements OnInit{
     this._router.navigate(["/threads"]); //navigates back to the thread
   }
 
-  /*
-  deleteComment(comment: Comment){
-    const confirmDelete = confirm(`Are you sure you want to delete the comment`);
-    if(confirmDelete){
-      this._commentService.deleteComment(comment.commentId).subscribe(
-        (response)=> {
-          if (response.success){
-            console.log(response.message("successfuly  deleted"))
-          }
-        },
-        error => {
-          console.error("Error deleting comment", error)
-        }
-      )
-    }
-
-  } */
-
 }
