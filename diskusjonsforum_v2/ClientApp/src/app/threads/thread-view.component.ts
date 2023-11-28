@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { ThreadService } from './threads.service';
 import { Thread } from './threads';
 import { Comment } from '../comments/comments';
@@ -17,13 +17,10 @@ export class ThreadViewComponent implements OnInit, OnDestroy {
   isEditing = false;
   editedTitle!: string;
   editedContent!: string;
-  comments: Comment[] = [];
 
   private unsubscribe$ = new Subject<void>();
 
-  constructor(private route: ActivatedRoute,
-              private threadService: ThreadService,
-              private router: Router) {}
+  constructor(private route: ActivatedRoute, private threadService: ThreadService) {}
   // fetches the thread and the comments under the thread
   ngOnInit(): void {
     this.route.paramMap.pipe(
@@ -64,7 +61,7 @@ export class ThreadViewComponent implements OnInit, OnDestroy {
       createdBy: this.newCommentCreatedBy,
       childComments: [],
     };
-
+  // adds the new comments to the thread it belongs to by the threadId
     this.threadService.addCommentToThread(this.thread.threadId, newComment).subscribe(
       (updatedThread: Thread) => {
         this.thread = updatedThread;
@@ -135,6 +132,34 @@ export class ThreadViewComponent implements OnInit, OnDestroy {
       (error) => console.error('Error deleting comment', error)
     );
   }
+
+  toggleEditComment(comment: Comment): void {
+    comment.isEditing = !comment.isEditing;
+    comment.editedBody = comment.commentBody;
+  }
+
+  saveChangesComment(comment: Comment): void {
+    if (comment.editedBody !== undefined) {
+      comment.commentBody = comment.editedBody;
+      this.threadService.updateComment(comment).subscribe(
+        (response) => {
+          console.log("Comment has been updated");
+          comment.isEditing = false;
+        },
+        (error) => {
+          console.error('Error saving changes', error);
+        }
+      );
+    } else {
+      console.error('Attempted to save changes with undefined editedBody');
+    }
+  }
+  cancelEditComment(comment: Comment): void {
+    comment.editedBody = comment.commentBody;
+    comment.isEditing = false;
+  }
   ngOnDestroy(): void {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 }

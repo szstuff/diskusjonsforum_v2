@@ -170,6 +170,7 @@ namespace diskusjonsforum_v2.Controllers
         public async Task<ActionResult> UpdateThread(int id, [FromBody] Thread thread)
         {
             thread.ThreadLastEditedAt = DateTime.Now;
+            string errorMsg = "An error occured when trying to save your edit";
             try
             {
                 // Add custom validation for the thread content
@@ -179,17 +180,37 @@ namespace diskusjonsforum_v2.Controllers
                     return BadRequest();
                 }
 
-                bool returnOk = await _threadRepository.Update(thread);
-                if (returnOk)
-                    return Ok(thread);
+                bool updateSuccess = await _threadRepository.Update(thread);
+
+                if (updateSuccess)
+                {
+                    // Fetch the updated thread after the update
+                    Thread updatedThread = _threadRepository.GetThreadById(id);
+
+                    if (updatedThread != null)
+                    {
+                        // Return the updated thread in the response
+                        return Ok(updatedThread);
+                    }
+                    else
+                    {
+                        // This should not happen, but handle it just in case
+                        errorMsg = "Could not retrieve the updated thread.";
+                    }
+                }
+                else
+                {
+                    // Thread update failed
+                    errorMsg = "Thread update failed.";
+                }
             }
             catch (Exception ex)
             {
+                errorMsg = "Could not edit your thread due to a database error.";
                 _logger.LogError(ex, "[ThreadController] Error editing thread: {0}", id);
-                return StatusCode(500, "An error occurred while editing your thread");
             }
 
-            return StatusCode(500, "An error occurred while editing your thread");
+            return StatusCode(500, new { message = errorMsg });
         }
         
         // Delete thread with given threadId if user has permission

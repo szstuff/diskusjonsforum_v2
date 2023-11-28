@@ -33,6 +33,7 @@ namespace diskusjonsforum_v2.Controllers
             }
             catch (Exception ex)
             {
+                // if an exception occurs an error is logged
                 _logger.LogError(ex, "[CommentController] An error occurred in GetComments action.");
                 return StatusCode(500, "An error occurred while fetching comments");
             }
@@ -68,17 +69,32 @@ namespace diskusjonsforum_v2.Controllers
         {
             try
             {
-                // returns NoContent if the update is successful and if not it returns a Badrequest response
-                bool returnOk = await _commentRepository.Update(comment);
-                if (returnOk)
+                // Retrieve the existing comment from the repository
+                Comment existingComment = _commentRepository.GetById(id);
+
+                // If the comment with the specified id doesn't exist, return NotFound
+                if (existingComment == null)
                 {
-                    return NoContent();
+                    return NotFound($"Comment with ID {id} not found.");
                 }
 
-                return BadRequest("Comment updated failed.");
+                // Update the properties of the existing comment
+                existingComment.CommentBody = comment.CommentBody; 
+
+                // Call the repository method to update the comment
+                bool updateSuccess = await _commentRepository.Update(existingComment);
+
+                if (updateSuccess)
+                {
+                    // Return the updated comment in the response
+                    return Ok(existingComment);
+                }
+
+                return BadRequest("Comment update failed.");
             }
             catch (Exception ex)
             {
+                // Log the error and return a status code
                 _logger.LogError(ex, "[CommentController] An error occurred in UpdateComment action.");
                 return StatusCode(500, "Error occurred while updating the comment.");
             }
@@ -104,7 +120,6 @@ namespace diskusjonsforum_v2.Controllers
                 return StatusCode(500, "Error occurred while deleting the comment.");
             }
         }
-
 
         //recursively finds all replies to the comment 
         private List<Comment> AddChildren(Comment parentComment)

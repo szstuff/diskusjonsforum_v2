@@ -7,8 +7,6 @@ import {ActivatedRoute, NavigationExtras, Router} from "@angular/router";
 @Component({
   selector: 'app-comment-component', // custom HTML tag
   templateUrl: './comments.component.html'//path to the HTML file structure
-
-  // styleUrls: ['./comment.component.css']
 })
 
 export class CommentsComponent implements OnInit {
