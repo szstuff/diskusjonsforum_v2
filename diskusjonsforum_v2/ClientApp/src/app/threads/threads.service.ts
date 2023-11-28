@@ -18,7 +18,7 @@ export class ThreadService {
     return this._http.get<Thread[]>(`${this.apiUrl}/getall`);
   }
 
-  // Updated getThread to include comments
+
   getThread(threadId: number): Observable<Thread> {
     const url = `${this.apiUrl}/getThread/${threadId}`;
     return this._http.get<Thread>(url);

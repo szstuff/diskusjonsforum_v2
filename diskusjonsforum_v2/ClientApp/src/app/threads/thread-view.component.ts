@@ -5,6 +5,7 @@ import { Thread } from './threads';
 import { Comment } from '../comments/comments';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import {CommentsService} from "../comments/comments.service";
 
 @Component({
   selector: 'app-thread-view',
@@ -48,7 +49,7 @@ export class ThreadViewComponent implements OnInit, OnDestroy {
       );
     });
   }
-  // makes a constructor that takes in several data. It is used in the HTML "thread-view.component.html" to add the data from the input
+  // makes a constructor that takes in several data for comment. It is used in the HTML "thread-view.component.html" to add the data from the input
   addComment() {
     const newComment = {
       commentId: 0,
@@ -75,6 +76,7 @@ export class ThreadViewComponent implements OnInit, OnDestroy {
     );
   }
 
+  // deletes the thread by threadId
   deletePost(thread: Thread){
     const confirmDelete = confirm(`Are you sure you want to delete "${thread.threadTitle}"`);
     if (confirmDelete){
@@ -125,4 +127,6 @@ export class ThreadViewComponent implements OnInit, OnDestroy {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
   }
+
+  protected readonly CommentsService = CommentsService;
 }

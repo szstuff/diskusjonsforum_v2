@@ -26,7 +26,7 @@
 
         <ng-template #editMode>
           <!-- Display editable content when editing -->
-          <input type="text" [(ngModel)]="editedTitle" />
+          <input type="text" [(ngModel)]="editedTitle" class="editTitle"/>
           <div class="thread-information">
             <!-- Thread information: user, post date, last edited date -->
             <p>
@@ -77,6 +77,11 @@
               </ng-container>
             </p>
             <p>{{ comment.commentBody }}</p>
+            <div>
+              <button  class="commentBtn" >Edit</button>
+              <button class="commentBtn">Delete</button>
+
+            </div>
             <hr>
           </div>
         </div>
