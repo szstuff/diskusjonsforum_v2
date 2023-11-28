@@ -5,8 +5,6 @@ import { Thread } from './threads';
 import { Comment } from '../comments/comments';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import {CommentsService} from "../comments/comments.service";
-
 @Component({
   selector: 'app-thread-view',
   templateUrl: './thread-view.component.html',
@@ -69,6 +67,8 @@ export class ThreadViewComponent implements OnInit, OnDestroy {
         this.thread = updatedThread;
         this.newCommentBody = '';
         this.newCommentCreatedBy = '';
+
+        window.location.reload();
       },
       (error) => {
         console.error('Error adding comment', error);
@@ -127,7 +127,8 @@ export class ThreadViewComponent implements OnInit, OnDestroy {
     this.threadService.deleteComment(commentId).subscribe(
       () => {
         console.log('Comment deleted');
-      },
+        window.location.reload(); //Manually reload same site
+        },
       (error) => console.error('Error deleting comment', error)
     );
   }

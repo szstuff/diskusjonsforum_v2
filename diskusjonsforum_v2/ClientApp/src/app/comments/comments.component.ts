@@ -42,9 +42,7 @@ export class CommentsComponent implements OnInit {
   getCommentsByThread(): void {
     if (this.parentThreadId !== undefined && this.parentThreadId !== null) {
       this.commentsService.getCommentsByThreadId(this.parentThreadId).subscribe(
-        (comments) => (this.comments = comments),
-        (error) => console.error('Error fetching comments')
-      )
+        (comments) => (this.comments = comments))
     } else {
       // if the parentThreadId is null or not defined the error is handled and the errormessage is logged to the console
       console.error('Cannot fetch comments, parentThreadId is undefined.')

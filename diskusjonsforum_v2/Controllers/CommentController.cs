@@ -12,21 +12,18 @@ namespace diskusjonsforum_v2.Controllers
     {
         //Initialise controllers and interfaces for constructor
         private readonly ICommentRepository _commentRepository;
-        private readonly IThreadRepository _threadRepository;
         private readonly ILogger<CommentController> _logger;
 
         public CommentController(ICommentRepository commentRepository,
-            IThreadRepository threadRepository,
             ILogger<CommentController> logger)
         {
-            _threadRepository = threadRepository;
             _commentRepository = commentRepository;
             _logger = logger;
         }
 
         // Return all comments 
         [HttpGet("getByThread/{parentThreadId}")]
-        public IActionResult GetComments(int parentThreadId)
+        public ActionResult GetComments(int parentThreadId)
         {
             try
             {
@@ -66,7 +63,6 @@ namespace diskusjonsforum_v2.Controllers
             }
         }
 
-
         // updates comment by id
         [HttpPut("update/{id}")]
         public async Task<ActionResult> UpdateComment(int id, [FromBody] Comment comment)
@@ -103,7 +99,6 @@ namespace diskusjonsforum_v2.Controllers
                 return StatusCode(500, "Error occurred while updating the comment.");
             }
         }
-
 
         // deletes comment by id
         [HttpDelete("delete/{id}")]

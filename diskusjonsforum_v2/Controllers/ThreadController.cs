@@ -86,9 +86,7 @@ namespace diskusjonsforum_v2.Controllers
             {
                 _logger.LogError(ex, "[ThreadController] An error occurred in the Thread action for thread ID: {0},",
                     id);
-                // Redirect to Error view if error occurs
-                return RedirectToAction("Error", "Home",
-                    new { errorMsg = "An error occurred while loading the thread." });
+                return StatusCode(500, "An error occurred while loading the thread");
 
             }
 
@@ -169,11 +167,10 @@ namespace diskusjonsforum_v2.Controllers
 
         // Saves edits made to a thread
         [HttpPut("update/{id}")]
-        public async Task<ActionResult<Thread>> UpdateThread(int id, [FromBody] Thread thread)
+        public async Task<ActionResult> UpdateThread(int id, [FromBody] Thread thread)
         {
             thread.ThreadLastEditedAt = DateTime.Now;
-            string errorMsg = "An error occurred when trying to save your edit";
-
+            string errorMsg = "An error occured when trying to save your edit";
             try
             {
                 // Add custom validation for the thread content
@@ -215,8 +212,6 @@ namespace diskusjonsforum_v2.Controllers
 
             return StatusCode(500, new { message = errorMsg });
         }
-
-
         
         // Delete thread with given threadId if user has permission
         [HttpDelete("delete/{id}")]
@@ -240,7 +235,7 @@ namespace diskusjonsforum_v2.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "[ThreadController] An error occurred while deleting the thread with ID: {threadId}", id);
-                return StatusCode(500, "Error deleting thread.");
+                return StatusCode(500, "An error occurred while deleting your thread");
             }
         }
 
