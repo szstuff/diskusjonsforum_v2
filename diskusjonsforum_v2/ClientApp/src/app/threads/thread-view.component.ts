@@ -5,8 +5,6 @@ import { Thread } from './threads';
 import { Comment } from '../comments/comments';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import {CommentsService} from "../comments/comments.service";
-
 @Component({
   selector: 'app-thread-view',
   templateUrl: './thread-view.component.html',
@@ -25,7 +23,6 @@ export class ThreadViewComponent implements OnInit, OnDestroy {
 
   constructor(private route: ActivatedRoute,
               private threadService: ThreadService,
-              private commentsService: CommentsService,
               private router: Router) {}
   // fetches the thread and the comments under the thread
   ngOnInit(): void {
@@ -74,26 +71,10 @@ export class ThreadViewComponent implements OnInit, OnDestroy {
         this.newCommentBody = '';
         this.newCommentCreatedBy = '';
 
-        // Refresh comments for the current thread
-        this.getCommentsByThread();
-
-        // Redirect back to the thread view page
-        this.router.navigate(['/thread-view/', {id: this.thread.threadId}]);
+        window.location.reload();
       },
       (error) => {
         console.error('Error adding comment', error);
-      }
-    );
-  }
-
-  // Refresh comments for the current thread
-  getCommentsByThread() {
-    this.commentsService.getCommentsByThreadId(this.thread.threadId).subscribe(
-      (comments) => {
-        this.comments = comments;
-      },
-      (error) => {
-        console.error('Error fetching comments', error);
       }
     );
   }
@@ -149,23 +130,11 @@ export class ThreadViewComponent implements OnInit, OnDestroy {
     this.threadService.deleteComment(commentId).subscribe(
       () => {
         console.log('Comment deleted');
-
-        // Refresh comments for the current thread
-        this.getCommentsByThread();
-
-        // Optional: Redirect back to the thread details page
-        setTimeout(() => {
-          this.router.navigate([`/threads/${this.thread.threadId}`]);
-        }, 0);
-      },
+        window.location.reload();
+        },
       (error) => console.error('Error deleting comment', error)
     );
   }
-
-
-
-  protected readonly CommentsService = CommentsService;
-
   ngOnDestroy(): void {
   }
 }
