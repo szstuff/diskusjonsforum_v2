@@ -41,7 +41,7 @@
           </div>
           <div><p class="comment-count"><img src="../../assets/images/message-detail-regular-24.png" alt="..." height="20" />
             {{ thread.threadComments?.length }}</p></div>
-          <button (click)="saveChanges()" [routerLink]="['/thread-view/', thread.threadId]" class="editBtn">Save</button>
+          <button (click)="saveChanges()" class="editBtn">Save</button>
           <button (click)="cancelEdit()" class="editBtn">Cancel</button>
         </ng-template>
       </div>
@@ -70,19 +70,32 @@
             <p>No comments yet.</p>
           </div>
           <div *ngFor="let comment of thread.threadComments">
-            <p> <b>{{comment.createdBy}}</b> replied on the <b>{{comment.commentCreatedAt | date:'yyyy-MM-dd HH:mm'}}</b>
-              <!-- Displays commentLastEdited value only if it differs from commentCreatedAt        -->
-              <ng-container *ngIf="comment.commentLastEditedAt !== comment.commentCreatedAt">
-              <i>. Last edited at: {{ comment.commentLastEditedAt | date:'yyyy-MM-dd HH:mm' }}</i>
-              </ng-container>
-            </p>
-            <p>{{ comment.commentBody }}</p>
-            <div>
-              <button  class="commentBtn">Edit</button>
-              <button class="commentBtn" (click)="deleteComment(comment.commentId)">Delete</button>
-
+            <div *ngIf="!comment.isEditing; else editMode">
+              <!-- Display content when not editing -->
+              <p>
+                <b>{{comment.createdBy}}</b> replied on the <b>{{comment.commentCreatedAt | date:'yyyy-MM-dd HH:mm'}}</b>
+                <!-- Displays commentLastEdited value only if it differs from commentCreatedAt        -->
+                <ng-container *ngIf="comment.commentLastEditedAt !== comment.commentCreatedAt">
+                  <i>. Last edited at: {{ comment.commentLastEditedAt | date:'yyyy-MM-dd HH:mm' }}</i>
+                </ng-container>
+              </p>
+              <p>{{ comment.commentBody }}</p>
+              <div>
+                <button class="commentBtn" (click)="toggleEditComment(comment)">Edit</button>
+                <button class="commentBtn" (click)="deleteComment(comment.commentId)">Delete</button>
+              </div>
+              <hr>
             </div>
-            <hr>
+
+            <ng-template #editMode>
+              <!-- Display editable content when editing -->
+              <input type="text" [(ngModel)]="comment.editedBody" />
+              <div>
+                <button class="commentBtn" (click)="saveChangesComment(comment)">Save</button>
+                <button class="commentBtn" (click)="cancelEditComment(comment)">Cancel</button>
+              </div>
+              <hr>
+            </ng-template>
           </div>
         </div>
       </div>

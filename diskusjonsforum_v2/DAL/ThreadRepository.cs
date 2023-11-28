@@ -63,4 +63,14 @@ public class ThreadRepository : IThreadRepository
         await _threadDbContext.SaveChangesAsync();
     }
 
+    public IEnumerable<Thread> GetThreadsByRecent()
+    {
+        return _threadDbContext.Threads.OrderByDescending(t => t.ThreadCreatedAt).ToList();
+    }
+
+    public IEnumerable<Thread> GetThreadsByComments()
+    {
+        return _threadDbContext.Threads.OrderByDescending(t => t.ThreadComments.Count()).ToList();
+    }
+
 }
