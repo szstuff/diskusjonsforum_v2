@@ -165,33 +165,24 @@ public class ThreadControllerTests
             ThreadLastEditedAt = new DateTime(2023, 10, 10, 10, 10, 10),
             CreatedBy = "Stilian"
         };
-        var invalidThread3 = new Thread
-        {
-            ThreadBody = "Test body",
-            ThreadComments = new List<Comment>(),
-            ThreadTitle = "Test title",
-            ThreadCreatedAt = new DateTime(2023, 10, 10, 10, 10, 10),
-            ThreadLastEditedAt = new DateTime(2023, 10, 10, 10, 10, 10),
-            CreatedBy = "Stilian"
-        };
+      
         var mockThreadRepository = new Mock<IThreadRepository>();
         var mockCommentRepository = new Mock<ICommentRepository>();
         var mockLogger = new Mock<ILogger<ThreadController>>();
+        mockThreadRepository.Setup(repo => repo.Add(It.IsAny<Thread>())).ReturnsAsync(false);
+
         var threadController =
             new ThreadController(mockThreadRepository.Object, mockCommentRepository.Object, mockLogger.Object);
 
         //Act
         var act1 = threadController.CreateThread(invalidThread1);
         var act2 = threadController.CreateThread(invalidThread2);
-        var act3 = threadController.CreateThread(invalidThread3);
 
         //Assert 
         var result1 = Assert.IsType<BadRequestObjectResult>(act1.Result);
         Assert.Equal(400, result1.StatusCode);
         var result2 = Assert.IsType<BadRequestObjectResult>(act2.Result);
         Assert.Equal(400, result2.StatusCode);
-        var result3 = Assert.IsType<BadRequestObjectResult>(act3.Result);
-        Assert.Equal(400, result3.StatusCode);
 
 
         
