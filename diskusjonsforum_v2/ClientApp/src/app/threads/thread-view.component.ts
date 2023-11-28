@@ -97,6 +97,7 @@ export class ThreadViewComponent implements OnInit, OnDestroy {
     this.isEditing = !this.isEditing;
   }
 
+  // saves the changes made on the thread.
   saveChanges(): void {
     // Perform the logic to save changes, update thread.title and thread.body
     // Call the service method to update the thread

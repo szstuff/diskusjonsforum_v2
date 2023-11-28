@@ -6,7 +6,6 @@
       <a class="navbar-brand custom-font fs-4 text-light em-wide" [routerLink]="['/']">
         <img src="../../assets/images/bicycle.png" alt="..." height="35" />ArcaNet
       </a>
-
       <button class="navbar-toggler btn-close-white shadow-none border-0"
               type="button"
               data-toggle="collapse"
@@ -16,21 +15,16 @@
               (click)="toggle()">
         <span class="navbar-toggler-icon"></span>
       </button>
+
       <div class="navbar-collapse collapse d-sm-inline-flex justify-content-end"
            [ngClass]="{ show: isExpanded }">
-
         <ul class="navbar-nav flex-grow">
-          <!--<li
-        class="login-text nav-link text-light"
-        [routerLinkActive]="['link-active']"
-        [routerLinkActiveOptions]="{ exact: true }"
-      >
-      </li>-->
           <li class="d-flex flex-column flex-lg-row justify-content-center align-items-center gap-3" [routerLinkActive]="['link-active']">
             <a class="login-text nav-link text-light" [routerLink]="['/threads']">Explore </a>
           </li>
         </ul>
       </div>
+
       <div class="position-relative">
         <input #searchBarElement
                id="searchBar"
@@ -39,8 +33,9 @@
                type="text"
                [(ngModel)]="handlesearchinput"
                (input)="handleSearchInput()" />
-        <div id="searchResultsDropdown" class="search-results" *ngIf="searchResults.length > 0">
+
           <!-- Display your search results here -->
+        <div id="searchResultsDropdown" class="search-results" *ngIf="searchResults.length > 0">
           <div class="search_bar_results" *ngFor="let result of searchResults" (click)="navigateToThreadform(result)">
             {{ result.threadTitle }}
           </div>

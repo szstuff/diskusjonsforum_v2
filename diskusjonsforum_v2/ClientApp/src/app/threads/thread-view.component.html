@@ -1,6 +1,7 @@
 <div class="form-box">
   <div class="create-container">
     <div class="form-group">
+
       <div *ngIf="thread.threadId; else notFound">
         <div *ngIf="!isEditing; else editMode" id="displayPost">
           <!-- Display content when not editing -->
@@ -18,8 +19,11 @@
             <hr />
             <p class="thread-body">{{ thread.threadBody }}</p>
           </div>
+
           <div><p class="comment-count"><img src="../../assets/images/message-detail-regular-24.png" alt="..." height="20" />
-            {{ thread.threadComments?.length }}</p></div>
+            {{ thread.threadComments?.length }}</p>
+          </div>
+
           <button (click)="toggleEdit()" class="editBtn">Edit</button>
           <button (click)="deletePost(thread)" [routerLink]="['/threads']" class="editBtn">Delete</button>
         </div>
@@ -39,8 +43,11 @@
             <hr />
             <textarea [(ngModel)]="editedContent" class="editBox"></textarea>
           </div>
+
           <div><p class="comment-count"><img src="../../assets/images/message-detail-regular-24.png" alt="..." height="20" />
-            {{ thread.threadComments?.length }}</p></div>
+            {{ thread.threadComments?.length }}</p>
+          </div>
+
           <button (click)="saveChanges()" class="editBtn">Save</button>
           <button (click)="cancelEdit()" class="editBtn">Cancel</button>
         </ng-template>
@@ -69,6 +76,7 @@
           <div *ngIf="!thread.threadComments || thread.threadComments.length === 0">
             <p>No comments yet.</p>
           </div>
+
           <div *ngFor="let comment of thread.threadComments">
             <div *ngIf="!comment.isEditing; else editMode">
               <!-- Display content when not editing -->
@@ -80,6 +88,7 @@
                 </ng-container>
               </p>
               <p>{{ comment.commentBody }}</p>
+
               <div>
                 <button class="commentBtn" (click)="toggleEditComment(comment)">Edit</button>
                 <button class="commentBtn" (click)="deleteComment(comment.commentId)">Delete</button>
@@ -90,6 +99,7 @@
             <ng-template #editMode>
               <!-- Display editable content when editing -->
               <input type="text" [(ngModel)]="comment.editedBody" />
+
               <div>
                 <button class="commentBtn" (click)="saveChangesComment(comment)">Save</button>
                 <button class="commentBtn" (click)="cancelEditComment(comment)">Cancel</button>

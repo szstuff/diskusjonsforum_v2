@@ -51,7 +51,7 @@ export class HomeComponent implements OnInit {
       this.loadThreadsByComments();
     }
   }
-
+  // filters the threads by recently posted
   loadThreadsByRecent() {
     this.threadService.getThreadsByRecent().subscribe(
       (threads: Thread[]) => {
@@ -63,7 +63,7 @@ export class HomeComponent implements OnInit {
       }
     );
   }
-
+  // filters the threads by most comments
   loadThreadsByComments() {
     this.threadService.getThreadsByComments().subscribe(
       (threads: Thread[]) => {
