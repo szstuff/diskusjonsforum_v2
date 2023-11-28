@@ -2,15 +2,12 @@ using Microsoft.AspNetCore.Mvc;
 using diskusjonsforum_v2.Models;
 using diskusjonsforum_v2.DAL;
 
-
 namespace diskusjonsforum_v2.Controllers
 {
-    // defines the base route and indicate that it is an API controller
     [Route("api/comments")]
     [ApiController]
     public class CommentController : ControllerBase
     {
-        //Initialise controllers and interfaces for constructor
         private readonly ICommentRepository _commentRepository;
         private readonly ILogger<CommentController> _logger;
 
@@ -20,8 +17,7 @@ namespace diskusjonsforum_v2.Controllers
             _commentRepository = commentRepository;
             _logger = logger;
         }
-
-        // Return all comments 
+        
         [HttpGet("getByThread/{parentThreadId}")]
         public ActionResult GetComments(int parentThreadId)
         {
@@ -101,8 +97,7 @@ namespace diskusjonsforum_v2.Controllers
                 return StatusCode(500, "Error occurred while updating the comment.");
             }
         }
-
-        // deletes comment by id
+        
         [HttpDelete("delete/{id}")]
         public IActionResult DeleteComment(int id)
         {

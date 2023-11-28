@@ -19,6 +19,7 @@ export class ThreadsComponent implements OnInit {
     return this._listFilter;
   }
 
+
   set listFilter(value: string) {
     this._listFilter = value;
     console.log('In setter:', value);
@@ -33,6 +34,7 @@ export class ThreadsComponent implements OnInit {
     private _router: Router
   ) { }
 
+  // function for retrieving  threads
   getThreads(): void {
     this._threadService.getThreadsByRecent() // Use a method that retrieves threads sorted by date
       .subscribe(data => {
