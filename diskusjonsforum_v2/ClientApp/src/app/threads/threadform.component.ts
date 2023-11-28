@@ -29,7 +29,7 @@ export class ThreadformComponent {
   }
 
 
-  onSubmit() { // the method gets triggered when a thread is submitted
+  onSubmit() {
     console.log("ThreadCreate from submitted:");
     console.log(this.threadForm);
     console.log('The thread ' + this.threadForm.value.title + ' is created.');
@@ -38,11 +38,10 @@ export class ThreadformComponent {
     this._threadService.createThread(newThread) //Send the new thread to ThreadService->ThreadController to save
       .subscribe(response => {
       if (response.success) {
-        // if the response is a sucsess a message is logged from the server
         console.log(response.message);
         this._router.navigate(['/threads']);  // navigates back to /threads
       }
-      else { // if it's not succesfull a failed success message is logged
+      else {
         console.log('Thread creation failed');
       }
     });

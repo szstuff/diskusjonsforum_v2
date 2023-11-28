@@ -46,8 +46,8 @@ export class ThreadsComponent implements OnInit {
         });
   }
 
+  // function for loading comments belonging to a thread by threadId
   private loadCommentsForThreads() {
-    // Iterate through threads and load comments for each thread
     this.threads.forEach((thread) => {
       this._threadService.getCommentsForThread(thread.threadId).subscribe(
         (comments) => {
@@ -70,10 +70,12 @@ export class ThreadsComponent implements OnInit {
     );
   }
 
+  // navigates to the thread from when creating a new thread
   navigateToThreadform() {
     this._router.navigate(['/threadForm']);
   }
 
+  // changes grid view for how the threads in the index
   navigateToHome() {
     this._router.navigate(['/home']);
   }
@@ -83,6 +85,7 @@ export class ThreadsComponent implements OnInit {
     this.getThreads();
   }
 
+  // updates the thread
   update(thread: Thread): void {
     this._threadService.updateThread(thread).subscribe(
       () => {
@@ -95,6 +98,7 @@ export class ThreadsComponent implements OnInit {
     );
   }
 
+  // deletes the thread by threadId
   delete(threadId: number): void {
     this._threadService.deleteThread(threadId).subscribe(
       () => {
