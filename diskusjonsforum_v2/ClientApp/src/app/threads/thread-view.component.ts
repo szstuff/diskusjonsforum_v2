@@ -5,6 +5,7 @@ import { Thread } from './threads';
 import { Comment } from '../comments/comments';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import {CommentsService} from "../comments/comments.service";
 
 @Component({
   selector: 'app-thread-view',
@@ -14,6 +15,10 @@ import { Subject } from 'rxjs';
 export class ThreadViewComponent implements OnInit, OnDestroy {
   thread: Thread = {} as Thread;
   newCommentBody: string = '';
+  newCommentCreatedBy: string = '';
+  isEditing = false;
+  editedTitle!: string;
+  editedContent!: string;
 
   private unsubscribe$ = new Subject<void>();
 
@@ -44,7 +49,7 @@ export class ThreadViewComponent implements OnInit, OnDestroy {
       );
     });
   }
-  // makes a constructor that takes in several data. It is used in the HTML "thread-view.component.html" to add the data from the input
+  // makes a constructor that takes in several data for comment. It is used in the HTML "thread-view.component.html" to add the data from the input
   addComment() {
     const newComment = {
       commentId: 0,
@@ -55,7 +60,7 @@ export class ThreadViewComponent implements OnInit, OnDestroy {
       thread: null,
       parentCommentId: null,
       parentComment: null,
-      createdBy: null,
+      createdBy: this.newCommentCreatedBy,
       childComments: [],
     };
   // adds the new comments to the thread it belongs to by the threadId
@@ -63,6 +68,7 @@ export class ThreadViewComponent implements OnInit, OnDestroy {
       (updatedThread: Thread) => {
         this.thread = updatedThread;
         this.newCommentBody = '';
+        this.newCommentCreatedBy = '';
       },
       (error) => {
         console.error('Error adding comment', error);
@@ -70,9 +76,57 @@ export class ThreadViewComponent implements OnInit, OnDestroy {
     );
   }
 
+  // deletes the thread by threadId
+  deletePost(thread: Thread){
+    const confirmDelete = confirm(`Are you sure you want to delete "${thread.threadTitle}"`);
+    if (confirmDelete){
+      this.threadService.deleteThread(thread.threadId).subscribe(
+        (response) => {
+          if (response.success){
+            console.log(response.message);
+          }
+        },
+        error => {
+          console.error('Error deleting item', error)
+        }
+      )
+    }
+  }
+
+  toggleEdit() {
+    this.isEditing = !this.isEditing;
+  }
+
+  saveChanges(): void {
+    // Perform the logic to save changes, update thread.title and thread.body
+    // Call the service method to update the thread
+    this.thread.threadTitle = this.editedTitle;
+    this.thread.threadBody = this.editedContent;
+
+    this.threadService.updateThread(this.thread).subscribe(
+      (response) => {
+        console.log(response.message);
+        // Reset isEditing flag after successful save
+        this.isEditing = false;
+      },
+      (error) => {
+        console.error('Error saving changes', error);
+      }
+    );
+  }
+
+  cancelEdit(): void {
+    // Reset editedTitle and editedContent with the current values
+    this.editedTitle = this.thread.threadTitle;
+    this.editedContent = this.thread.threadBody;
+    // Reset isEditing flag
+    this.isEditing = false;
+  }
 
   ngOnDestroy(): void {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
   }
+
+  protected readonly CommentsService = CommentsService;
 }

@@ -40,7 +40,7 @@
     height: 200px;
 }
 
-.username-input, .title-input, .body-input, .comment-input {
+.username-input, .title-input, .body-input, .comment-input, .editBox{
   font-family: 'Ubuntu', sans-serif;
   font-weight: 300;
   box-shadow: inset 0 1px 3px #ddd;
@@ -94,10 +94,28 @@
   transition: .3s ease-in-out;
 }
 
-  .cancel-button:hover {
+  .cancel-button:hover, .delete-thread-button{
     background: rgb(150, 29, 29, 07);
     box-shadow: 1px 5px 7px 1px rgba(0, 0, 0, 0.2);
   }
+
+.delete-thread-button{
+  font-size: 13px;
+  font-weight: 700;
+  color: white;
+  height: 30px;
+  margin-top: 7px;
+  margin-left: 2px;
+  margin-bottom: 20px;
+  width: 18%;
+  border: none;
+  border-radius: 7px;
+  outline: none;
+  background-color: rgb(150, 29, 29, 07);
+  box-shadow: 1px 5px 7px 1px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: .2s ease-out;
+}
 
 
 .input-label {
@@ -158,4 +176,79 @@
 
 .thread-body {
     font-weight: 400;
+}
+
+.actual-comment{
+  box-shadow: inset 0 1px 3px #ddd;
+  border-radius: 7px;
+  border: 1px solid #ccc;
+  padding: 20px 20px 0px 20px;
+  background-color: rgba(255, 255, 255, 0.8);
+}
+.comment-input{
+  border-radius: 7px;
+  box-shadow: inset 0 1px 3px #ddd;
+  border: 1px solid #ccc;
+  margin-bottom: 5px;
+}
+
+.editBtn{
+
+  font-size: 13px;
+  font-weight: 700;
+  color: white;
+  height: 30px;
+  margin-top: 7px;
+  margin-left: 2px;
+  margin-bottom: 20px;
+  width: 18%;
+  border: none;
+  border-radius: 7px;
+  outline: none;
+  background-color: rgba(29, 150, 53, 0.9);
+  box-shadow: 1px 5px 7px 1px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: .2s ease-out;
+}
+.editBtn:hover {
+  background: rgb(29, 150, 53, 07);
+  box-shadow: 1px 5px 7px 1px rgba(0, 0, 0, 0.2);
+}
+
+.editBox {
+  border-radius: 7px;
+  box-shadow: inset 0 1px 3px #ddd;
+  border: 1px solid #ccc;
+  margin-bottom: 5px;
+  padding-right: 70%;
+}
+
+.commentBtn {
+  font-size: 13px;
+  font-weight: 700;
+  color: white;
+  height: 30px;
+  margin-top: 7px;
+  margin-left: 2px;
+  margin-bottom: 20px;
+  width: 18%;
+  border: none;
+  border-radius: 7px;
+  outline: none;
+  background-color: rgba(29, 150, 53, 0.9);
+  box-shadow: 1px 5px 7px 1px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: .2s ease-out;
+}
+
+.editTitle{
+  font-family: 'Ubuntu', sans-serif;
+  font-weight: 300;
+  box-shadow: inset 0 1px 3px #ddd;
+  border: 1px solid #ccc;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 20px;
+  padding-right: 65%;
+  border-radius: 7px;
 }

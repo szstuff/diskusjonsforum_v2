@@ -44,9 +44,6 @@ namespace diskusjonsforum_v2.Controllers
             try
             {   // set comment details for user and adds the new comment
                 newComment.ThreadId = threadId;
-
-                newComment.CreatedBy = "Sys";
-
                 _commentRepository.Add(newComment);
                 // success message when the comment is successfully made
                 var response = new

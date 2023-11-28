@@ -1,10 +1,9 @@
-
 <div class="form-box">
   <div class="create-container">
     <div class="form-group">
       <div *ngIf="thread.threadId; else notFound">
-        <div id="displayPost">
-          <!-- Thread title -->
+        <div *ngIf="!isEditing; else editMode" id="displayPost">
+          <!-- Display content when not editing -->
           <h1 class="thread-title-current">{{ thread.threadTitle }}</h1>
 
           <div class="thread-information">
@@ -19,10 +18,33 @@
             <hr />
             <p class="thread-body">{{ thread.threadBody }}</p>
           </div>
-          <div><p class="comment-count"><img src="../../assets/images/message-detail-regular-24.png" alt="..." height="20" />    {{ thread.threadComments?.length }}</p></div>
+          <div><p class="comment-count"><img src="../../assets/images/message-detail-regular-24.png" alt="..." height="20" />
+            {{ thread.threadComments?.length }}</p></div>
+          <button (click)="toggleEdit()" class="editBtn">Edit</button>
+          <button (click)="deletePost(thread)" [routerLink]="['/threads']" class="editBtn">Delete</button>
         </div>
-      </div>
 
+        <ng-template #editMode>
+          <!-- Display editable content when editing -->
+          <input type="text" [(ngModel)]="editedTitle" class="editTitle"/>
+          <div class="thread-information">
+            <!-- Thread information: user, post date, last edited date -->
+            <p>
+              Posted by <b>{{ thread.createdBy }}</b> on the <b>{{ thread.threadCreatedAt | date: 'yyyy-MM-dd HH:mm' }}</b>.
+              <!-- Display last edited date if different -->
+              <span *ngIf="thread.threadCreatedAt !== thread.threadLastEditedAt">
+                <i>Last edited: {{ thread.threadLastEditedAt | date: 'yyyy-MM-dd HH:mm' }}</i>
+              </span>
+            </p>
+            <hr />
+            <textarea [(ngModel)]="editedContent" class="editBox"></textarea>
+          </div>
+          <div><p class="comment-count"><img src="../../assets/images/message-detail-regular-24.png" alt="..." height="20" />
+            {{ thread.threadComments?.length }}</p></div>
+          <button (click)="saveChanges()" [routerLink]="['/thread-view/', thread.threadId]" class="editBtn">Save</button>
+          <button (click)="cancelEdit()" class="editBtn">Cancel</button>
+        </ng-template>
+      </div>
 
       <ng-template #notFound>
         <div class="container">
@@ -35,6 +57,7 @@
 
         <!-- Input box for adding comments -->
         <div id="textBox">
+          <input [(ngModel)]="newCommentCreatedBy" placeholder="Display name" class="comment-input">
           <textarea [(ngModel)]="newCommentBody" placeholder="What are your thoughts?" class="comment-input"></textarea>
           <div>
             <button (click)="addComment()" class="add-comment-button">Add Comment</button>
@@ -47,11 +70,25 @@
             <p>No comments yet.</p>
           </div>
           <div *ngFor="let comment of thread.threadComments">
+            <p> <b>{{comment.createdBy}}</b> replied on the <b>{{comment.commentCreatedAt | date:'yyyy-MM-dd HH:mm'}}</b>
+              <!-- Displays commentLastEdited value only if it differs from commentCreatedAt        -->
+              <ng-container *ngIf="comment.commentLastEditedAt !== comment.commentCreatedAt">
+              <i>. Last edited at: {{ comment.commentLastEditedAt | date:'yyyy-MM-dd HH:mm' }}</i>
+              </ng-container>
+            </p>
             <p>{{ comment.commentBody }}</p>
+            <div>
+              <button  class="commentBtn" >Edit</button>
+              <button class="commentBtn">Delete</button>
+
+            </div>
+            <hr>
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+
 
