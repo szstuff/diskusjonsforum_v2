@@ -1,6 +1,7 @@
 <div class="form-box">
   <div class="create-container">
     <div class="form-group">
+
       <div *ngIf="thread.threadId; else notFound">
         <div *ngIf="!isEditing; else editMode" id="displayPost">
           <!-- Display content when not editing -->
@@ -11,16 +12,19 @@
             <p>
               Posted by <b>{{ thread.createdBy }}</b> on the <b>{{ thread.threadCreatedAt | date: 'yyyy-MM-dd HH:mm' }}</b>.
               <!-- Display last edited date if different -->
-              <span *ngIf="thread.threadCreatedAt !== thread.threadLastEditedAt">
+              <span *ngIf="significantTimeDifference(thread)">
                 <i>Last edited: {{ thread.threadLastEditedAt | date: 'yyyy-MM-dd HH:mm' }}</i>
               </span>
             </p>
             <hr />
             <p class="thread-body">{{ thread.threadBody }}</p>
           </div>
-          <div><p class="comment-count"><img src="../../assets/images/message-detail-regular-24.png" alt="..." height="20" />
-            {{ thread.threadComments?.length }}</p></div>
-          <button (click)="toggleEdit()" class="editBtn">Edit</button>
+
+          <div><p class="comment-count"><img ngSrc="../../assets/images/message-detail-regular-24.png" alt="..." height="20" width="20"/>
+            {{ thread.threadComments?.length }}</p>
+          </div>
+
+          <button (click)="toggleEdit(thread)" class="editBtn">Edit</button>
           <button (click)="deletePost(thread)" [routerLink]="['/threads']" class="editBtn">Delete</button>
         </div>
 
@@ -32,17 +36,20 @@
             <p>
               Posted by <b>{{ thread.createdBy }}</b> on the <b>{{ thread.threadCreatedAt | date: 'yyyy-MM-dd HH:mm' }}</b>.
               <!-- Display last edited date if different -->
-              <span *ngIf="thread.threadCreatedAt !== thread.threadLastEditedAt">
+              <span *ngIf="(significantTimeDifference(thread))">
                 <i>Last edited: {{ thread.threadLastEditedAt | date: 'yyyy-MM-dd HH:mm' }}</i>
               </span>
             </p>
             <hr />
-            <textarea [(ngModel)]="editedContent" class="editBox"></textarea>
+            <textarea [(ngModel)]="editedBody" class="editBox"></textarea>
           </div>
-          <div><p class="comment-count"><img src="../../assets/images/message-detail-regular-24.png" alt="..." height="20" />
-            {{ thread.threadComments?.length }}</p></div>
+
+          <div><p class="comment-count"><img ngSrc="../../assets/images/message-detail-regular-24.png" alt="..." height="20" width="20" />
+            {{ thread.threadComments?.length }}</p>
+          </div>
+
           <button (click)="saveChanges()" class="editBtn">Save</button>
-          <button (click)="cancelEdit()" class="editBtn">Cancel</button>
+          <button (click)="toggleEdit(thread)" class="editBtn">Cancel</button>
         </ng-template>
       </div>
 
@@ -75,17 +82,19 @@
           <div *ngIf="!thread.threadComments || thread.threadComments.length === 0">
             <p>No comments yet.</p>
           </div>
+
           <div *ngFor="let comment of thread.threadComments">
             <div *ngIf="!comment.isEditing; else editMode">
               <!-- Display content when not editing -->
               <p>
                 <b>{{comment.createdBy}}</b> replied on the <b>{{comment.commentCreatedAt | date:'yyyy-MM-dd HH:mm'}}</b>
                 <!-- Displays commentLastEdited value only if it differs from commentCreatedAt        -->
-                <ng-container *ngIf="comment.commentLastEditedAt !== comment.commentCreatedAt">
+                <ng-container *ngIf="(significantTimeDifference(comment))">
                   <i>. Last edited at: {{ comment.commentLastEditedAt | date:'yyyy-MM-dd HH:mm' }}</i>
                 </ng-container>
               </p>
               <p>{{ comment.commentBody }}</p>
+
               <div>
                 <button class="commentBtn" (click)="toggleEditComment(comment)">Edit</button>
                 <button class="commentBtn" (click)="deleteComment(comment.commentId)">Delete</button>
@@ -104,8 +113,8 @@
               </p>
               <textarea class="comment-input" type="text" [(ngModel)]="comment.editedBody"></textarea>
               <div>
-                <button class="commentBtn" (click)="saveChangesComment(comment)">Save</button>
-                <button class="commentBtn" (click)="cancelEditComment(comment)">Cancel</button>
+                <button class="commentBtn" (click)="saveChangesComment(comment, editedBody)">Save</button>
+                <button class="commentBtn" (click)="toggleEditComment(comment)">Cancel</button>
               </div>
               <hr>
             </ng-template>

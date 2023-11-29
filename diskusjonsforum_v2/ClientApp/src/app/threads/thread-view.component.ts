@@ -18,8 +18,8 @@ export class ThreadViewComponent implements OnInit, OnDestroy {
   newCommentBody: string = '';
   newCommentCreatedBy: string = '';
   isEditing = false;
-  editedTitle!: string;
-  editedContent!: string;
+  editedTitle: string = '';
+  editedBody: string = '';
 
   private unsubscribe$ = new Subject<void>();
 
@@ -76,14 +76,14 @@ export class ThreadViewComponent implements OnInit, OnDestroy {
       createdBy: this.newCommentCreatedBy,
       childComments: [],
     };
-  // adds the new comments to the thread it belongs to by the threadId
     this.threadService.addCommentToThread(this.thread.threadId, newComment).subscribe(
-      (updatedThread: Thread) => {
-        this.thread = updatedThread;
+      (response) => {
         this.newCommentBody = '';
         this.newCommentCreatedBy = '';
+        newComment.commentId = response.commentId;
+        this.thread.threadComments!.push(newComment); //Adds new comment to local representation of thread (because the thread is already loaded and would otherwise need to be refreshed)
 
-        window.location.reload();
+
       },
       (error) => {
         console.error('Error adding comment', error);
@@ -98,6 +98,7 @@ export class ThreadViewComponent implements OnInit, OnDestroy {
       this.threadService.deleteThread(thread.threadId).subscribe(
         (response) => {
           if (response.success){
+            this.router.navigate(['/']); //Navigate to home page after deleting a thread.
             console.log(response.message);
           }
         },
@@ -108,21 +109,32 @@ export class ThreadViewComponent implements OnInit, OnDestroy {
     }
   }
 
-  toggleEdit() {
+  toggleEdit(thread: Thread) {
     this.isEditing = !this.isEditing;
+    this.editedBody = thread.threadBody;
+    this.editedTitle = thread.threadTitle;
+
   }
 
+  // saves the changes made on the thread.
   saveChanges(): void {
     // Perform the logic to save changes, update thread.title and thread.body
     // Call the service method to update the thread
     this.thread.threadTitle = this.editedTitle;
-    this.thread.threadBody = this.editedContent;
+    this.thread.threadBody = this.editedBody;
 
     this.threadService.updateThread(this.thread).subscribe(
       (response) => {
-        console.log(response.message);
-        // Reset isEditing flag after successful save
-        this.isEditing = false;
+        console.log('Server response:', response);
+
+        // Update the thread with the response from the server
+        if (response.success) {
+          this.thread.threadLastEditedAt = response.updatedThread.threadLastEditedAt;
+
+          this.toggleEdit(this.thread);
+        } else {
+          console.error('Error updating thread. Server response:', response);
+        }
       },
       (error) => {
         console.error('Error saving changes', error);
@@ -130,36 +142,33 @@ export class ThreadViewComponent implements OnInit, OnDestroy {
     );
   }
 
-  cancelEdit(): void {
-    // Reset editedTitle and editedContent with the current values
-    this.editedTitle = this.thread.threadTitle;
-    this.editedContent = this.thread.threadBody;
-    // Reset isEditing flag
-    this.isEditing = false;
-  }
 
   deleteComment(commentId: number): void {
     this.threadService.deleteComment(commentId).subscribe(
       () => {
         console.log('Comment deleted');
-        window.location.reload(); //Manually reload same site
-        },
+
+        // This ensure that the UI update gets updated after deletion
+        if (this.thread && this.thread.threadComments) {
+          this.thread.threadComments = this.thread.threadComments.filter(comment => comment.commentId !== commentId);
+        }
+      },
       (error) => console.error('Error deleting comment', error)
     );
   }
 
   toggleEditComment(comment: Comment): void {
     comment.isEditing = !comment.isEditing;
-    comment.editedBody = comment.commentBody;
+    this.editedBody = comment.commentBody;
   }
 
-  saveChangesComment(comment: Comment): void {
-    if (comment.editedBody !== undefined) {
-      comment.commentBody = comment.editedBody;
+  saveChangesComment(comment: Comment, editedBody: string): void {
+    if (editedBody !== undefined && editedBody.length >= 1) {
+      comment.commentBody = editedBody;
       this.threadService.updateComment(comment).subscribe(
         (response) => {
           console.log("Comment has been updated");
-          comment.isEditing = false;
+          this.toggleEditComment(comment);
         },
         (error) => {
           console.error('Error saving changes', error);
@@ -169,10 +178,20 @@ export class ThreadViewComponent implements OnInit, OnDestroy {
       console.error('Attempted to save changes with undefined editedBody');
     }
   }
-  cancelEditComment(comment: Comment): void {
-    comment.editedBody = comment.commentBody;
-    comment.isEditing = false;
+
+
+  // LastEditedAt value is only displayed when time difference is over 1s (60*1000ms)
+  significantTimeDifference(object: any): boolean {
+    let timeDiff: number;
+    if ("threadCreatedAt" in object) { //If object contains threadCreatedAt field, it must be a thread.
+       timeDiff = new Date(object.threadLastEditedAt).getTime() - new Date(object.threadCreatedAt).getTime();
+    } else {
+       timeDiff = new Date(object.commentLastEditedAt).getTime() - new Date(object.commentCreatedAt).getTime();
+    }
+    return timeDiff > (60*1000)
+
   }
+
   ngOnDestroy(): void {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();

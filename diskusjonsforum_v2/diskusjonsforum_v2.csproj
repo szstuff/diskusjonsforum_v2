@@ -46,6 +46,7 @@
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
+    <None Remove="DiscussionDatabase.db-wal" />
 
 
   </ItemGroup>

@@ -67,7 +67,7 @@ namespace diskusjonsforum_v2.Controllers
 
         // Returns an individual thread 
         [HttpGet("getThread/{id}")]
-        public ActionResult<Thread> GetThread(int id)
+        public IActionResult GetThread(int id)
         {
             try
             {
@@ -80,7 +80,7 @@ namespace diskusjonsforum_v2.Controllers
 
                 thread.ThreadComments = SortComments(thread.ThreadComments!);
 
-                return thread;
+                return Ok(thread);
             }
             catch (Exception ex)
             {
@@ -92,6 +92,8 @@ namespace diskusjonsforum_v2.Controllers
 
         }
 
+        //This method is used for organising child comments.
+        //Child comment functionaity is not implemented in this assignment
         private List<Comment> SortComments(List<Comment> comments)
         {
             try
@@ -114,7 +116,8 @@ namespace diskusjonsforum_v2.Controllers
             }
         }
 
-        // Add child comment to sortedComments list
+        // Add child comments to sortedComments list
+        //Child comment functionaity is not implemented in this assignment
         private void AddChildComments(Comment parent, List<Comment> allComments, List<Comment> sortedComments, HashSet<int> visitedComments)
         {
             try
@@ -170,7 +173,7 @@ namespace diskusjonsforum_v2.Controllers
         public async Task<ActionResult> UpdateThread(int id, [FromBody] Thread thread)
         {
             thread.ThreadLastEditedAt = DateTime.Now;
-            string errorMsg = "An error occured when trying to save your edit";
+            string errorMsg = "An error occurred when trying to save your edit";
             try
             {
                 // Add custom validation for the thread content
@@ -190,12 +193,7 @@ namespace diskusjonsforum_v2.Controllers
                     if (updatedThread != null)
                     {
                         // Return the updated thread in the response
-                        return Ok(updatedThread);
-                    }
-                    else
-                    {
-                        // This should not happen, but handle it just in case
-                        errorMsg = "Could not retrieve the updated thread.";
+                        return Ok(new { success = true, message = "Thread updated successfully.", updatedThread = "updatedThread" });
                     }
                 }
                 else
@@ -209,11 +207,9 @@ namespace diskusjonsforum_v2.Controllers
                 errorMsg = "Could not edit your thread due to a database error.";
                 _logger.LogError(ex, "[ThreadController] Error editing thread: {0}", id);
             }
-
             return StatusCode(500, new { message = errorMsg });
         }
         
-        // Delete thread with given threadId if user has permission
         [HttpDelete("delete/{id}")]
         public async Task<IActionResult> DeleteThread(int id)
         {
@@ -228,8 +224,8 @@ namespace diskusjonsforum_v2.Controllers
 
                 await _threadRepository.Remove(threadToDelete);
                 await _threadRepository.SaveChangesAsync();
-
-                var response = new { success = true, message = "Thread " + id.ToString() + " deleted successfully" };
+                
+                var response = new { success = true, message = $"Thread {id} deleted successfully" };
                 return Ok(response);
             }
             catch (Exception ex)
@@ -238,6 +234,7 @@ namespace diskusjonsforum_v2.Controllers
                 return StatusCode(500, "An error occurred while deleting your thread");
             }
         }
+
 
 
         [HttpGet("search/{searchQuery}")]
