@@ -262,3 +262,22 @@
   margin: 3px 0 0 5px;
   color: rgba(150, 29, 29, 0.9);
 }
+
+.backBtn{
+  background-color: transparent;
+  color: #f8f9fa;
+  border-color: transparent;
+
+}
+
+.backBtn:hover{
+  transform: scale(1.1);
+}
+
+
+.outerBackDiv{
+  font-size: 30px;
+  text-align: center;
+  margin-bottom: -20px;
+  padding-right: 42%;
+}
