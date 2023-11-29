@@ -75,13 +75,13 @@
   }
 
 .cancel-button {
-  font-size: 15px;
+  font-size: 17px;
   font-weight: 700;
   color: white;
   height: 35px;
   margin-top: 20px;
   margin-left: 20px;
-  width: 17%;
+  width: 20%;
   border: none;
   border-radius: 20px;
   outline: none;
@@ -92,7 +92,30 @@
 }
 
   .cancel-button:hover {
-    background: rgb(255, 0, 0);
+    background: rgba(150, 29, 29, 0.7);
+    box-shadow: 1px 5px 7px 1px rgba(0, 0, 0, 0.2);
+  }
+
+.cancel-comment-button {
+  font-size: 13px;
+  font-weight: 700;
+  color: white;
+  height: 30px;
+  margin-top: 7px;
+  margin-left: 2px;
+  margin-bottom: 20px;
+  width: 18%;
+  border: none;
+  border-radius: 7px;
+  outline: none;
+  background-color: rgba(255, 135, 135, 0.9);
+  box-shadow: 1px 5px 7px 1px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: .2s ease-out;
+}
+
+  .cancel-comment-button:hover {
+    background: rgb(255, 0, 0, 0.8);
     box-shadow: 1px 5px 7px 1px rgba(0, 0, 0, 0.2);
   }
 
@@ -147,7 +170,7 @@
     box-shadow: 1px 5px 7px 1px rgba(0, 0, 0, 0.2);
   }
 
-.delete-comment-button {
+/*.delete-comment-button {
   font-size: 13px;
   font-weight: 700;
   color: white;
@@ -168,7 +191,7 @@
 .delete-comment-button:hover {
   background: rgb(255, 0, 0);
   box-shadow: 1px 5px 7px 1px rgba(0, 0, 0, 0.2);
-}
+}*/
 
 
 #displayPost {
@@ -324,11 +347,11 @@
   white-space: normal;
 }
 
-.backBtn{
+.backBtn {
   background-color: transparent;
   color: #f8f9fa;
   border-color: transparent;
-
+  transition: 300ms ease;
 }
 
 .backBtn:hover{
@@ -337,8 +360,10 @@
 
 
 .outerBackDiv{
+  align-items: center;
   font-size: 30px;
   text-align: center;
-  margin-bottom: -20px;
+  margin-bottom: -10px;
   padding-right: 42%;
 }
+

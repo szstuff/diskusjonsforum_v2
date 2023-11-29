@@ -97,6 +97,10 @@ header {
 }
 
 .search_bar_results {
+  max-width: 300px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   cursor: pointer;
   padding: 10px 10px 10px 10px;
   font-weight: 400;

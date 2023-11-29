@@ -5,7 +5,7 @@
     <div class="col-lg-6">
       <input class="form-control" type="text" placeholder="Filter by title" [(ngModel)]="listFilter" />
     </div>
-    <div class="col-lg-2">
+    <div class="col-lg-2" #dropdownFilterElement>
       <div class="dropdown-filter" [ngClass]="{ 'open': isDropdownOpen }" (click)="toggleDropdown()">
         <button class="btn btn-primary filter-button">
           Sort by
