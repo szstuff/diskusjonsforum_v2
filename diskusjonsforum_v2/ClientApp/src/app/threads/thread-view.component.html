@@ -64,11 +64,11 @@
 
         <!-- Input box for adding comments -->
         <div id="textBox">
-          <input [(ngModel)]="newCommentCreatedBy" placeholder="Display name" class="comment-input">
+          <input [(ngModel)]="newCommentCreatedBy" formControlName="newCommentCreatedBy" placeholder="Display name" class="comment-input">
           <div class="error-form" *ngIf="commentForm.get('newCommentCreatedBy')?.hasError('maxlength')">
             <b>Maximum length exceeded (max 50 characters).</b>
           </div>
-          <textarea [(ngModel)]="newCommentBody" placeholder="What are your thoughts?" class="comment-input"></textarea>
+          <textarea [(ngModel)]="newCommentBody" formControlName="newCommentBody" placeholder="What are your thoughts?" class="comment-input"></textarea>
           <div class="error-form" *ngIf="commentForm.get('newCommentBody')?.hasError('maxlength')">
             <b>Maximum length exceeded (max 1000 characters).</b>
           </div>

@@ -7,6 +7,7 @@ import { Comment } from '../comments/comments';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import {HttpClient} from "@angular/common/http";
+
 @Component({
   selector: 'app-thread-view',
   templateUrl: './thread-view.component.html',
@@ -124,8 +125,6 @@ export class ThreadViewComponent implements OnInit, OnDestroy {
 
   // saves the changes made on the thread.
   saveChanges(): void {
-    // Perform the logic to save changes, update thread.title and thread.body
-    // Call the service method to update the thread
     this.thread.threadTitle = this.editedTitle;
     this.thread.threadBody = this.editedBody;
 
@@ -135,9 +134,9 @@ export class ThreadViewComponent implements OnInit, OnDestroy {
 
         // Update the thread with the response from the server
         if (response.success) {
-          this.thread.threadLastEditedAt = response.updatedThread.threadLastEditedAt;
-
+          this.thread = response.updatedThread;
           this.toggleEdit(this.thread);
+
         } else {
           console.error('Error updating thread. Server response:', response);
         }

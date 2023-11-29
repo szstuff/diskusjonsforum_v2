@@ -89,6 +89,13 @@ export class HomeComponent implements OnInit {
     );
   }
 
+  // LastEditedAt value is only displayed when time difference is over 1s (60*1000ms)
+  significantTimeDifference(thread: Thread): boolean {
+     const timeDiff = new Date(thread.threadLastEditedAt).getTime() - new Date(thread.threadCreatedAt).getTime();
+    return timeDiff > (60*1000)
+
+  }
+
   private loadCommentsForThreads() {
     // Iterate through threads and load comments for each thread
     this.threads.forEach((thread) => {
