@@ -169,6 +169,10 @@ export class ThreadViewComponent implements OnInit, OnDestroy {
     this.editedBody = comment.commentBody;
   }
 
+  clearCommentFields(): void{
+    this.newCommentCreatedBy = "";
+    this.newCommentBody = "";
+  }
   saveChangesComment(comment: Comment, editedBody: string): void {
     if (editedBody !== undefined && editedBody.length >= 1) {
       comment.commentBody = editedBody;
