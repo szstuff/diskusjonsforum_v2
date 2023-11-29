@@ -193,7 +193,7 @@ namespace diskusjonsforum_v2.Controllers
                     if (updatedThread != null)
                     {
                         // Return the updated thread in the response
-                        return Ok(new { success = true, message = "Thread updated successfully.", updatedThread });
+                        return Ok(new { success = true, message = "Thread updated successfully.", updatedThread = "updatedThread" });
                     }
                 }
                 else

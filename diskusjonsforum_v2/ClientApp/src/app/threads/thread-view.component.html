@@ -24,7 +24,7 @@
             {{ thread.threadComments?.length }}</p>
           </div>
 
-          <button (click)="toggleEdit()" class="editBtn">Edit</button>
+          <button (click)="toggleEdit(thread, editedBody, editedTitle)" class="editBtn">Edit</button>
           <button (click)="deletePost(thread)" [routerLink]="['/threads']" class="editBtn">Delete</button>
         </div>
 
@@ -41,7 +41,7 @@
               </span>
             </p>
             <hr />
-            <textarea [(ngModel)]="editedContent" class="editBox"></textarea>
+            <textarea [(ngModel)]="editedBody" class="editBox"></textarea>
           </div>
 
           <div><p class="comment-count"><img src="../../assets/images/message-detail-regular-24.png" alt="..." height="20" />
@@ -49,7 +49,7 @@
           </div>
 
           <button (click)="saveChanges()" class="editBtn">Save</button>
-          <button (click)="cancelEdit()" class="editBtn">Cancel</button>
+          <button (click)="toggleEdit(thread, editedBody, editedTitle)" class="editBtn">Cancel</button>
         </ng-template>
       </div>
 
@@ -90,7 +90,7 @@
               <p>{{ comment.commentBody }}</p>
 
               <div>
-                <button class="commentBtn" (click)="toggleEditComment(comment)">Edit</button>
+                <button class="commentBtn" (click)="toggleEditComment(comment, editedBody)">Edit</button>
                 <button class="commentBtn" (click)="deleteComment(comment.commentId)">Delete</button>
               </div>
               <hr>
@@ -98,11 +98,11 @@
 
             <ng-template #editMode>
               <!-- Display editable content when editing -->
-              <input type="text" [(ngModel)]="comment.editedBody" />
+              <input type="text" [(ngModel)]="editedBody" />
 
               <div>
-                <button class="commentBtn" (click)="saveChangesComment(comment)">Save</button>
-                <button class="commentBtn" (click)="cancelEditComment(comment)">Cancel</button>
+                <button class="commentBtn" (click)="saveChangesComment(comment, editedBody)">Save</button>
+                <button class="commentBtn" (click)="toggleEditComment(comment, editedBody)">Cancel</button>
               </div>
               <hr>
             </ng-template>
