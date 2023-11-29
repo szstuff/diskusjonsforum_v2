@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { ThreadService } from './threads.service';
 import { Thread } from './threads';
 import { Comment } from '../comments/comments';
@@ -20,7 +20,7 @@ export class ThreadViewComponent implements OnInit, OnDestroy {
 
   private unsubscribe$ = new Subject<void>();
 
-  constructor(private route: ActivatedRoute, private threadService: ThreadService, private router: Router) {}
+  constructor(private route: ActivatedRoute, private threadService: ThreadService) {}
   // fetches the thread and the comments under the thread
   ngOnInit(): void {
     this.route.paramMap.pipe(
