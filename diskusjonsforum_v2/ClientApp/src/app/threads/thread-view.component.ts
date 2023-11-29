@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ThreadService } from './threads.service';
@@ -24,6 +25,7 @@ export class ThreadViewComponent implements OnInit, OnDestroy {
   private unsubscribe$ = new Subject<void>();
 
   constructor(
+    private route: ActivatedRoute,
     private _formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private threadService: ThreadService
