@@ -60,11 +60,9 @@ export class ThreadViewComponent implements OnInit, OnDestroy {
   }
 
   private adjustHeight(textArea: HTMLTextAreaElement): void {
-    const minHeight = 40; // Set a minimum height if needed
-    const scrollHeight = Math.max(textArea.scrollHeight, minHeight);
-    const rows = Math.ceil(scrollHeight / 20); // Assuming 20px per row, adjust this value as needed
-    textArea.rows = rows;
-  }
+    textArea.style.height = 'hidden';
+    textArea.style.height = 'auto';
+    textArea.style.height = textArea.scrollHeight + 'px';
   }
 
   // fetches the thread and the comments under the thread
