@@ -173,7 +173,7 @@ namespace diskusjonsforum_v2.Controllers
         public async Task<ActionResult> UpdateThread(int id, [FromBody] Thread thread)
         {
             thread.ThreadLastEditedAt = DateTime.Now;
-            string errorMsg = "An error occured when trying to save your edit";
+            string errorMsg = "An error occurred when trying to save your edit";
             try
             {
                 // Add custom validation for the thread content
@@ -193,12 +193,7 @@ namespace diskusjonsforum_v2.Controllers
                     if (updatedThread != null)
                     {
                         // Return the updated thread in the response
-                        return Ok(updatedThread);
-                    }
-                    else
-                    {
-                        // This should not happen, but handle it just in case
-                        errorMsg = "Could not retrieve the updated thread.";
+                        return Ok(new { success = true, message = "Thread updated successfully.", updatedThread });
                     }
                 }
                 else
@@ -215,7 +210,6 @@ namespace diskusjonsforum_v2.Controllers
             return StatusCode(500, new { message = errorMsg });
         }
         
-        // Delete thread with given threadId if user has permission
         [HttpDelete("delete/{id}")]
         public async Task<IActionResult> DeleteThread(int id)
         {
@@ -230,8 +224,9 @@ namespace diskusjonsforum_v2.Controllers
 
                 await _threadRepository.Remove(threadToDelete);
                 await _threadRepository.SaveChangesAsync();
-
-                var response = new { success = true, message = "Thread " + id.ToString() + " deleted successfully" };
+                
+                var updatedThreads = _threadRepository.GetAll(); 
+                var response = new { success = true, message = $"Thread {id} deleted successfully", updatedThreads };
                 return Ok(response);
             }
             catch (Exception ex)
@@ -240,6 +235,7 @@ namespace diskusjonsforum_v2.Controllers
                 return StatusCode(500, "An error occurred while deleting your thread");
             }
         }
+
 
 
         [HttpGet("search/{searchQuery}")]
