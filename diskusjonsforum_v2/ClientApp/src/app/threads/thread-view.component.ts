@@ -7,12 +7,14 @@ import { Comment } from '../comments/comments';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { HttpClient } from "@angular/common/http";
+import { Directive, ElementRef, HostListener, Renderer2 } from '@angular/core';
 
 @Component({
   selector: 'app-thread-view',
   templateUrl: './thread-view.component.html',
   styleUrls: ['../../css/thread_view.css']
 })
+
 export class ThreadViewComponent implements OnInit, OnDestroy {
   commentForm: FormGroup;
   threadForm: FormGroup; // Initialise a FormGroup object
@@ -25,8 +27,9 @@ export class ThreadViewComponent implements OnInit, OnDestroy {
 
   private unsubscribe$ = new Subject<void>();
 
-
   constructor(
+    private el: ElementRef,
+    private renderer: Renderer2,
     private _formBuilder: FormBuilder,
     private _router: Router, // Initialise router object for navigation
     private route: ActivatedRoute,
@@ -45,6 +48,25 @@ export class ThreadViewComponent implements OnInit, OnDestroy {
       newCommentBody:  ['', Validators.required]
     })
   }
+
+  @HostListener('input', ['$event.target'])
+  onInput(textArea: HTMLTextAreaElement): void {
+    this.adjustHeight(textArea);
+  }
+
+  ngAfterViewInit(): void {
+    // Adjust the height initially (if there is pre-existing text)
+    this.adjustHeight(this.el.nativeElement);
+  }
+
+  private adjustHeight(textArea: HTMLTextAreaElement): void {
+    const minHeight = 40; // Set a minimum height if needed
+    const scrollHeight = Math.max(textArea.scrollHeight, minHeight);
+    const rows = Math.ceil(scrollHeight / 20); // Assuming 20px per row, adjust this value as needed
+    textArea.rows = rows;
+  }
+  }
+
   // fetches the thread and the comments under the thread
   ngOnInit(): void {
     this.route.paramMap.pipe(

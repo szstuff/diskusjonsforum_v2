@@ -7,6 +7,9 @@
         <div class="create-information">
           <label class="input-label" for="createdBy">Username:</label>
             <input type="text" id="createdBy" formControlName="createdBy" class="form-control username-input" />
+            <div class="error-form" *ngIf="threadForm.get('createdBy')?.hasError('maxlength')">
+              <b>Maximum length exceeded (max 30 characters).</b>
+            </div>
         </div>
 
         <div class="create-information">

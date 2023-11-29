@@ -146,9 +146,6 @@
     box-shadow: 1px 5px 7px 1px rgba(0, 0, 0, 0.2);
   }
 
-.comment-input {
-  width: 100%;
-}
 
 #displayPost {
   box-shadow: inset 0 1px 3px #ddd;
@@ -185,7 +182,11 @@
   padding: 20px 20px 0px 20px;
   background-color: rgba(255, 255, 255, 0.8);
 }
-.comment-input{
+
+.comment-input {
+  resize: none;
+  overflow-y: hidden;
+  width: 100%;
   border-radius: 7px;
   box-shadow: inset 0 1px 3px #ddd;
   border: 1px solid #ccc;
@@ -261,4 +262,10 @@
 .error-form {
   margin: 3px 0 0 5px;
   color: rgba(150, 29, 29, 0.9);
+}
+
+.break-word {
+  overflow: hidden;
+  word-wrap: break-word;
+  white-space: normal;
 }

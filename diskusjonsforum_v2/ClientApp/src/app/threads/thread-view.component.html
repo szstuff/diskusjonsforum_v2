@@ -5,11 +5,11 @@
       <div *ngIf="thread.threadId; else notFound">
         <div *ngIf="!isEditing; else editMode" id="displayPost">
           <!-- Display content when not editing -->
-          <h1 class="thread-title-current">{{ thread.threadTitle }}</h1>
+          <h1 class="thread-title-current break-word">{{ thread.threadTitle }}</h1>
 
           <div class="thread-information">
             <!-- Thread information: user, post date, last edited date -->
-            <p>
+            <p class="break-word">
               Posted by <b>{{ thread.createdBy }}</b> on the <b>{{ thread.threadCreatedAt | date: 'yyyy-MM-dd HH:mm' }}</b>.
               <!-- Display last edited date if different -->
               <span *ngIf="significantTimeDifference(thread)">
@@ -17,7 +17,7 @@
               </span>
             </p>
             <hr />
-            <p class="thread-body">{{ thread.threadBody }}</p>
+            <p class="thread-body break-word">{{ thread.threadBody }}</p>
           </div>
 
           <div><p class="comment-count"><img ngSrc="../../assets/images/message-detail-regular-24.png" alt="..." height="20" width="20"/>
@@ -86,14 +86,14 @@
           <div *ngFor="let comment of thread.threadComments">
             <div *ngIf="!comment.isEditing; else editMode">
               <!-- Display content when not editing -->
-              <p>
+              <p class="break-word">
                 <b>{{comment.createdBy}}</b> replied on the <b>{{comment.commentCreatedAt | date:'yyyy-MM-dd HH:mm'}}</b>
                 <!-- Displays commentLastEdited value only if it differs from commentCreatedAt        -->
                 <ng-container *ngIf="(significantTimeDifference(comment))">
-                  <i>. Last edited at: {{ comment.commentLastEditedAt | date:'yyyy-MM-dd HH:mm' }}</i>
+                  <i class="break-word">. Last edited at: {{ comment.commentLastEditedAt | date:'yyyy-MM-dd HH:mm' }}</i>
                 </ng-container>
               </p>
-              <p>{{ comment.commentBody }}</p>
+              <p class="break-word">{{ comment.commentBody }}</p>
 
               <div>
                 <button class="commentBtn" (click)="toggleEditComment(comment)">Edit</button>
@@ -111,7 +111,7 @@
                   <i>. Last edited at: {{ comment.commentLastEditedAt | date:'yyyy-MM-dd HH:mm' }}</i>
                 </ng-container>
               </p>
-              <textarea class="comment-input" type="text" [(ngModel)]="editedBody"></textarea>
+              <textarea class="comment-input" type="text" [ngModel]="editedBody" autoresize></textarea>
               <div>
                 <button class="commentBtn" (click)="saveChangesComment(comment, editedBody)">Save</button>
                 <button class="commentBtn" (click)="toggleEditComment(comment)">Cancel</button>
