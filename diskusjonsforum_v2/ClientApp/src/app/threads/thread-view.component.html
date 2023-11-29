@@ -65,15 +65,15 @@
         <!-- Input box for adding comments -->
         <div id="textBox">
           <input [(ngModel)]="newCommentCreatedBy" placeholder="Display name" class="comment-input">
-          <div class="error-form" *ngIf="threadView.get('newCommentCreatedBy')?.hasError('maxlength')">
+          <div class="error-form" *ngIf="commentForm.get('newCommentCreatedBy')?.hasError('maxlength')">
             <b>Maximum length exceeded (max 50 characters).</b>
           </div>
           <textarea [(ngModel)]="newCommentBody" placeholder="What are your thoughts?" class="comment-input"></textarea>
-          <div class="error-form" *ngIf="threadView.get('newCommentBody')?.hasError('maxlength')">
+          <div class="error-form" *ngIf="commentForm.get('newCommentBody')?.hasError('maxlength')">
             <b>Maximum length exceeded (max 1000 characters).</b>
           </div>
           <div>
-            <button (click)="addComment()" class="add-comment-button" [disabled]="threadView.invalid">Add Comment</button>
+            <button (click)="addComment()" class="add-comment-button" [disabled]="commentForm.invalid">Add Comment</button>
           </div>
         </div>
 
@@ -111,7 +111,7 @@
                   <i>. Last edited at: {{ comment.commentLastEditedAt | date:'yyyy-MM-dd HH:mm' }}</i>
                 </ng-container>
               </p>
-              <textarea class="comment-input" type="text" [(ngModel)]="comment.editedBody"></textarea>
+              <textarea class="comment-input" type="text" [(ngModel)]="editedBody"></textarea>
               <div>
                 <button class="commentBtn" (click)="saveChangesComment(comment, editedBody)">Save</button>
                 <button class="commentBtn" (click)="toggleEditComment(comment)">Cancel</button>
