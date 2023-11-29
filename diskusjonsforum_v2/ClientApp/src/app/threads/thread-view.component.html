@@ -12,7 +12,7 @@
             <p>
               Posted by <b>{{ thread.createdBy }}</b> on the <b>{{ thread.threadCreatedAt | date: 'yyyy-MM-dd HH:mm' }}</b>.
               <!-- Display last edited date if different -->
-              <span *ngIf="thread.threadCreatedAt !== thread.threadLastEditedAt">
+              <span *ngIf="significantTimeDifference(thread)">
                 <i>Last edited: {{ thread.threadLastEditedAt | date: 'yyyy-MM-dd HH:mm' }}</i>
               </span>
             </p>
@@ -36,7 +36,7 @@
             <p>
               Posted by <b>{{ thread.createdBy }}</b> on the <b>{{ thread.threadCreatedAt | date: 'yyyy-MM-dd HH:mm' }}</b>.
               <!-- Display last edited date if different -->
-              <span *ngIf="thread.threadCreatedAt !== thread.threadLastEditedAt">
+              <span *ngIf="(significantTimeDifference(thread))">
                 <i>Last edited: {{ thread.threadLastEditedAt | date: 'yyyy-MM-dd HH:mm' }}</i>
               </span>
             </p>
@@ -83,7 +83,7 @@
               <p>
                 <b>{{comment.createdBy}}</b> replied on the <b>{{comment.commentCreatedAt | date:'yyyy-MM-dd HH:mm'}}</b>
                 <!-- Displays commentLastEdited value only if it differs from commentCreatedAt        -->
-                <ng-container *ngIf="comment.commentLastEditedAt !== comment.commentCreatedAt">
+                <ng-container *ngIf="(significantTimeDifference(comment))">
                   <i>. Last edited at: {{ comment.commentLastEditedAt | date:'yyyy-MM-dd HH:mm' }}</i>
                 </ng-container>
               </p>

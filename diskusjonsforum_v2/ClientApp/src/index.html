@@ -14,26 +14,28 @@
     <main>
     <app-root>Loading...</app-root>
     </main>
+
+    <!-- hyperlink that scrolls to the top of the page -->
     <div id="topBtn">
       <a id="top" href="#">^</a>
     </div>
     <script>
       // JavaScript to handle smooth scroll to top
       document.addEventListener('DOMContentLoaded', function() {
-        var scrollToTopBtn = document.getElementById('top');
+        var topBtn = document.getElementById('top');
 
         // Show/hide the "TOP" link based on scroll position
         window.onscroll = function() {
           if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-            scrollToTopBtn.style.display = 'block';
+            topBtn.style.display = 'block';
           } else {
-            scrollToTopBtn.style.display = 'none';
+            topBtn.style.display = 'none';
           }
         };
 
         // Add click event listener to scroll to top
-        scrollToTopBtn.addEventListener('click', function(event) {
-          event.preventDefault(); // Prevent the default behavior of the anchor tag
+        topBtn.addEventListener('click', function(action) {
+          action.preventDefault(); // Prevent the default behavior of the anchor tag
           document.body.scrollTop = 0; // For Safari
           document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE, and Opera
         });
