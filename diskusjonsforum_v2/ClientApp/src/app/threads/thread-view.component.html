@@ -36,7 +36,7 @@
           </div>
 
           <button (click)="toggleEdit(thread)" class="editBtn">Edit</button>
-          <button (click)="deletePost(thread)" [routerLink]="['/threads']" class="editBtn">Delete</button>
+          <button (click)="deletePost(thread)" [routerLink]="['/threads']" class="deleteBtn">Delete</button>
         </div>
 
         <ng-template #editMode>
@@ -60,7 +60,7 @@
           </div>
 
           <button (click)="saveChanges()" class="editBtn">Save</button>
-          <button (click)="toggleEdit(thread)" class="editBtn">Cancel</button>
+          <button (click)="toggleEdit(thread)" class="deleteBtn">Cancel</button>
         </ng-template>
       </div>
 
@@ -108,8 +108,8 @@
               <p class="break-word">{{ comment.commentBody }}</p>
 
               <div>
-                <button class="commentBtn" (click)="toggleEditComment(comment)">Edit</button>
-                <button class="delete-thread-button" (click)="deleteComment(comment.commentId)">Delete</button>
+                <button class="editBtn" (click)="toggleEditComment(comment)">Edit</button>
+                <button class="deleteBtn" (click)="deleteComment(comment.commentId)">Delete</button>
               </div>
               <hr>
             </div>
@@ -125,8 +125,8 @@
               </p>
               <textarea class="comment-input scroll" type="text" [(ngModel)]="editedBody" oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'></textarea>
               <div>
-                <button class="commentBtn" (click)="saveChangesComment(comment, editedBody)">Save</button>
-                <button class="commentBtn" (click)="toggleEditComment(comment)">Cancel</button>
+                <button class="editBtn" (click)="saveChangesComment(comment, editedBody)">Save</button>
+                <button class="deleteBtn" (click)="toggleEditComment(comment)">Cancel</button>
               </div>
               <hr>
             </ng-template>

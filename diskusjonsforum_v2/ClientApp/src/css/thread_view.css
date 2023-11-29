@@ -96,7 +96,7 @@
     box-shadow: 1px 5px 7px 1px rgba(0, 0, 0, 0.2);
   }
 
-.delete-thread-button{
+/*.delete-comment-button{
   font-size: 13px;
   font-weight: 700;
   color: white;
@@ -104,7 +104,7 @@
   margin-top: 7px;
   margin-left: 2px;
   margin-bottom: 20px;
-  width: 18%;
+  width: 11%;
   border: none;
   border-radius: 7px;
   outline: none;
@@ -113,10 +113,10 @@
   cursor: pointer;
   transition: .2s ease-out;
 }
-  .delete-thread-button:hover {
+  .delete-comment-button:hover {
     background: rgb(255, 0, 0);
     box-shadow: 1px 5px 7px 1px rgba(0, 0, 0, 0.2);
-  }
+  }*/
 
 
 .input-label {
@@ -146,25 +146,26 @@
     background: rgb(51, 153, 105, 07);
     box-shadow: 1px 5px 7px 1px rgba(0, 0, 0, 0.2);
   }
-.cancel-comment-button {
+
+.delete-comment-button {
   font-size: 13px;
   font-weight: 700;
   color: white;
   height: 30px;
   margin-top: 7px;
-  margin-left: 2px;
+  margin-right: 10px;
   margin-bottom: 20px;
   width: 18%;
-  border: none;
   border-radius: 7px;
   outline: none;
-  background-color: rgba(255, 137, 137, 0.9);
+  border: none;
+  background: rgba(255, 135, 135, 0.9);
   box-shadow: 1px 5px 7px 1px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   transition: .2s ease-out;
 }
 
-.cancel-comment-button:hover {
+.delete-comment-button:hover {
   background: rgb(255, 0, 0);
   box-shadow: 1px 5px 7px 1px rgba(0, 0, 0, 0.2);
 }
@@ -242,6 +243,29 @@
 
   .editBtn:hover {
     background: linear-gradient(320deg, #f8f9fa, #e9ecef);
+    box-shadow: 1px 5px 7px 1px rgba(0, 0, 0, 0.3);
+  }
+
+.deleteBtn {
+  font-size: 13px;
+  font-weight: 700;
+  color: white;
+  height: 30px;
+  margin-top: 7px;
+  margin-right: 10px;
+  margin-bottom: 20px;
+  width: 11%;
+  border-radius: 7px;
+  outline: none;
+  border: none;
+  background: rgba(255, 135, 135, 0.9);
+  box-shadow: 1px 5px 7px 1px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: .2s ease-out;
+}
+
+  .deleteBtn:hover {
+    background: rgb(255, 0, 0, 0.8);
     box-shadow: 1px 5px 7px 1px rgba(0, 0, 0, 0.3);
   }
 
