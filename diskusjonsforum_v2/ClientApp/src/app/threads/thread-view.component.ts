@@ -7,6 +7,7 @@ import { Comment } from '../comments/comments';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { HttpClient } from "@angular/common/http";
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-thread-view',
@@ -31,7 +32,8 @@ export class ThreadViewComponent implements OnInit, OnDestroy {
     private _router: Router, // Initialise router object for navigation
     private route: ActivatedRoute,
     private _threadService: ThreadService,
-    private _http: HttpClient)
+    private _http: HttpClient,
+    private _location: Location)
   {
     this.threadForm = _formBuilder.group({
       // Define FormBuilder input validation rules
@@ -168,6 +170,10 @@ export class ThreadViewComponent implements OnInit, OnDestroy {
     this.editedBody = comment.commentBody;
   }
 
+  clearCommentFields(): void{
+    this.newCommentCreatedBy = "";
+    this.newCommentBody = "";
+  }
   saveChangesComment(comment: Comment, editedBody: string): void {
     if (editedBody !== undefined && editedBody.length >= 1) {
       comment.commentBody = editedBody;
@@ -196,6 +202,10 @@ export class ThreadViewComponent implements OnInit, OnDestroy {
     }
     return timeDiff > (60*1000)
 
+  }
+
+  goBack() {
+    this._location.back();
   }
 
   ngOnDestroy(): void {

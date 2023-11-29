@@ -1,6 +1,17 @@
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+<div class="outerBackDiv">
+
+  <button class="backBtn" type="button"  (click)="goBack()" aria-label="Back button">
+    <i class='bx bx-left-arrow arrow'></i>
+    Back
+  </button>
+</div>
+
 <div class="form-box">
   <div class="create-container">
+
     <div class="form-group">
+
 
       <div *ngIf="thread.threadId; else notFound">
         <div *ngIf="!isEditing; else editMode" id="displayPost">
@@ -20,7 +31,7 @@
             <p class="thread-body break-word">{{ thread.threadBody }}</p>
           </div>
 
-          <div><p class="comment-count"><img ngSrc="../../assets/images/message-detail-regular-24.png" alt="..." height="20" width="20"/>
+          <div><p class="comment-count"><img src="../../assets/images/message-detail-regular-24.png" alt="Comments" height="20" width="20"/>
             {{ thread.threadComments?.length }}</p>
           </div>
 
@@ -74,6 +85,7 @@
           </div>
           <div>
             <button (click)="addComment()" class="add-comment-button" [disabled]="commentForm.invalid">Add Comment</button>
+            <button (click)="clearCommentFields()" class="cancel-comment-button" style="float: right" *ngIf="newCommentBody.length >= 1 || newCommentCreatedBy.length >=1"> Cancel </button>
           </div>
         </div>
 
@@ -97,7 +109,7 @@
 
               <div>
                 <button class="commentBtn" (click)="toggleEditComment(comment)">Edit</button>
-                <button class="commentBtn" (click)="deleteComment(comment.commentId)">Delete</button>
+                <button class="delete-thread-button" (click)="deleteComment(comment.commentId)">Delete</button>
               </div>
               <hr>
             </div>
