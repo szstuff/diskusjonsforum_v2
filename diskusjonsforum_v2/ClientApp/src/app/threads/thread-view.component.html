@@ -2,6 +2,15 @@
   <div class="create-container">
     <div class="form-group">
 
+      <button class="back-btn shadow-none border-0"
+              type="button"
+              (click)="goBack()"
+              aria-label="Back button"
+      >
+        <img ngSrc="../../assets/images/back_arrow.png" alt="Comments" height="40" width="40"/>
+           Back
+      </button>
+
       <div *ngIf="thread.threadId; else notFound">
         <div *ngIf="!isEditing; else editMode" id="displayPost">
           <!-- Display content when not editing -->
@@ -20,7 +29,7 @@
             <p class="thread-body">{{ thread.threadBody }}</p>
           </div>
 
-          <div><p class="comment-count"><img ngSrc="../../assets/images/message-detail-regular-24.png" alt="..." height="20" width="20"/>
+          <div><p class="comment-count"><img ngSrc="../../assets/images/message-detail-regular-24.png" alt="Comments" height="20" width="20"/>
             {{ thread.threadComments?.length }}</p>
           </div>
 

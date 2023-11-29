@@ -7,6 +7,7 @@ import { Comment } from '../comments/comments';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { HttpClient } from "@angular/common/http";
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-thread-view',
@@ -30,7 +31,8 @@ export class ThreadViewComponent implements OnInit, OnDestroy {
     private _formBuilder: FormBuilder,
     private _router: Router, // Initialise router object for navigation
     private route: ActivatedRoute,
-    private _threadService: ThreadService,
+    private _location: Location,
+  private _threadService: ThreadService,
     private _http: HttpClient)
   {
     this.threadForm = _formBuilder.group({
@@ -198,8 +200,12 @@ export class ThreadViewComponent implements OnInit, OnDestroy {
        timeDiff = new Date(object.commentLastEditedAt).getTime() - new Date(object.commentCreatedAt).getTime();
     }
     return timeDiff > (60*1000)
-
   }
+
+  goBack() {
+    this._location.back();
+  }
+
 
   ngOnDestroy(): void {
     this.unsubscribe$.next();
