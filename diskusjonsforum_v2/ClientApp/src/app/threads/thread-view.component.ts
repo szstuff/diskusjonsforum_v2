@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { ThreadService } from './threads.service';
 import { Thread } from './threads';
 import { Comment } from '../comments/comments';
@@ -13,6 +14,8 @@ import { HttpClient } from "@angular/common/http";
   styleUrls: ['../../css/thread_view.css']
 })
 export class ThreadViewComponent implements OnInit, OnDestroy {
+  commentForm: FormGroup;
+  threadForm: FormGroup; // Initialise a FormGroup object
   thread: Thread = {} as Thread;
   newCommentBody: string = '';
   newCommentCreatedBy: string = '';
@@ -24,12 +27,24 @@ export class ThreadViewComponent implements OnInit, OnDestroy {
 
 
   constructor(
-    private _router: Router,
+    private _formBuilder: FormBuilder,
+    private _router: Router, // Initialise router object for navigation
     private route: ActivatedRoute,
     private _threadService: ThreadService,
-    private _http: HttpClient
-  ) { }
+    private _http: HttpClient)
+  {
+    this.threadForm = _formBuilder.group({
+      // Define FormBuilder input validation rules
+      createdBy: ['', Validators.required],
+      threadTitle: ['', [Validators.required, Validators.maxLength(100)]],
+      threadBody: ['', [Validators.required, Validators.maxLength(2500)]],
 
+    });
+    this.commentForm= _formBuilder.group({
+      newCommentCreatedBy: ['', Validators.required],
+      newCommentBody:  ['', Validators.required]
+    })
+  }
   // fetches the thread and the comments under the thread
   ngOnInit(): void {
     this.route.paramMap.pipe(
@@ -110,8 +125,6 @@ export class ThreadViewComponent implements OnInit, OnDestroy {
 
   // saves the changes made on the thread.
   saveChanges(): void {
-    // Perform the logic to save changes, update thread.title and thread.body
-    // Call the service method to update the thread
     this.thread.threadTitle = this.editedTitle;
     this.thread.threadBody = this.editedBody;
 
@@ -121,9 +134,9 @@ export class ThreadViewComponent implements OnInit, OnDestroy {
 
         // Update the thread with the response from the server
         if (response.success) {
-          this.thread.threadLastEditedAt = response.updatedThread.threadLastEditedAt;
-
+          this.thread = response.updatedThread;
           this.toggleEdit(this.thread);
+
         } else {
           console.error('Error updating thread. Server response:', response);
         }

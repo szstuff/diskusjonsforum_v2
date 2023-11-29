@@ -33,6 +33,10 @@
           <p class="thread-information">
             <b>{{ thread.createdBy }}</b> posted on
             <b>{{ thread.threadCreatedAt | date: 'yyyy-MM-dd HH:mm' }}</b>
+            <!-- Displays commentLastEdited value only if it differs from commentCreatedAt        -->
+            <ng-container *ngIf="(significantTimeDifference(thread))">
+              <i>. Edited {{ thread.threadLastEditedAt | date:'yyyy-MM-dd HH:mm' }}</i>
+            </ng-container>
           </p>
           <hr />
           <p class="title-thread"><b>{{ thread.threadTitle }}</b>
