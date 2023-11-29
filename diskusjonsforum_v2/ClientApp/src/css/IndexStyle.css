@@ -105,7 +105,6 @@ a{
 
 .dropdown-filter {
   position: relative;
-  display: inline-block;
   border-radius: 20px;
   display: flex;
   border: solid transparent;
