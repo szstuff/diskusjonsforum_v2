@@ -25,7 +25,7 @@
           </div>
 
           <button (click)="toggleEdit(thread)" class="editBtn">Edit</button>
-          <button (click)="deletePost(thread)" [routerLink]="['/threads']" class="editBtn">Delete</button>
+          <button (click)="deletePost(thread)" [routerLink]="['/threads']" class="delete-thread-button">Delete</button>
         </div>
 
         <ng-template #editMode>
@@ -74,6 +74,7 @@
           </div>
           <div>
             <button (click)="addComment()" class="add-comment-button" [disabled]="commentForm.invalid">Add Comment</button>
+            <button (click)="clearCommentFields()" class="cancel-comment-button" style="float: right" *ngIf="newCommentBody.length >= 1 || newCommentCreatedBy.length >=1"> Cancel </button>
           </div>
         </div>
 
@@ -97,7 +98,7 @@
 
               <div>
                 <button class="commentBtn" (click)="toggleEditComment(comment)">Edit</button>
-                <button class="commentBtn" (click)="deleteComment(comment.commentId)">Delete</button>
+                <button class="delete-thread-button" (click)="deleteComment(comment.commentId)">Delete</button>
               </div>
               <hr>
             </div>
