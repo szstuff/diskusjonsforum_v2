@@ -6,7 +6,7 @@ import { Thread } from './threads';
 import { Comment } from '../comments/comments';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import {HttpClient} from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 
 @Component({
   selector: 'app-thread-view',

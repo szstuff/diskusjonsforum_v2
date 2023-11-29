@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
@@ -10,7 +10,7 @@ import { HomeComponent } from './home/home.component';
 import { ThreadsComponent } from './threads/threads.component';
 import { ThreadformComponent} from "./threads/threadform.component";
 import { ThreadViewComponent } from "./threads/thread-view.component";
-import {NgOptimizedImage} from "@angular/common";
+import { NgOptimizedImage } from "@angular/common";
 
 // defines the components
 @NgModule({
