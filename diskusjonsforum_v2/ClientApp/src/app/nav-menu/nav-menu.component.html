@@ -15,15 +15,13 @@
               (click)="toggle()">
         <span class="navbar-toggler-icon"></span>
       </button>
-
-      <div class="navbar-collapse collapse d-sm-inline-flex justify-content-end"
-           [ngClass]="{ show: isExpanded }">
-        <ul class="navbar-nav flex-grow">
-          <li class="d-flex flex-column flex-lg-row justify-content-center align-items-center gap-3" [routerLinkActive]="['link-active']">
-            <a class="login-text nav-link text-light" [routerLink]="['/threads']">Explore </a>
-          </li>
-        </ul>
-      </div>
+      <button class="btn-close shadow-none border-0"
+              type="button"
+              (click)="goBack()"
+              aria-label="Back button"
+      >
+        Back
+      </button>
 
       <div class="position-relative">
         <input #searchBarElement

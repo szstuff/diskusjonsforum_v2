@@ -2,7 +2,8 @@ import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Thread } from '../threads/threads';
 import { NavMenuService } from './nav-menu.service';
-import { ThreadService } from '../threads/threads.service';
+import {Location} from '@angular/common';
+
 
 @Component({
   selector: 'app-nav-menu',
@@ -38,7 +39,8 @@ export class NavMenuComponent {
   // initialises router and service for controllers
   constructor(
     private navMenuService: NavMenuService,
-    private router: Router
+    private router: Router,
+    private _location: Location
   ) { }
 
   // a function that handles the input in the search bar
@@ -64,6 +66,10 @@ export class NavMenuComponent {
       const searchResults = document.getElementById('searchResultsDropdown') as HTMLElement;
       searchResults.style.display = 'none';
     }
+  }
+
+  goBack() {
+    this._location.back();
   }
 
   navigateToThreadform(thread: Thread) {

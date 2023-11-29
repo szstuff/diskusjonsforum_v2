@@ -155,6 +155,19 @@ export class ThreadViewComponent implements OnInit, OnDestroy {
       console.error('Attempted to save changes with undefined editedBody');
     }
   }
+
+
+  // LastEditedAt value is only displayed when time difference is over 1s (60*1000ms)
+  significantTimeDifference(object: any): boolean {
+    var timeDiff = 0;
+    if ("threadCreatedAt" in object) { //If object contains threadCreatedAt field, it must be a thread.
+       timeDiff = new Date(object.threadLastEditedAt).getTime() - new Date(object.threadCreatedAt).getTime();
+    } else {
+       timeDiff = new Date(object.commentLastEditedAt).getTime() - new Date(object.commentCreatedAt).getTime();
+    }
+    return timeDiff > (60*1000)
+
+  }
   cancelEditComment(comment: Comment): void {
     comment.editedBody = comment.commentBody;
     comment.isEditing = false;
