@@ -1,20 +1,18 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { ThreadService } from './threads.service';
 import { Thread } from './threads';
 import { Comment } from '../comments/comments';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import {HttpClient} from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
+
 @Component({
   selector: 'app-thread-view',
   templateUrl: './thread-view.component.html',
   styleUrls: ['../../css/thread_view.css']
 })
 export class ThreadViewComponent implements OnInit, OnDestroy {
-  commentForm: FormGroup;
-  threadForm: FormGroup; // Initialise a FormGroup object
   thread: Thread = {} as Thread;
   newCommentBody: string = '';
   newCommentCreatedBy: string = '';
@@ -26,24 +24,12 @@ export class ThreadViewComponent implements OnInit, OnDestroy {
 
 
   constructor(
-    private _formBuilder: FormBuilder,
-    private _router: Router, // Initialise router object for navigation
+    private _router: Router,
     private route: ActivatedRoute,
     private _threadService: ThreadService,
-    private _http: HttpClient)
-  {
-    this.threadForm = _formBuilder.group({
-      // Define FormBuilder input validation rules
-      createdBy: ['', Validators.required],
-      threadTitle: ['', [Validators.required, Validators.maxLength(100)]],
-      threadBody: ['', [Validators.required, Validators.maxLength(2500)]],
+    private _http: HttpClient
+  ) { }
 
-    });
-    this.commentForm= _formBuilder.group({
-      newCommentCreatedBy: ['', Validators.required],
-      newCommentBody:  ['', Validators.required]
-    })
-  }
   // fetches the thread and the comments under the thread
   ngOnInit(): void {
     this.route.paramMap.pipe(
