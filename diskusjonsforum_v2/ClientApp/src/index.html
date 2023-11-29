@@ -25,11 +25,12 @@
       // JavaScript to handle smooth scroll to top
       document.addEventListener('DOMContentLoaded', function () {
         var topBtn = document.getElementById('top');
+        var scrollThreshold = 400; // Adjust this value based on your preference
 
         // Show/hide the "TOP" link based on scroll position
         window.onscroll = function () {
-          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-            topBtn.style.display = 'block';
+          if (document.body.scrollTop > scrollThreshold || document.documentElement.scrollTop > scrollThreshold) {
+            topBtn.style.display = 'inline-block';
           } else {
             topBtn.style.display = 'none';
           }
@@ -37,9 +38,9 @@
 
         // Add click event listener to scroll to top
         topBtn.addEventListener('click', function (action) {
-          action.preventDefault(); // Prevent the default behavior of the anchor tag
-          document.body.scrollTop = 0; // For Safari
-          document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE, and Opera
+          action.preventDefault();
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
         });
       });
     </script>
