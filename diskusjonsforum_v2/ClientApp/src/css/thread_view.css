@@ -172,7 +172,13 @@
 }
 
 .thread-body {
-    font-weight: 400;
+  font-weight: 400;
+  margin: 0;
+  overflow-y: hidden;
+}
+
+.scroll::-webkit-scrollbar {
+  display: none;
 }
 
 .actual-comment{
@@ -221,7 +227,8 @@
   box-shadow: inset 0 1px 3px #ddd;
   border: 1px solid #ccc;
   margin-bottom: 5px;
-  padding-right: 70%;
+  width: 100%;
+  height: 100%;
 }
 
 .commentBtn {

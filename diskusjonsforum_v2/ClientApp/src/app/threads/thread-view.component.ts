@@ -7,7 +7,6 @@ import { Comment } from '../comments/comments';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { HttpClient } from "@angular/common/http";
-import { Directive, ElementRef, HostListener, Renderer2 } from '@angular/core';
 
 @Component({
   selector: 'app-thread-view',
@@ -28,8 +27,6 @@ export class ThreadViewComponent implements OnInit, OnDestroy {
   private unsubscribe$ = new Subject<void>();
 
   constructor(
-    private el: ElementRef,
-    private renderer: Renderer2,
     private _formBuilder: FormBuilder,
     private _router: Router, // Initialise router object for navigation
     private route: ActivatedRoute,
@@ -47,22 +44,6 @@ export class ThreadViewComponent implements OnInit, OnDestroy {
       newCommentCreatedBy: ['', Validators.required],
       newCommentBody:  ['', Validators.required]
     })
-  }
-
-  @HostListener('input', ['$event.target'])
-  onInput(textArea: HTMLTextAreaElement): void {
-    this.adjustHeight(textArea);
-  }
-
-  ngAfterViewInit(): void {
-    // Adjust the height initially (if there is pre-existing text)
-    this.adjustHeight(this.el.nativeElement);
-  }
-
-  private adjustHeight(textArea: HTMLTextAreaElement): void {
-    textArea.style.height = 'hidden';
-    textArea.style.height = 'auto';
-    textArea.style.height = textArea.scrollHeight + 'px';
   }
 
   // fetches the thread and the comments under the thread
