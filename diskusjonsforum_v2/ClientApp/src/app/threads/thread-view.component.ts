@@ -67,8 +67,6 @@ export class ThreadViewComponent implements OnInit, OnDestroy {
         this.thread = updatedThread;
         this.newCommentBody = '';
         this.newCommentCreatedBy = '';
-
-        window.location.reload();
       },
       (error) => {
         console.error('Error adding comment', error);
@@ -84,6 +82,10 @@ export class ThreadViewComponent implements OnInit, OnDestroy {
         (response) => {
           if (response.success){
             console.log(response.message);
+
+            if (this.thread && this.thread.threadId) {
+              this.thread = {} as Thread;
+            }
           }
         },
         error => {
@@ -106,9 +108,16 @@ export class ThreadViewComponent implements OnInit, OnDestroy {
 
     this.threadService.updateThread(this.thread).subscribe(
       (response) => {
-        console.log(response.message);
-        // Reset isEditing flag after successful save
-        this.isEditing = false;
+        console.log('Server response:', response);
+
+        // Update the thread with the response from the server
+        if (response.success) {
+          this.thread = response.updatedThread;
+          // Reset isEditing flag after successful save
+          this.isEditing = false;
+        } else {
+          console.error('Error updating thread. Server response:', response);
+        }
       },
       (error) => {
         console.error('Error saving changes', error);
@@ -128,8 +137,12 @@ export class ThreadViewComponent implements OnInit, OnDestroy {
     this.threadService.deleteComment(commentId).subscribe(
       () => {
         console.log('Comment deleted');
-        window.location.reload(); //Manually reload same site
-        },
+
+        // This ensure that the UI update gets updated after deletion
+        if (this.thread && this.thread.threadComments) {
+          this.thread.threadComments = this.thread.threadComments.filter(comment => comment.commentId !== commentId);
+        }
+      },
       (error) => console.error('Error deleting comment', error)
     );
   }
