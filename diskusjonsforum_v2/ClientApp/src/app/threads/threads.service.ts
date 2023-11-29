@@ -54,9 +54,9 @@ export class ThreadService {
   }
 
   // function to add comment to a thread
-  addCommentToThread(threadId: number, newComment: Comment): Observable<Thread> {
+  addCommentToThread(threadId: number, newComment: Comment): Observable<any> {
     const url = `${this.apiCommentUrl}/addComment/${threadId}`;
-    return this._http.post<Thread>(url, newComment);
+    return this._http.post(url, newComment);
   }
 
   // function for creating a thread

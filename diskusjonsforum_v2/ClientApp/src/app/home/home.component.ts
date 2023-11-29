@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ThreadService } from '../threads/threads.service';
 import { Thread } from '../threads/threads';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
@@ -16,8 +16,7 @@ export class HomeComponent implements OnInit {
   constructor(
     private threadService: ThreadService,
     private _http: HttpClient,
-    private _router: Router,
-    private route: ActivatedRoute
+    private _router: Router
   ) { }
 
   ngOnInit(): void {

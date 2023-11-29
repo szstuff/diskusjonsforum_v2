@@ -48,7 +48,8 @@ namespace diskusjonsforum_v2.Controllers
                 var response = new
                 {
                     success = true,
-                    message = $"Comment {newComment.CommentId} created successfully"
+                    message = $"Comment {newComment.CommentId} created successfully",
+                    commentId = newComment.CommentId
                 };
 
                 if (ok.Result)

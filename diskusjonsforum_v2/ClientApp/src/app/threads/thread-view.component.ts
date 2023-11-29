@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import { ThreadService } from './threads.service';
 import { Thread } from './threads';
 import { Comment } from '../comments/comments';
@@ -20,7 +20,7 @@ export class ThreadViewComponent implements OnInit, OnDestroy {
 
   private unsubscribe$ = new Subject<void>();
 
-  constructor(private route: ActivatedRoute, private threadService: ThreadService) {}
+  constructor(private route: ActivatedRoute, private threadService: ThreadService, private router: Router) {}
   // fetches the thread and the comments under the thread
   ngOnInit(): void {
     this.route.paramMap.pipe(
@@ -61,12 +61,13 @@ export class ThreadViewComponent implements OnInit, OnDestroy {
       createdBy: this.newCommentCreatedBy,
       childComments: [],
     };
-    this.thread.threadComments!.push(newComment); //Adds new comment to local representation of thread (because the thread is already loaded and would otherwise need to be refreshed)
-    // adds the new comments to the thread it belongs to by the threadId
     this.threadService.addCommentToThread(this.thread.threadId, newComment).subscribe(
-      (updatedThread: Thread) => {
+      (response) => {
         this.newCommentBody = '';
         this.newCommentCreatedBy = '';
+        newComment.commentId = response.commentId;
+        this.thread.threadComments!.push(newComment); //Adds new comment to local representation of thread (because the thread is already loaded and would otherwise need to be refreshed)
+
 
       },
       (error) => {
@@ -82,6 +83,7 @@ export class ThreadViewComponent implements OnInit, OnDestroy {
       this.threadService.deleteThread(thread.threadId).subscribe(
         (response) => {
           if (response.success){
+            this.router.navigate(['/']); //Navigate to home page after deleting a thread.
             console.log(response.message);
           }
         },
@@ -92,7 +94,7 @@ export class ThreadViewComponent implements OnInit, OnDestroy {
     }
   }
 
-  toggleEdit(thread: Thread, editedBody: string, editedTitle: string) {
+  toggleEdit(thread: Thread) {
     this.isEditing = !this.isEditing;
     this.editedBody = thread.threadBody;
     this.editedTitle = thread.threadTitle;
@@ -114,7 +116,7 @@ export class ThreadViewComponent implements OnInit, OnDestroy {
         if (response.success) {
           this.thread.threadLastEditedAt = response.updatedThread.threadLastEditedAt;
 
-          this.toggleEdit(this.thread, this.editedBody, this.editedTitle);
+          this.toggleEdit(this.thread);
         } else {
           console.error('Error updating thread. Server response:', response);
         }
@@ -140,7 +142,7 @@ export class ThreadViewComponent implements OnInit, OnDestroy {
     );
   }
 
-  toggleEditComment(comment: Comment, editedBody: string): void {
+  toggleEditComment(comment: Comment): void {
     comment.isEditing = !comment.isEditing;
     this.editedBody = comment.commentBody;
   }
@@ -151,7 +153,7 @@ export class ThreadViewComponent implements OnInit, OnDestroy {
       this.threadService.updateComment(comment).subscribe(
         (response) => {
           console.log("Comment has been updated");
-          this.toggleEditComment(comment, editedBody);
+          this.toggleEditComment(comment);
         },
         (error) => {
           console.error('Error saving changes', error);
@@ -165,7 +167,7 @@ export class ThreadViewComponent implements OnInit, OnDestroy {
 
   // LastEditedAt value is only displayed when time difference is over 1s (60*1000ms)
   significantTimeDifference(object: any): boolean {
-    var timeDiff = 0;
+    let timeDiff: number;
     if ("threadCreatedAt" in object) { //If object contains threadCreatedAt field, it must be a thread.
        timeDiff = new Date(object.threadLastEditedAt).getTime() - new Date(object.threadCreatedAt).getTime();
     } else {

@@ -225,8 +225,7 @@ namespace diskusjonsforum_v2.Controllers
                 await _threadRepository.Remove(threadToDelete);
                 await _threadRepository.SaveChangesAsync();
                 
-                var updatedThreads = _threadRepository.GetAll(); 
-                var response = new { success = true, message = $"Thread {id} deleted successfully", updatedThreads };
+                var response = new { success = true, message = $"Thread {id} deleted successfully" };
                 return Ok(response);
             }
             catch (Exception ex)

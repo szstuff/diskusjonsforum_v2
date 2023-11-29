@@ -48,6 +48,6 @@ export class ThreadformComponent {
   }
 
   backToThreads() {
-    this._router.navigate(['/threads']); //navigates back to the threads
+    this._router.navigate(['/threads']); //navigates back to table view of threads
   }
 }

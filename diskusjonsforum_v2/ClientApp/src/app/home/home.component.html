@@ -11,14 +11,14 @@
           Filter by...
         </button>
         <div class="dropdown-content">
-          <button id="dropdown-filter-results" class="dropdown-item" (click)="filterBy('recent')">Most recent</button>
-          <button id="dropdown-filter-results" class="dropdown-item" (click)="filterBy('comments')">Most comments</button>
+          <button class="dropdown-filter-results dropdown-item" (click)="filterBy('recent')">Most recent</button>
+          <button class="dropdown-filter-results dropdown-item" (click)="filterBy('comments')">Most comments</button>
         </div>
       </div>
     </div>
     <div class="col-sm-1">
       <button class="table-change" (click)="navigateToThreads()">
-        <img src="../../assets/images/icons8-rows-48 (1).png" alt="..." height="40" />
+        <img ngSrc="../../assets/images/icons8-rows-48 (1).png" alt="..." height="40" width="40" />
       </button>
     </div>
 
@@ -45,9 +45,9 @@
               <span *ngIf="thread.threadBody.length > 44">(…)</span>
             </p>
           </div>
-          <div><p class="comment-count"><img src="../../assets/images/message-detail-regular-24.png" alt="..." height="20" />    {{ thread.threadComments?.length }}</p></div>
+          <div><p class="comment-count"><img ngSrc="../../assets/images/message-detail-regular-24.png" alt="..." height="20" width="20" />    {{ thread.threadComments?.length }}</p></div>
         </div>
       </a>
-    </div>  
+    </div>
   </div>
 </div>
