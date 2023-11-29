@@ -136,32 +136,6 @@
     background-color: #ff9fc5;
 }
 
-.top_btn {
-    position: fixed; /* Fixed/sticky position */
-    bottom: 20px; /* Place the button at the bottom of the page */
-    right: 30px; /* Place the button 30px from the right */
-    z-index: 99; /* Make sure it does not overlap */
-    border: none; /* Remove borders */
-    outline: none; /* Remove outline */
-    background: none; /* Set a background color */
-    color: #002c45; /* Text color */
-    cursor: pointer; /* Add a mouse pointer on hover */
-    transition: .3s ease-in-out;
-    padding: 15px; /* Some padding */
-    border-radius: 30px; /* Rounded corners */
-    font-size: 18px; /* Increase font size */
-    font-weight: 700;
-    align-items: center;
-    width: auto;
-    height: auto;
-}
-
-.top_btn:hover {
-    /*background-color: #555;*/ /* Add a dark-grey background on hover */
-    /*background: rgba(254, 238, 239, 0.5);*/
-    /*box-shadow: 1px 5px 7px 1px rgba(0, 0, 0, 0.2);*/
-}
-
 /*places the category container*/
 .category-container {
     left: 8%;

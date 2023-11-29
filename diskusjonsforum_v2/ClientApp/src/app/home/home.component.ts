@@ -56,7 +56,7 @@ export class HomeComponent implements OnInit {
       }
     );
   }
-
+  // filters the threads by recently posted
   filterBy(option: string) {
     // Implement your filtering logic here
     if (option === 'recent') {
@@ -65,7 +65,6 @@ export class HomeComponent implements OnInit {
       this.loadThreadsByComments();
     }
   }
-  // filters the threads by recently posted
   loadThreadsByRecent() {
     this.threadService.getThreadsByRecent().subscribe(
       (threads: Thread[]) => {
