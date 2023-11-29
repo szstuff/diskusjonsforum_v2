@@ -33,29 +33,6 @@ body {
   color: #002c45;
 }
 
-.login-text {
-  position: relative;/* positioned relative to its normal position */
-  font-size: 25px;
-  margin-right: 10px;
-}
-/*pseudo-element used to create after content*/
-.login-text::after {
-  content: '';
-  opacity: 0;
-  transition: all 0.2s;
-
-  height: 2px;
-  width: 100%;
-  background-color: white;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-}
-/*Hover function*/
-.login-text:hover::after {
-  opacity: 1; /*when it's hovered over the opacity is changed to 1*/
-}
-
 /*design for the header, fonts sizes and placement*/
 header {
   font-family: 'Ubuntu', sans-serif;
