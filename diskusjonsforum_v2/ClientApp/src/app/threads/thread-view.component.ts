@@ -1,10 +1,13 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { ThreadService } from './threads.service';
 import { Thread } from './threads';
 import { Comment } from '../comments/comments';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+
 @Component({
   selector: 'app-thread-view',
   templateUrl: './thread-view.component.html',
@@ -12,6 +15,7 @@ import { Subject } from 'rxjs';
 })
 export class ThreadViewComponent implements OnInit, OnDestroy {
   thread: Thread = {} as Thread;
+  threadView: FormGroup;
   newCommentBody: string = '';
   newCommentCreatedBy: string = '';
   isEditing = false;
@@ -20,7 +24,20 @@ export class ThreadViewComponent implements OnInit, OnDestroy {
 
   private unsubscribe$ = new Subject<void>();
 
-  constructor(private route: ActivatedRoute, private threadService: ThreadService) {}
+  constructor(
+    private route: ActivatedRoute,
+    private _formBuilder: FormBuilder,
+    private route: ActivatedRoute,
+    private threadService: ThreadService
+  )
+  {
+    this.threadView = _formBuilder.group({
+      newCommentCreatedBy: ['', [Validators.required, Validators.maxLength(50)]],
+      newCommentBody: ['', [Validators.required, Validators.maxLength(1000)]],
+
+    });
+  }
+
   // fetches the thread and the comments under the thread
   ngOnInit(): void {
     this.route.paramMap.pipe(

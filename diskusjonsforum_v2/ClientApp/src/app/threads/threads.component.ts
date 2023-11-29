@@ -14,6 +14,8 @@ export class ThreadsComponent implements OnInit {
   viewTitle: string = 'Table';
   threads: Thread[] = [];
   private _listFilter: string = '';
+  isDropdownOpen: boolean = false;
+
 
   get listFilter(): string {
     return this._listFilter;
@@ -111,5 +113,42 @@ export class ThreadsComponent implements OnInit {
         console.error('Error deleting thread', error);
       }
     );
+  }
+
+  filterBy(option: string) {
+    // Implement your filtering logic here
+    if (option === 'recent') {
+      this.loadThreadsByRecent();
+    } else if (option === 'comments') {
+      this.loadThreadsByComments();
+    }
+  }
+
+  loadThreadsByRecent() {
+    this._threadService.getThreadsByRecent().subscribe(
+      (threads: Thread[]) => {
+        this.threads = threads;
+        this.loadCommentsForThreads(); // Load comments for the filtered threads
+      },
+      (error) => {
+        console.error('Error fetching threads by recent', error);
+      }
+    );
+  }
+
+  loadThreadsByComments() {
+    this._threadService.getThreadsByComments().subscribe(
+      (threads: Thread[]) => {
+        this.threads = threads;
+        this.loadCommentsForThreads(); // Load comments for the filtered threads
+      },
+      (error) => {
+        console.error('Error fetching threads by comments', error);
+      }
+    );
+  }
+
+  toggleDropdown() {
+    this.isDropdownOpen = !this.isDropdownOpen;
   }
 }
