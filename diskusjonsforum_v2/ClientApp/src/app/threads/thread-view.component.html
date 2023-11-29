@@ -63,7 +63,7 @@
         <h3 class="comments-header">Comments</h3>
 
         <!-- Input box for adding comments -->
-        <div id="textBox">
+        <div id="textBox" [formGroup]="commentForm">
           <input [(ngModel)]="newCommentCreatedBy" formControlName="newCommentCreatedBy" placeholder="Display name" class="comment-input">
           <div class="error-form" *ngIf="commentForm.get('newCommentCreatedBy')?.hasError('maxlength')">
             <b>Maximum length exceeded (max 50 characters).</b>
