@@ -1,20 +1,30 @@
-<h2 class="tabelLabel text-white">Explore discussions</h2>
+<h2 class="tabelLabel text-white">Explore all discussions</h2>
 
 <div class="container thread-table-container">
   <div class="row">
-    <div class="col-sm-7">
+    <div class="col-lg-6">
       <input class="form-control" type="text" placeholder="Filter by title" [(ngModel)]="listFilter" />
     </div>
-    <div class="col-sm-3">
-      <button class="btn btn-primary submit" (click)="navigateToThreadform()">Create New Thread</button>
+    <div class="col-lg-2">
+      <div class="dropdown-filter" [ngClass]="{ 'open': isDropdownOpen }" (click)="toggleDropdown()">
+        <button class="btn btn-primary filter-button">
+          Sort by
+        </button>
+        <div class="dropdown-content">
+          <button id="dropdown-filter-results" class="dropdown-item" (click)="filterBy('recent')">Most recent</button>
+          <button id="dropdown-filter-results" class="dropdown-item" (click)="filterBy('comments')">Most comments</button>
+        </div>
+      </div>
     </div>
-    <div class="col-sm-1">
+    <div class="col-lg-2">
+      <button class="btn btn-primary create-new-thread-button" (click)="navigateToThreadform()">Create New Thread</button>
+    </div>
+    <div class="col-lg-1">
       <button class="table-change" (click)="navigateToHome()">
-        <img src="../../assets/images/icons8-grid-48.png" alt="..." height="40" />
+        <img src="../../assets/images/icons8-grid-48.png" alt="..." height="45" />
       </button>
     </div>
   </div>
-
 
   <div *ngFor="let thread of filteredThreads">
     <a [routerLink]="['/thread-view', thread.threadId]">

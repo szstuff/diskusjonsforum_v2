@@ -10,8 +10,22 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['../../css/IndexStyle.css', '../../css/thread_table.css'],
 })
 export class HomeComponent implements OnInit {
+  viewTitle: string = 'Table';
   threads: Thread[] = [];
   isDropdownOpen: boolean = false;
+  private _listFilter: string = '';
+
+  get listFilter(): string {
+    return this._listFilter;
+  }
+
+  set listFilter(value: string) {
+    this._listFilter = value;
+    console.log('In setter:', value);
+    this.filteredThreads = this.performFilter(value);
+  }
+
+  filteredThreads: Thread[] = this.threads;
 
   constructor(
     private threadService: ThreadService,
@@ -89,6 +103,16 @@ export class HomeComponent implements OnInit {
         }
       );
     });
+
+    // Update filteredThreads after loading comments
+    this.filteredThreads = this.performFilter(this.listFilter);
+  }
+
+  performFilter(filterBy: string): Thread[] {
+    filterBy = filterBy.toLocaleLowerCase();
+    return this.threads.filter((thread: Thread) =>
+      thread.threadTitle.toLocaleLowerCase().includes(filterBy)
+    );
   }
 
   toggleDropdown() {

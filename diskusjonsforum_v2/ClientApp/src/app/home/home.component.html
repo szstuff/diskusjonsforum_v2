@@ -2,13 +2,13 @@
 
 <div class="container thread-table-container">
   <div class="row">
-    <div class="col-sm-8">
-      <input name="PostText" class="form-control" placeholder="Create Post" type="text" (click)="navigateToThreadform()">
+    <div class="col-lg-6">
+      <input class="form-control" type="text" placeholder="Filter by title" [(ngModel)]="listFilter" />
     </div>
-    <div class="col-sm-2">
+    <div class="col-lg-2">
       <div class="dropdown-filter" [ngClass]="{ 'open': isDropdownOpen }" (click)="toggleDropdown()">
         <button class="btn btn-primary filter-button">
-          Filter by...
+          Sort by
         </button>
         <div class="dropdown-content">
           <button id="dropdown-filter-results" class="dropdown-item" (click)="filterBy('recent')">Most recent</button>
@@ -16,14 +16,16 @@
         </div>
       </div>
     </div>
-    <div class="col-sm-1">
+    <div class="col-lg-2">
+      <button class="btn btn-primary create-new-thread-button" (click)="navigateToThreadform()">Create New Thread</button>
+    </div>
+    <div class="col-lg-1">
       <button class="table-change" (click)="navigateToThreads()">
-        <img src="../../assets/images/icons8-rows-48 (1).png" alt="..." height="40" />
+        <img src="../../assets/images/icons8-grid-48.png" alt="..." height="45" />
       </button>
     </div>
 
-
-    <div *ngFor="let thread of threads | slice:0:6" class="col-md-6">
+    <div *ngFor="let thread of filteredThreads | slice:0:6" class="col-md-6">
       <a [routerLink]="['/thread-view', thread.threadId]">
         <div class="post">
           <div>
@@ -48,6 +50,6 @@
           <div><p class="comment-count"><img src="../../assets/images/message-detail-regular-24.png" alt="..." height="20" />    {{ thread.threadComments?.length }}</p></div>
         </div>
       </a>
-    </div>  
+    </div>
   </div>
 </div>
