@@ -126,3 +126,11 @@ header {
   font-size: 250%;
   text-align: right;
 }
+
+.scroll-to-top {
+  display: inline-block;
+  width: 50px; /* Set the width and height to match your image dimensions */
+  height: 50px;
+  background: url('assets/images/icons8-arrow-50.png') no-repeat;
+  text-indent: -9999px; /* Hide the default text */
+}

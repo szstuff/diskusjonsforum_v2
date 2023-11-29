@@ -21,11 +21,11 @@
     </div>
     <div class="col-lg-1">
       <button class="table-change" (click)="navigateToThreads()">
-        <img src="../../assets/images/icons8-grid-48.png" alt="..." height="45" />
+        <img src="../../assets/images/icons8-rows-48 (1).png" alt="..." height="45" />
       </button>
     </div>
 
-    <div *ngFor="let thread of filteredThreads | slice:0:6" class="col-md-6">
+    <div *ngFor="let thread of filteredThreads" class="col-md-6">
       <a [routerLink]="['/thread-view', thread.threadId]">
         <div class="post">
           <div>
