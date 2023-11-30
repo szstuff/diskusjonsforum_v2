@@ -8,6 +8,7 @@ import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { HttpClient } from "@angular/common/http";
 import {Location} from '@angular/common';
+import {style} from "@angular/animations";
 
 @Component({
   selector: 'app-thread-view',
@@ -125,28 +126,34 @@ export class ThreadViewComponent implements OnInit, OnDestroy {
 
   }
 
-  // saves the changes made on the thread.
+  // saves the changes made to the thread.
   saveChanges(): void {
-    this.thread.threadTitle = this.editedTitle;
-    this.thread.threadBody = this.editedBody;
+    if (this.editedTitle.length >= 1 && this.editedBody.length >= 1) {
+      this.thread.threadTitle = this.editedTitle;
+      this.thread.threadBody = this.editedBody;
+      this._threadService.updateThread(this.thread).subscribe(
+        (response) => {
+          console.log('Server response:', response);
 
-    this._threadService.updateThread(this.thread).subscribe(
-      (response) => {
-        console.log('Server response:', response);
+          // Update the thread with the response from the server
+          if (response.success) {
+            var oldComments = this.thread.threadComments; //The controller returns the updated thread with no comments to
+            // prevent JSON circular reference issue. Comments are set from the old thread as they're unchanged
+            this.thread = response.updatedThread;
+            this.thread.threadComments = oldComments;
+            this.toggleEdit(this.thread);
 
-        // Update the thread with the response from the server
-        if (response.success) {
-          this.thread = response.updatedThread;
-          this.toggleEdit(this.thread);
-
-        } else {
-          console.error('Error updating thread. Server response:', response);
+          } else {
+            console.error('Error updating thread. Server response:', response);
+          }
+        },
+        (error) => {
+          console.error('Error saving changes', error);
         }
-      },
-      (error) => {
-        console.error('Error saving changes', error);
-      }
-    );
+      );
+    } else {
+      console.log('Attempted to update a thread with empty string(s)');
+    }
   }
 
 
@@ -174,7 +181,7 @@ export class ThreadViewComponent implements OnInit, OnDestroy {
     this.newCommentBody = "";
   }
   saveChangesComment(comment: Comment, editedBody: string): void {
-    if (editedBody !== undefined && editedBody.length >= 1) {
+    if (editedBody.length >= 1) {
       comment.commentBody = editedBody;
       this._threadService.updateComment(comment).subscribe(
         (response) => {
@@ -186,7 +193,7 @@ export class ThreadViewComponent implements OnInit, OnDestroy {
         }
       );
     } else {
-      console.error('Attempted to save changes with undefined editedBody');
+      console.error('Attempted to save changes with empty editedBody');
     }
   }
 
@@ -211,4 +218,8 @@ export class ThreadViewComponent implements OnInit, OnDestroy {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
   }
+
+  protected readonly innerWidth = innerWidth;
+  protected readonly window = window;
+  protected readonly style = style;
 }

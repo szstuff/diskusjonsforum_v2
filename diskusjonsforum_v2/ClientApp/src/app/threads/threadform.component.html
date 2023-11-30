@@ -6,12 +6,14 @@
       <div class="form-group">
         <div class="create-information">
           <label class="input-label" for="createdBy">Username:</label>
-            <input type="text" id="createdBy" formControlName="createdBy" class="form-control username-input" />
+          <textarea type="text" id="createdBy" formControlName="createdBy" class="form-control username-input"  oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'> </textarea>
         </div>
 
         <div class="create-information">
           <label class="input-label" for="threadTitle">Title:</label>
-            <input type="text" id="threadTitle" formControlName="threadTitle" class="form-control title-input" />
+          <!-- The oninput code below makes the textarea expand as the user types -->
+          <!-- Source: https://stackoverflow.com/questions/2803880/is-there-a-way-to-get-a-textarea-to-stretch-to-fit-its-content-without-using-php -->
+          <textarea type="text" id="threadTitle" formControlName="threadTitle" class="form-control title-input"  oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'> </textarea>
             <div class="error-form" *ngIf="threadForm.get('threadTitle')?.hasError('maxlength')">
               <b>Maximum length exceeded (max 100 characters).</b>
             </div>
@@ -19,7 +21,7 @@
 
         <div class="create-information">
           <label class="input-label" for="threadBody">Body:</label>
-            <textarea type="text" id="threadBody" formControlName="threadBody" class="form-control body-input"></textarea>
+            <textarea type="text" id="threadBody" formControlName="threadBody" class="form-control body-input"  oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'></textarea>
             <div class="error-form" *ngIf="threadForm.get('threadBody')?.hasError('maxlength')">
               <b>Maximum length exceeded (max 2500 characters).</b>
             </div>

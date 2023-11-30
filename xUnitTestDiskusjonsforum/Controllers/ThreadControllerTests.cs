@@ -63,7 +63,8 @@ public class ThreadControllerTests
         mockThreadRepository.Setup(repo => repo.GetAll()).Returns(threadList);
         //commentRepository.GetThreadComments returns list of comments that belong to a specific thread 
         //It.IsAny<int> represents the argument of type Thread, which is used to pass the ThreadId to the method in ThreadController. 
-        mockCommentRepository.Setup(repo => repo.GetThreadComments(It.IsAny<int>())).Returns((int threadId) => commentList.Where(c => c.ThreadId == threadId).AsQueryable());
+        mockCommentRepository.Setup(repo => repo.GetThreadComments(It.IsAny<int>()))
+            .Returns((int threadId) => commentList.Where(c => c.ThreadId == threadId).AsQueryable());
         var mockLogger = new Mock<ILogger<ThreadController>>();
         var threadController =
             new ThreadController(mockThreadRepository.Object, mockCommentRepository.Object, mockLogger.Object);

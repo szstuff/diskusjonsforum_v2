@@ -1,8 +1,6 @@
-﻿using diskusjonsforum_v2.DAL;
-using diskusjonsforum_v2.Models;
-using Microsoft.AspNetCore.Identity;
+﻿using System.Text.Json.Serialization;
+using diskusjonsforum_v2.DAL;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Serilog;
 using Serilog.Events;
 
@@ -17,7 +15,6 @@ builder.Services.AddDbContext<ThreadDbContext>(options => {
 });
 
 builder.Services.AddScoped<IThreadRepository, ThreadRepository>();
-
 builder.Services.AddScoped<ICommentRepository, CommentRepository>();
 
 
@@ -32,31 +29,6 @@ loggerConfiguration.Filter.ByExcluding(e => e.Properties.TryGetValue("SourceCont
 var logger = loggerConfiguration.CreateLogger();
 builder.Logging.AddSerilog(logger);
 
-
-/*
- builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
-    {
-        // Password settings
-        options.Password.RequireDigit = true;
-        options.Password.RequiredLength = 8;
-        options.Password.RequireNonAlphanumeric = true;
-        options.Password.RequireUppercase = true;
-        options.Password.RequireLowercase = true;
-        options.Password.RequiredUniqueChars = 1;
-
-        // Lockout settings
-        options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(60);
-        options.Lockout.MaxFailedAccessAttempts = 5;
-        options.Lockout.AllowedForNewUsers = true;
-
-        // User settings
-        options.User.RequireUniqueEmail = true;
-    })
-    .AddEntityFrameworkStores<ThreadDbContext>()
-    .AddDefaultTokenProviders()
-    .AddDefaultUI();
-*/
-
 builder.Services.AddDistributedMemoryCache();
 
 builder.Services.AddSession(options =>
@@ -67,12 +39,6 @@ builder.Services.AddSession(options =>
 });
 
 var app = builder.Build();
-
-//Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-}
-
 
 app.UseStaticFiles();
 
