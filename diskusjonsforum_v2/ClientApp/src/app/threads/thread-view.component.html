@@ -40,7 +40,9 @@
 
         <ng-template #editMode>
           <!-- Display editable content when editing -->
-          <input type="text" [(ngModel)]="editedTitle" class="editTitle"/>
+          <!-- The oninput code below makes the textarea expand as the user types -->
+          <!-- Source: https://stackoverflow.com/questions/2803880/is-there-a-way-to-get-a-textarea-to-stretch-to-fit-its-content-without-using-php -->
+          <textarea type="text" [(ngModel)]="editedTitle" class="editTitle " style="width: 100%"  oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'></textarea>
           <div class="thread-information">
             <!-- Thread information: user, post date, last edited date -->
             <p>
@@ -74,7 +76,7 @@
 
         <!-- Input box for adding comments -->
         <div id="textBox" [formGroup]="commentForm">
-          <input [(ngModel)]="newCommentCreatedBy" formControlName="newCommentCreatedBy" placeholder="Display name" class="comment-input">
+          <textarea [(ngModel)]="newCommentCreatedBy" formControlName="newCommentCreatedBy" placeholder="Display name" class="comment-input"  oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'> </textarea>
           <div class="error-form" *ngIf="commentForm.get('newCommentCreatedBy')?.hasError('maxlength')">
             <b>Maximum length exceeded (max 50 characters).</b>
           </div>
@@ -122,7 +124,7 @@
                   <i>. Last edited at: {{ comment.commentLastEditedAt | date:'yyyy-MM-dd HH:mm' }}</i>
                 </ng-container>
               </p>
-              <textarea class="comment-input scroll" type="text" [(ngModel)]="editedBody" oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'></textarea>
+              <textarea class="comment-input scroll" type="text" [(ngModel)]="editedBody"  oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'></textarea>
               <div>
                 <button class="editBtn" (click)="saveChangesComment(comment, editedBody)">Save</button>
                 <button class="deleteBtn" (click)="toggleEditComment(comment)">Cancel</button>

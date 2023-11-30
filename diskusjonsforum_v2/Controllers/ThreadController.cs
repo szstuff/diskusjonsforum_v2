@@ -63,8 +63,7 @@ namespace diskusjonsforum_v2.Controllers
                 return Enumerable.Empty<Comment>().AsQueryable(); // Returns empty collection
             }
         }
-
-
+        
         // Returns an individual thread 
         [HttpGet("getThread/{id}")]
         public IActionResult GetThread(int id)
@@ -189,11 +188,14 @@ namespace diskusjonsforum_v2.Controllers
                 {
                     // Fetch the updated thread after the update
                     Thread updatedThread = _threadRepository.GetThreadById(id);
+                    //Workaround for JSON circular reference issue. Serializing the updatedThread with its comments causes the serializer to go in a loop through Thread=>ThreadComments=>Thread=>ThreadComments, etc
+                    var threadCommentCount = updatedThread.ThreadComments.Count;
+                    updatedThread.ThreadComments = null;
 
                     if (updatedThread != null)
                     {
                         // Return the updated thread in the response
-                        return Ok(new { success = true, message = "Thread updated successfully.", updatedThread });
+                        return Ok(new { success = true, message = "Thread updated successfully.", CommentCount = threadCommentCount, updatedThread });
                     }
                 }
                 else
