@@ -1,15 +1,17 @@
-.recent-posts-title, .tabelLabel {
+
+/* Header Styling */
+.tabelLabel {
   font-size: 30px;
   text-align: center;
   padding: 50px 0 30px 0;
 }
 
+/* Form styling */
 .form-box {
   overflow: hidden;
   margin: auto;
   width: 50%;
 }
-
 
 .form-group {
   font-family: 'Ubuntu', sans-serif;
@@ -25,6 +27,7 @@
   box-shadow: 3px 4px 5px 0px rgba(0, 0, 0, 0.38);
 }
 
+/* Create container styling */
 .create-container {
   width: 100%;
   transition: .5s ease-in-out;
@@ -40,6 +43,7 @@
     height: 200px;
 }
 
+/* Input styling */
 .username-input, .title-input, .body-input, .comment-input, .editBox{
   font-family: 'Ubuntu', sans-serif;
   font-weight: 300;
@@ -48,11 +52,13 @@
   padding: 10px 20px;
 }
 
+/* Create thread and cancel button margin */
 .create-thread-buttons {
     margin: auto;
     width: 100%;
 }
 
+/* Create thread anc cancel styling */
 .create-button {
   font-size: 17px;
   font-weight: 700;
@@ -96,6 +102,8 @@
     box-shadow: 1px 5px 7px 1px rgba(0, 0, 0, 0.2);
   }
 
+/* Add new comment styling */
+/* Cancel comment button styling, clears comment */
 .cancel-comment-button {
   font-size: 13px;
   font-weight: 700;
@@ -119,34 +127,14 @@
     box-shadow: 1px 5px 7px 1px rgba(0, 0, 0, 0.2);
   }
 
-/*.delete-comment-button{
-  font-size: 13px;
-  font-weight: 700;
-  color: white;
-  height: 30px;
-  margin-top: 7px;
-  margin-left: 2px;
-  margin-bottom: 20px;
-  width: 11%;
-  border: none;
-  border-radius: 7px;
-  outline: none;
-  background-color: rgba(255, 135, 135, 0.9);
-  box-shadow: 1px 5px 7px 1px rgba(0, 0, 0, 0.1);
-  cursor: pointer;
-  transition: .2s ease-out;
-}
-  .delete-comment-button:hover {
-    background: rgb(255, 0, 0);
-    box-shadow: 1px 5px 7px 1px rgba(0, 0, 0, 0.2);
-  }*/
-
-
+/* Input label styling */
 .input-label {
   margin-left: 4px;
   margin-bottom: 2px;
 }
 
+
+/* Add comment button styling */
 .add-comment-button {
   font-size: 13px;
   font-weight: 700;
@@ -170,30 +158,7 @@
     box-shadow: 1px 5px 7px 1px rgba(0, 0, 0, 0.2);
   }
 
-/*.delete-comment-button {
-  font-size: 13px;
-  font-weight: 700;
-  color: white;
-  height: 30px;
-  margin-top: 7px;
-  margin-right: 10px;
-  margin-bottom: 20px;
-  width: 18%;
-  border-radius: 7px;
-  outline: none;
-  border: none;
-  background: rgba(255, 135, 135, 0.9);
-  box-shadow: 1px 5px 7px 1px rgba(0, 0, 0, 0.1);
-  cursor: pointer;
-  transition: .2s ease-out;
-}
-
-.delete-comment-button:hover {
-  background: rgb(255, 0, 0);
-  box-shadow: 1px 5px 7px 1px rgba(0, 0, 0, 0.2);
-}*/
-
-
+/* Display styling */
 #displayPost {
   box-shadow: inset 0 1px 3px #ddd;
   border-radius: 7px;
@@ -224,6 +189,7 @@
   overflow-y: hidden;
 }
 
+/* Do not allow scrolling inside textarea */
 .scroll::-webkit-scrollbar {
   display: none;
 }
@@ -236,6 +202,7 @@
   background-color: rgba(255, 255, 255, 0.8);
 }
 
+/* Comment-input */
 .comment-input {
   resize: none;
   overflow-y: hidden;
@@ -246,6 +213,7 @@
   margin-bottom: 5px;
 }
 
+/* Edit button style */
 .editBtn {
   font-size: 13px;
   font-weight: 700;
@@ -269,6 +237,7 @@
     box-shadow: 1px 5px 7px 1px rgba(0, 0, 0, 0.3);
   }
 
+/* Delete buttons styling */
 .deleteBtn {
   font-size: 13px;
   font-weight: 700;
@@ -292,6 +261,7 @@
     box-shadow: 1px 5px 7px 1px rgba(0, 0, 0, 0.3);
   }
 
+/* Edit input/textarea field styling */
 .editBox {
   border-radius: 7px;
   box-shadow: inset 0 1px 3px #ddd;
@@ -301,29 +271,7 @@
   height: 30%;
 }
 
-.commentBtn {
-  font-size: 13px;
-  font-weight: 700;
-  color: black;
-  height: 30px;
-  margin-top: 7px;
-  margin-right: 10px;
-  margin-bottom: 20px;
-  width: 11%;
-  border: 0.5px solid #e9ecef;
-  border-radius: 7px;
-  outline: none;
-  background: linear-gradient(160deg, #f8f9fa, #e9ecef);
-  box-shadow: 1px 5px 7px 1px rgba(0, 0, 0, 0.1);
-  cursor: pointer;
-  transition: .2s ease-out;
-}
-
-  .commentBtn:hover {
-    background: linear-gradient(320deg, #f8f9fa, #e9ecef);
-    box-shadow: 1px 5px 7px 1px rgba(0, 0, 0, 0.3);
-  }
-
+/* Thread title for edit mode */
 .editTitle{
   font-family: 'Ubuntu', sans-serif;
   font-weight: 300;
@@ -336,17 +284,20 @@
   border-radius: 7px;
 }
 
+/* Validators styling */
 .error-form {
   margin: 3px 0 0 5px;
   color: rgba(150, 29, 29, 0.9);
 }
 
+/* Make text shift line if it exceeds box */
 .break-word {
   overflow: hidden;
   word-wrap: break-word;
   white-space: normal;
 }
 
+/* Back button styling*/
 .backBtn {
   background-color: transparent;
   color: #f8f9fa;
@@ -366,4 +317,3 @@
   margin-bottom: -10px;
   padding-right: 42%;
 }
-

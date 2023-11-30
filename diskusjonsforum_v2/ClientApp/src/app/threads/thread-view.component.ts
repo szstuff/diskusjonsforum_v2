@@ -37,15 +37,15 @@ export class ThreadViewComponent implements OnInit, OnDestroy {
   {
     this.threadForm = _formBuilder.group({
       // Define FormBuilder input validation rules
-      createdBy: ['', Validators.required],
+      createdBy: ['', [Validators.required, Validators.maxLength(50)]],
       threadTitle: ['', [Validators.required, Validators.maxLength(100)]],
       threadBody: ['', [Validators.required, Validators.maxLength(2500)]],
 
     });
-    this.commentForm= _formBuilder.group({
-      newCommentCreatedBy: ['', Validators.required],
-      newCommentBody:  ['', Validators.required]
-    })
+    this.commentForm = _formBuilder.group({
+      newCommentCreatedBy: ['', [Validators.required, Validators.maxLength(50)]],
+      newCommentBody: ['', [Validators.required, Validators.maxLength(1750)]],
+    });
   }
 
   // fetches the thread and the comments under the thread

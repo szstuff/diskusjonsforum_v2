@@ -40,7 +40,7 @@
           </p>
           <hr />
           <p class="title-thread"><b>{{ thread.threadTitle }}</b>
-          <span *ngIf="thread.threadBody.length > 800">(…)</span></p>
+          <span *ngIf="thread.threadTitle.length > 500">(…)</span></p>
           <p class="thread-text">
             {{ thread.threadBody | slice: 0:800}}
             <span *ngIf="thread.threadBody.length > 800">(…)</span>

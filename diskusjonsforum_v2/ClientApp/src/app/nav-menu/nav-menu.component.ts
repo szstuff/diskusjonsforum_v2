@@ -8,7 +8,6 @@ import { NavMenuService } from './nav-menu.service';
 @Component({
   selector: 'app-nav-menu',
   templateUrl: './nav-menu.component.html',
-  styleUrls: ['../../css/nav-menu.component.css']
 })
 export class NavMenuComponent {
   isExpanded = false;
