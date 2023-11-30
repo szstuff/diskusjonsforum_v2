@@ -42,7 +42,7 @@
           <!-- Display editable content when editing -->
           <!-- The oninput code below makes the textarea expand as the user types -->
           <!-- Source: https://stackoverflow.com/questions/2803880/is-there-a-way-to-get-a-textarea-to-stretch-to-fit-its-content-without-using-php -->
-          <textarea type="text" [(ngModel)]="editedTitle" class="editTitle" style="width: 100%"  oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'></textarea>
+          <textarea type="text" [(ngModel)]="editedTitle" class="editTitle " style="width: 100%"  oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'></textarea>
           <div class="thread-information">
             <!-- Thread information: user, post date, last edited date -->
             <p>
@@ -53,7 +53,6 @@
               </span>
             </p>
             <hr />
-            <textarea [(ngModel)]="editedBody" class="editBox" style="width: 100%" oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'></textarea>
             <textarea [(ngModel)]="editedBody" class="editBox scroll" oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'></textarea>
           </div>
 
