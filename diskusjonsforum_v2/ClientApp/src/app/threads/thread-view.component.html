@@ -1,24 +1,25 @@
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+<div class="outerBackDiv">
+
+  <button class="backBtn" type="button"  (click)="goBack()" aria-label="Back button">
+    <i class='bx bx-left-arrow arrow' alt="..." height="10"></i> Back
+  </button>
+</div>
+
 <div class="form-box">
   <div class="create-container">
+
     <div class="form-group">
 
-      <button class="back-btn shadow-none border-0"
-              type="button"
-              (click)="goBack()"
-              aria-label="Back button"
-      >
-        <img ngSrc="../../assets/images/back_arrow.png" alt="Comments" height="40" width="40"/>
-           Back
-      </button>
 
       <div *ngIf="thread.threadId; else notFound">
         <div *ngIf="!isEditing; else editMode" id="displayPost">
           <!-- Display content when not editing -->
-          <h1 class="thread-title-current">{{ thread.threadTitle }}</h1>
+          <h1 class="thread-title-current break-word">{{ thread.threadTitle }}</h1>
 
           <div class="thread-information">
             <!-- Thread information: user, post date, last edited date -->
-            <p>
+            <p class="break-word">
               Posted by <b>{{ thread.createdBy }}</b> on the <b>{{ thread.threadCreatedAt | date: 'yyyy-MM-dd HH:mm' }}</b>.
               <!-- Display last edited date if different -->
               <span *ngIf="significantTimeDifference(thread)">
@@ -26,15 +27,15 @@
               </span>
             </p>
             <hr />
-            <p class="thread-body">{{ thread.threadBody }}</p>
+            <p class="thread-body break-word">{{ thread.threadBody }}</p>
           </div>
 
-          <div><p class="comment-count"><img ngSrc="../../assets/images/message-detail-regular-24.png" alt="Comments" height="20" width="20"/>
+          <div><p class="comment-count"><img src="../../assets/images/message-detail-regular-24.png" alt="Comments" height="20" width="20"/>
             {{ thread.threadComments?.length }}</p>
           </div>
 
           <button (click)="toggleEdit(thread)" class="editBtn">Edit</button>
-          <button (click)="deletePost(thread)" [routerLink]="['/threads']" class="delete-thread-button">Delete</button>
+          <button (click)="deletePost(thread)" [routerLink]="['/threads']" class="deleteBtn">Delete</button>
         </div>
 
         <ng-template #editMode>
@@ -53,6 +54,7 @@
             </p>
             <hr />
             <textarea [(ngModel)]="editedBody" class="editBox" style="width: 100%" oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'></textarea>
+            <textarea [(ngModel)]="editedBody" class="editBox scroll" oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'></textarea>
           </div>
 
           <div><p class="comment-count"><img ngSrc="../../assets/images/message-detail-regular-24.png" alt="..." height="20" width="20" />
@@ -60,7 +62,7 @@
           </div>
 
           <button (click)="saveChanges()" class="editBtn">Save</button>
-          <button (click)="toggleEdit(thread)" class="editBtn">Cancel</button>
+          <button (click)="toggleEdit(thread)" class="deleteBtn">Cancel</button>
         </ng-template>
       </div>
 
@@ -79,7 +81,7 @@
           <div class="error-form" *ngIf="commentForm.get('newCommentCreatedBy')?.hasError('maxlength')">
             <b>Maximum length exceeded (max 50 characters).</b>
           </div>
-          <textarea [(ngModel)]="newCommentBody" formControlName="newCommentBody" placeholder="What are your thoughts?" class="comment-input"  oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'></textarea>
+          <textarea [(ngModel)]="newCommentBody" formControlName="newCommentBody" placeholder="What are your thoughts?" class="comment-input scroll" oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'></textarea>
           <div class="error-form" *ngIf="commentForm.get('newCommentBody')?.hasError('maxlength')">
             <b>Maximum length exceeded (max 1000 characters).</b>
           </div>
@@ -98,18 +100,18 @@
           <div *ngFor="let comment of thread.threadComments">
             <div *ngIf="!comment.isEditing; else editMode">
               <!-- Display content when not editing -->
-              <p>
+              <p class="break-word">
                 <b>{{comment.createdBy}}</b> replied on the <b>{{comment.commentCreatedAt | date:'yyyy-MM-dd HH:mm'}}</b>
                 <!-- Displays commentLastEdited value only if it differs from commentCreatedAt        -->
                 <ng-container *ngIf="(significantTimeDifference(comment))">
-                  <i>. Last edited at: {{ comment.commentLastEditedAt | date:'yyyy-MM-dd HH:mm' }}</i>
+                  <i class="break-word">. Last edited at: {{ comment.commentLastEditedAt | date:'yyyy-MM-dd HH:mm' }}</i>
                 </ng-container>
               </p>
-              <p>{{ comment.commentBody }}</p>
+              <p class="break-word">{{ comment.commentBody }}</p>
 
               <div>
-                <button class="commentBtn" (click)="toggleEditComment(comment)">Edit</button>
-                <button class="delete-thread-button" (click)="deleteComment(comment.commentId)">Delete</button>
+                <button class="editBtn" (click)="toggleEditComment(comment)">Edit</button>
+                <button class="deleteBtn" (click)="deleteComment(comment.commentId)">Delete</button>
               </div>
               <hr>
             </div>
@@ -123,10 +125,10 @@
                   <i>. Last edited at: {{ comment.commentLastEditedAt | date:'yyyy-MM-dd HH:mm' }}</i>
                 </ng-container>
               </p>
-              <textarea class="comment-input" type="text" [(ngModel)]="editedBody"  oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'></textarea>
+              <textarea class="comment-input scroll" type="text" [(ngModel)]="editedBody"  oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'></textarea>
               <div>
-                <button class="commentBtn" (click)="saveChangesComment(comment, editedBody)">Save</button>
-                <button class="commentBtn" (click)="toggleEditComment(comment)">Cancel</button>
+                <button class="editBtn" (click)="saveChangesComment(comment, editedBody)">Save</button>
+                <button class="deleteBtn" (click)="toggleEditComment(comment)">Cancel</button>
               </div>
               <hr>
             </ng-template>

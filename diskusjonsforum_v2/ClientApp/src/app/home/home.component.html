@@ -1,18 +1,18 @@
-<h3 class="recent-posts-title text-white">Here are the most recent posts!</h3>
+<h3 class="recent-posts-title text-white">Welcome!</h3>
 
 <div class="container thread-table-container">
   <div class="row">
     <div class="col-lg-6">
       <input class="form-control" type="text" placeholder="Filter by title" [(ngModel)]="listFilter" />
     </div>
-    <div class="col-lg-2">
+    <div class="col-lg-2" #dropdownFilterElement>
       <div class="dropdown-filter" [ngClass]="{ 'open': isDropdownOpen }" (click)="toggleDropdown()">
         <button class="btn btn-primary filter-button">
           Sort by
         </button>
         <div class="dropdown-content">
-          <button class="dropdown-filter-results dropdown-item" (click)="filterBy('recent')">Most recent</button>
-          <button class="dropdown-filter-results dropdown-item" (click)="filterBy('comments')">Most comments</button>
+          <button id="dropdown-filter-results" class="dropdown-item" (click)="filterBy('recent')">Most recent</button>
+          <button id="dropdown-filter-results" class="dropdown-item" (click)="filterBy('comments')">Most comments</button>
         </div>
       </div>
     </div>

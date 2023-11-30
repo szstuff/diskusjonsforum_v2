@@ -4,6 +4,7 @@ import { Thread } from '../threads/threads';
 import { NavMenuService } from './nav-menu.service';
 
 
+
 @Component({
   selector: 'app-nav-menu',
   templateUrl: './nav-menu.component.html',
@@ -38,7 +39,8 @@ export class NavMenuComponent {
   // initialises router and service for controllers
   constructor(
     private navMenuService: NavMenuService,
-    private router: Router
+    private router: Router,
+
   ) { }
 
   // a function that handles the input in the search bar
@@ -65,6 +67,7 @@ export class NavMenuComponent {
       searchResults.style.display = 'none';
     }
   }
+
 
 
   navigateToThreadform(thread: Thread) {

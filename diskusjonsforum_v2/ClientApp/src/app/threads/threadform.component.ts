@@ -21,10 +21,9 @@ export class ThreadformComponent {
   {
     this.threadForm = _formBuilder.group({
       // Define FormBuilder input validation rules
-      createdBy: ['', Validators.required],
+      createdBy: ['', [Validators.required, Validators.maxLength(30)]],
       threadTitle: ['', [Validators.required, Validators.maxLength(100)]],
       threadBody: ['', [Validators.required, Validators.maxLength(2500)]],
-
     });
   }
 

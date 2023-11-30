@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Thread } from './threads';
 import { ThreadService } from "./threads.service";
 import { Router } from "@angular/router";
+import { ElementRef, HostListener, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-thread-component',
@@ -29,6 +30,26 @@ export class ThreadsComponent implements OnInit {
   }
 
   filteredThreads: Thread[] = this.threads;
+
+  @ViewChild('dropdownFilterElement') dropdownFilterElement!: ElementRef;
+
+  @HostListener('document:click', ['$event'])
+  handleDocumentClick(event: MouseEvent): void {
+    const clickedElement = event.target as HTMLElement;
+
+    console.log('Clicked element:', clickedElement);
+    console.log('Dropdown filter element:', this.dropdownFilterElement.nativeElement);
+
+    // Check if the clicked element is outside the dropdown filter
+    if (!this.dropdownFilterElement.nativeElement.contains(clickedElement)) {
+      // Close the dropdown filter
+      this.isDropdownOpen = false;
+    }
+  }
+
+  toggleDropdown() {
+    this.isDropdownOpen = !this.isDropdownOpen;
+  }
 
   constructor(
     private _threadService: ThreadService,
@@ -153,9 +174,5 @@ export class ThreadsComponent implements OnInit {
         console.error('Error fetching threads by comments', error);
       }
     );
-  }
-
-  toggleDropdown() {
-    this.isDropdownOpen = !this.isDropdownOpen;
   }
 }

@@ -3,6 +3,7 @@ import { ThreadService } from '../threads/threads.service';
 import { Thread } from '../threads/threads';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { ElementRef, HostListener, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-home',
@@ -27,10 +28,31 @@ export class HomeComponent implements OnInit {
 
   filteredThreads: Thread[] = this.threads;
 
+  @ViewChild('dropdownFilterElement') dropdownFilterElement!: ElementRef;
+
+  @HostListener('document:click', ['$event'])
+  handleDocumentClick(event: MouseEvent): void {
+    const clickedElement = event.target as HTMLElement;
+
+    console.log('Clicked element:', clickedElement);
+    console.log('Dropdown filter element:', this.dropdownFilterElement.nativeElement);
+
+    // Check if the clicked element is outside the dropdown filter
+    if (!this.dropdownFilterElement.nativeElement.contains(clickedElement)) {
+      // Close the dropdown filter
+      this.isDropdownOpen = false;
+    }
+  }
+
+  toggleDropdown() {
+    this.isDropdownOpen = !this.isDropdownOpen;
+  }
+
   constructor(
     private threadService: ThreadService,
     private _http: HttpClient,
-    private _router: Router
+    private _router: Router,
+    private _elementRef: ElementRef
   ) { }
 
   ngOnInit(): void {
@@ -118,9 +140,5 @@ export class HomeComponent implements OnInit {
     return this.threads.filter((thread: Thread) =>
       thread.threadTitle.toLocaleLowerCase().includes(filterBy)
     );
-  }
-
-  toggleDropdown() {
-    this.isDropdownOpen = !this.isDropdownOpen;
   }
 }

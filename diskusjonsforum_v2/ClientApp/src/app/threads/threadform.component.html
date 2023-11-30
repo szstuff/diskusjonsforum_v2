@@ -7,6 +7,9 @@
         <div class="create-information">
           <label class="input-label" for="createdBy">Username:</label>
           <textarea type="text" id="createdBy" formControlName="createdBy" class="form-control username-input"  oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'> </textarea>
+            <div class="error-form" *ngIf="threadForm.get('createdBy')?.hasError('maxlength')">
+              <b>Maximum length exceeded (max 30 characters).</b>
+            </div>
         </div>
 
         <div class="create-information">
@@ -21,7 +24,7 @@
 
         <div class="create-information">
           <label class="input-label" for="threadBody">Body:</label>
-            <textarea type="text" id="threadBody" formControlName="threadBody" class="form-control body-input"  oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'></textarea>
+            <textarea type="text" id="threadBody" formControlName="threadBody" class="form-control body-input scroll" oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'></textarea>
             <div class="error-form" *ngIf="threadForm.get('threadBody')?.hasError('maxlength')">
               <b>Maximum length exceeded (max 2500 characters).</b>
             </div>

@@ -15,6 +15,7 @@ import {style} from "@angular/animations";
   templateUrl: './thread-view.component.html',
   styleUrls: ['../../css/thread_view.css']
 })
+
 export class ThreadViewComponent implements OnInit, OnDestroy {
   commentForm: FormGroup;
   threadForm: FormGroup; // Initialise a FormGroup object
@@ -27,14 +28,13 @@ export class ThreadViewComponent implements OnInit, OnDestroy {
 
   private unsubscribe$ = new Subject<void>();
 
-
   constructor(
     private _formBuilder: FormBuilder,
     private _router: Router, // Initialise router object for navigation
     private route: ActivatedRoute,
-    private _location: Location,
-  private _threadService: ThreadService,
-    private _http: HttpClient)
+    private _threadService: ThreadService,
+    private _http: HttpClient,
+    private _location: Location)
   {
     this.threadForm = _formBuilder.group({
       // Define FormBuilder input validation rules
@@ -48,6 +48,7 @@ export class ThreadViewComponent implements OnInit, OnDestroy {
       newCommentBody:  ['', Validators.required]
     })
   }
+
   // fetches the thread and the comments under the thread
   ngOnInit(): void {
     this.route.paramMap.pipe(
@@ -207,12 +208,12 @@ export class ThreadViewComponent implements OnInit, OnDestroy {
        timeDiff = new Date(object.commentLastEditedAt).getTime() - new Date(object.commentCreatedAt).getTime();
     }
     return timeDiff > (60*1000)
+
   }
 
   goBack() {
     this._location.back();
   }
-
 
   ngOnDestroy(): void {
     this.unsubscribe$.next();
